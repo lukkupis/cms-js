@@ -1,5 +1,12 @@
+import Header from 'components/organisms/header/header';
+
 function Home() {
-  return <div>Logowanie</div>;
+  return (
+    <div>
+      <Header />
+      <div className="container">Logowanie</div>
+    </div>
+  );
 }
 
 export default Home;

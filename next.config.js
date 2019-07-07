@@ -1,6 +1,7 @@
 const path = require('path');
+const withSass = require('@zeit/next-sass');
 
-module.exports = {
+module.exports = withSass({
   useFileSystemPublicRoutes: false,
   webpack(config, options) {
     config.resolve.alias['components'] = path.join(__dirname, 'components');
@@ -12,4 +13,4 @@ module.exports = {
     config.resolve.alias['theme'] = path.join(__dirname, 'theme');
     return config;
   }
-};
+});
