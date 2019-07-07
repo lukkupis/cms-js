@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test": "jest",
     "dev": "nodemon -w server/server.js server/server.js",
     "build": "next build",
     "start": "NODE_ENV=production node server.js"
@@ -25,6 +26,13 @@
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
-    "nodemon": "^1.19.1"
+    "nodemon": "^1.19.1",
+    "@babel/core": "7.3.4",
+    "babel-jest": "24.1.0",
+    "enzyme": "3.4.3",
+    "enzyme-adapter-react-16": "1.2.0",
+    "jest": "24.1.0",
+    "react-addons-test-utils": "15.6.2",
+    "react-test-renderer": "16.4.2"    
   }
 }
