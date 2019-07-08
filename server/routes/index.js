@@ -21,7 +21,7 @@ router.post('/login', (req, res) => {
 
     res.redirect('/admin');
   } else {
-    res.redirect('/login');
+    res.redirect('/login?valid=error');
   }
 });
 

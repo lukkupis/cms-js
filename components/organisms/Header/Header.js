@@ -16,7 +16,7 @@ function Header(props) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="container">
+    <div className="container mb-5">
       <Navbar color="light" light expand="md">
         <Link href="/" passHref>
           <NavbarBrand>cms-js</NavbarBrand>
