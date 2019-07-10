@@ -1,21 +1,18 @@
 const express = require('express');
 const router = express.Router();
 
+const page_controller = require('../../controllers/pageController');
+
 router.all('*', (req, res, next) => {
   if (!req.session.admin) {
+    res.status(404).send('Unauthorized access.');
+
     return;
   }
 
   next();
 });
 
-router.all('/pages', (req, res, next) => {
-  const data = {
-    id: 0,
-    name: 'testowa'
-  };
-
-  res.json(data);
-});
+router.get('/pages', page_controller.page_list_api);
 
 module.exports = router;
