@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "dev": "nodemon -w server/server.js server/server.js",
+    "dev": "nodemon server/server.js",
     "build": "next build",
     "start": "NODE_ENV=production node server.js"
   },
@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@zeit/next-sass": "^1.0.1",
+    "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
     "chai": "^4.2.0",
     "cookie-parser": "^1.4.4",
