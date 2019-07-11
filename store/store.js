@@ -6,10 +6,10 @@ import rootReducer from 'store/reducers';
 
 const initialState = {};
 
-export function initializeStore(initialState = initialState) {
+export const initStore = (initialState = initialState) => {
   return createStore(
     rootReducer,
     initialState,
     composeWithDevTools(applyMiddleware(thunkMiddleware))
   );
-}
+};

@@ -20,7 +20,7 @@ function Admin({ data }) {
       <Header />
       <h2>Strony:</h2>
       {data.map(item => (
-        <div>
+        <div key={item.id}>
           <div>{item.author}</div>
           <div>{item.title}</div>
         </div>
