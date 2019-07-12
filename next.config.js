@@ -11,6 +11,7 @@ module.exports = withSass({
     config.resolve.alias['assets'] = path.join(__dirname, 'assets');
     config.resolve.alias['templates'] = path.join(__dirname, 'templates');
     config.resolve.alias['theme'] = path.join(__dirname, 'theme');
+    config.resolve.alias['helpers'] = path.join(__dirname, 'helpers');
     return config;
   }
 });

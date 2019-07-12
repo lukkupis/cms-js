@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
+import * as api from 'helpers/api';
 
 import * as cmsActions from 'actions/cmsActions';
 
@@ -33,14 +33,7 @@ Admin.getInitialProps = async ({ req, query }) => {
   let data = query.data;
 
   if (!req) {
-    await axios
-      .get('api/pages')
-      .then(function(response) {
-        data = response.data;
-      })
-      .catch(function(error) {
-        Router.push('/login');
-      });
+    data = await api.getPages(Router);
   }
   return { data };
 };
