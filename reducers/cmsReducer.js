@@ -1,15 +1,14 @@
-import * as constants from '../store/constants';
+import { createReducer } from 'redux-starter-kit';
+
+import * as cmsActions from '../actions/cmsActions';
 
 const initialState = {
   test: 'test123'
 };
 
-export default (state = initialState, action) => {
-  switch (action.type) {
-    case constants.CMS_TEST:
-      console.log('CMS_TEST');
-      return state;
-    default:
-      return state;
+export default createReducer(initialState, {
+  [cmsActions.test]: (state, action) => {
+    console.log('CMS_TEST');
+    return state;
   }
-};
+});

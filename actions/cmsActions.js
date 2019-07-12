@@ -1,5 +1,3 @@
-import * as constants from '../store/constants';
+import { createAction } from 'redux-starter-kit';
 
-export const test = dispatch => {
-  return dispatch({ type: constants.CMS_TEST });
-};
+export const test = createAction('CMS_TEST');

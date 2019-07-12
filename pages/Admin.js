@@ -12,7 +12,7 @@ function Admin({ data }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    cmsActions.test(dispatch);
+    dispatch(cmsActions.test());
   }, []);
 
   return (
@@ -20,7 +20,7 @@ function Admin({ data }) {
       <Header />
       <h2>Strony:</h2>
       {data.map(item => (
-        <div key={item.id}>
+        <div key={item._id}>
           <div>{item.author}</div>
           <div>{item.title}</div>
         </div>
