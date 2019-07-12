@@ -1,11 +1,9 @@
 import axios from 'axios';
 
-const serverUrl = '';
-
 export const getPages = Router =>
   new Promise((resolve, reject) => {
     axios
-      .get(serverUrl + 'api/pages')
+      .get(process.env.API_URL + '/api/pages')
       .then(function(response) {
         resolve(response.data);
       })

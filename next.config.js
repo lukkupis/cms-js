@@ -1,8 +1,20 @@
 const path = require('path');
 const withSass = require('@zeit/next-sass');
 
+const dotEnvResult = require('dotenv').config();
+
+const prod = process.env.NODE_ENV === 'production';
+
+if (dotEnvResult.error) {
+  throw dotEnvResult.error;
+}
+
 module.exports = withSass({
   useFileSystemPublicRoutes: false,
+  env: {
+    TEST: process.env.TEST,
+    API_URL: prod ? 'https://api.example.com' : 'https://localhost:3000'
+  },
   webpack(config, options) {
     config.resolve.alias['components'] = path.join(__dirname, 'components');
     config.resolve.alias['reducers'] = path.join(__dirname, 'reducers');
