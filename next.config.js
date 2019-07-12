@@ -13,7 +13,7 @@ module.exports = withSass({
   useFileSystemPublicRoutes: false,
   env: {
     TEST: process.env.TEST,
-    API_URL: prod ? 'https://api.example.com' : 'https://localhost:3000'
+    API_URL: prod ? 'https://api.example.com' : 'http://localhost:3000'
   },
   webpack(config, options) {
     config.resolve.alias['components'] = path.join(__dirname, 'components');

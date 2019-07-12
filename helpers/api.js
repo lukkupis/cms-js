@@ -9,6 +9,5 @@ export const getPages = Router =>
       })
       .catch(function(error) {
         Router.push('/login');
-        reject(error);
       });
   });

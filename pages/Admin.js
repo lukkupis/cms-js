@@ -7,7 +7,7 @@ import * as cmsActions from 'actions/cmsActions';
 
 import Header from 'components/organisms/Header/Header';
 
-function Admin({ data }) {
+function Admin({ data, isServer }) {
   const cmsState = useSelector(state => state.cmsStore);
   const dispatch = useDispatch();
 
@@ -19,6 +19,7 @@ function Admin({ data }) {
     <div className="container">
       <Header />
       <h2>Strony:</h2>
+      <div>{isServer ? 'server' : 'client'}</div>
       {data.map(item => (
         <div key={item._id}>
           <div>{item.author}</div>
@@ -29,13 +30,13 @@ function Admin({ data }) {
   );
 }
 
-Admin.getInitialProps = async ({ req, query }) => {
+Admin.getInitialProps = async ({ req, query, isServer }) => {
   let data = query.data;
 
   if (!req) {
     data = await api.getPages(Router);
   }
-  return { data };
+  return { data, isServer };
 };
 
 export default Admin;
