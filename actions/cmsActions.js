@@ -1,6 +1,7 @@
 import { createAction } from 'redux-starter-kit';
 import { createActionThunk } from 'redux-thunk-actions';
+import * as api from 'helpers/api';
 
-export const test = createAction('CMS_TEST');
+export const SET_PAGES_SERVER = createAction('SET_PAGES_SERVER');
 
-export const GET_PAGES = createActionThunk('GET_PAGES', () => api.fetch());
+export const GET_PAGES = createActionThunk('GET_PAGES', () => api.getPages());

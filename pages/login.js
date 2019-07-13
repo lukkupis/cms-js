@@ -1,4 +1,4 @@
-import Header from 'components/organisms/header/header';
+import Header from 'components/organisms/Header/Header';
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 

@@ -8,6 +8,6 @@ export const getPages = Router =>
         resolve(response.data);
       })
       .catch(function(error) {
-        Router.push('/login');
+        reject(error);
       });
   });

@@ -22,14 +22,6 @@ exports.page_detail = function(req, res) {
 // Handle page create on POST.
 exports.page_create_post = function(req, res) {
   const body = req.body;
-  // const body = {
-  //   author: 'Łukasz Kupis',
-  //   title: 'Nowa Strona',
-  //   content: 'lorem lorem',
-  //   excerpt: 'lorem',
-  //   status: 'published',
-  //   template: 'default'
-  // };
 
   const pageData = new Page(body);
   const errors = pageData.validateSync();
