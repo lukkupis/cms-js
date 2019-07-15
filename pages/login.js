@@ -1,8 +1,10 @@
+import * as cmsActions from 'actions/cmsActions';
+
 import Header from 'components/organisms/Header/Header';
 import React from 'react';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Alert } from 'reactstrap';
 
-function Login(props) {
+function Login({ query }) {
   return (
     <>
       <Header />
@@ -29,6 +31,9 @@ function Login(props) {
                   placeholder="password"
                 />
               </FormGroup>
+              {query.valid && (
+                <Alert color="danger">Invalid username or password.</Alert>
+              )}
               <Button>Submit</Button>
             </Form>
           </div>
@@ -49,7 +54,7 @@ Login.getInitialProps = async ({ req, query, store, isServer }) => {
     }
   }
 
-  return { isServer };
+  return { isServer, query };
 };
 
 export default Login;

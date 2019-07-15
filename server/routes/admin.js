@@ -6,7 +6,7 @@ const page_controller = require('../controllers/pageController');
 
 router.all('*', (req, res, next) => {
   if (!req.session.admin) {
-    res.redirect('login');
+    res.redirect('/login');
 
     return;
   }

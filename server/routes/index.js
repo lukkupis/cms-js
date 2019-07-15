@@ -17,6 +17,11 @@ router.get('/login', (req, res) => {
   }
 });
 
+router.get('/logout', (req, res) => {
+  req.session.admin = '';
+  res.redirect('/login');
+});
+
 router.post('/login', (req, res) => {
   const body = req.body;
 

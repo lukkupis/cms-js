@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import {
   Collapse,
   Navbar,
@@ -14,6 +15,8 @@ import 'theme/index.scss';
 
 function Header(props) {
   const [open, setOpen] = useState(false);
+  const cmsStore = useSelector(state => state.cmsStore);
+  const { userAdminName } = cmsStore;
 
   return (
     <div className="container mb-5">
@@ -29,6 +32,18 @@ function Header(props) {
                 <NavLink>Admin</NavLink>
               </Link>
             </NavItem>
+            {userAdminName && (
+              <>
+                <NavItem className="ml-5">
+                  <Link href="/logout" passHref>
+                    <NavLink>Logout</NavLink>
+                  </Link>
+                </NavItem>
+                <NavItem className="ml-4 d-flex align-items-center">
+                  Welcome, {userAdminName}
+                </NavItem>
+              </>
+            )}
           </Nav>
         </Collapse>
       </Navbar>

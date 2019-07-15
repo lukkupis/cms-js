@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import Router from 'next/Router';
+import Router from 'next/router';
 
 import Head from 'next/head';
 import Header from 'components/organisms/Header/Header';

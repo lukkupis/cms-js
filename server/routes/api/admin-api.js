@@ -5,7 +5,7 @@ const page_controller = require('../../controllers/pageController');
 
 router.all('*', (req, res, next) => {
   if (!req.session.admin) {
-    res.json({ auth_error: true });
+    res.status('404').end();
 
     return;
   }
