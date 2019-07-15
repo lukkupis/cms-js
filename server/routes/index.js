@@ -10,14 +10,18 @@ router.get('/', (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-  return app.render(req, res, '/login', req.query);
+  if (req.session.admin) {
+    res.redirect('/admin');
+  } else {
+    return app.render(req, res, '/login', req.query);
+  }
 });
 
 router.post('/login', (req, res) => {
   const body = req.body;
 
   if (body.login === config.login && body.password === config.password) {
-    req.session.admin = 1;
+    req.session.admin = 'Łukasz Kupis';
 
     res.redirect('/admin');
   } else {

@@ -5,7 +5,7 @@ const page_controller = require('../../controllers/pageController');
 
 router.all('*', (req, res, next) => {
   if (!req.session.admin) {
-    res.status(404).send('Unauthorized access.');
+    res.json({ auth_error: true });
 
     return;
   }

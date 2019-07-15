@@ -4,7 +4,7 @@ const app = require('../nextApp');
 // Display list of all pages.
 exports.page_list = function(req, res) {
   Page.find({}, (err, data) => {
-    app.render(req, res, '/admin', { data });
+    app.render(req, res, '/admin/pages', { data });
   });
 };
 

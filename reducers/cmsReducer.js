@@ -8,7 +8,8 @@ const initialState = {
   GET_PAGES_FAILED: false,
   GET_PAGES_ENDED: false,
   SET_PAGES_SUCCEEDED: false,
-  pages: []
+  pages: [],
+  userAdminName: ''
 };
 
 export default createReducer(initialState, {
@@ -35,6 +36,10 @@ export default createReducer(initialState, {
   GET_PAGES_ENDED: (state, action) => {
     state.GET_PAGES_ENDED = true;
     state.GET_PAGES_STARTED = false;
+    return state;
+  },
+  SET_USER_ADMIN: (state, action) => {
+    state.userAdminName = action.payload;
     return state;
   }
 });

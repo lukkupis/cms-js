@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Router from 'next/router';
 
 import * as cmsActions from 'actions/cmsActions';
+import initialCheckAuth from 'helpers/initialCheckAuth';
 
 import Head from 'next/head';
 import Header from 'components/organisms/Header/Header';
@@ -11,8 +12,8 @@ function Admin() {
   const cmsStore = useSelector(state => state.cmsStore);
 
   useEffect(() => {
-    cmsStore.GET_PAGES_FAILED && Router.push('/login');
-  }, [cmsStore.GET_PAGES_FAILED]);
+    cmsStore.userAdminName === '' && Router.push('/login');
+  }, [cmsStore.userAdminName]);
 
   return (
     <div className="container">
@@ -37,10 +38,16 @@ function Admin() {
 }
 
 Admin.getInitialProps = async ({ req, query, store, isServer }) => {
+  initialCheckAuth(req, store);
+
   if (req) {
     store.dispatch(cmsActions.SET_PAGES_SERVER(query.data));
   } else {
-    store.dispatch(cmsActions.GET_PAGES());
+    const userAdminName = store.getState().cmsStore.userAdminName;
+
+    if (userAdminName != '') {
+      store.dispatch(cmsActions.GET_PAGES());
+    }
   }
   return { isServer };
 };

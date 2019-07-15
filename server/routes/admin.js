@@ -14,7 +14,11 @@ router.all('*', (req, res, next) => {
   next();
 });
 
-router.get('/', page_controller.page_list);
+router.get('/', (req, res) => {
+  res.redirect('/admin/pages');
+});
+
+router.get('/pages', page_controller.page_list);
 
 router.post('/page-form', page_controller.page_create_post);
 

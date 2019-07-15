@@ -38,4 +38,18 @@ function Login(props) {
   );
 }
 
+Login.getInitialProps = async ({ req, query, store, isServer }) => {
+  if (req) {
+    store.dispatch(cmsActions.SET_USER_ADMIN(req.session.admin));
+  } else {
+    const userAdminName = store.getState().cmsStore.userAdminName;
+
+    if (userAdminName != '') {
+      Router.push('/admin');
+    }
+  }
+
+  return { isServer };
+};
+
 export default Login;
