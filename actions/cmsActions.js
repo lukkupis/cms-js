@@ -8,4 +8,4 @@ export const GET_PAGES = createActionThunk('GET_PAGES', () =>
   api.getPagesAdmin()
 );
 
-export const SET_USER_ADMIN = createAction('SET_USER_ADMIN');
+export const SET_USER = createAction('SET_USER');

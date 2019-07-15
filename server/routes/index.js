@@ -2,7 +2,7 @@ const express = require('express');
 const app = require('../nextApp');
 const router = express.Router();
 
-const config = require('../config');
+const user_controller = require('../controllers/userController');
 
 /* GET home page. */
 router.get('/', (req, res) => {
@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-  if (req.session.admin) {
+  if (req.session.user) {
     res.redirect('/admin');
   } else {
     return app.render(req, res, '/login', req.query);
@@ -18,20 +18,10 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/logout', (req, res) => {
-  req.session.admin = '';
+  req.session.user = '';
   res.redirect('/login');
 });
 
-router.post('/login', (req, res) => {
-  const body = req.body;
-
-  if (body.login === config.login && body.password === config.password) {
-    req.session.admin = 'Łukasz Kupis';
-
-    res.redirect('/admin');
-  } else {
-    res.redirect('/login?valid=error');
-  }
-});
+router.post('/login', user_controller.user_login);
 
 module.exports = router;

@@ -1,7 +1,8 @@
 const express = require('express');
 const app = require('./nextApp');
 
-const cookieSession = require('cookie-session');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const config = require('./config');
@@ -27,10 +28,15 @@ app.prepare().then(() => {
   server.use(express.urlencoded({ extended: false }));
   server.use(cookieParser());
   server.use(
-    cookieSession({
-      name: 'session',
-      keys: config.keySession,
-      maxAge: config.maxAgeSession
+    session({
+      name: 'cmsjs.sid',
+      secret: config.keySession,
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        maxAge: config.maxAgeSession
+      },
+      store: new MongoStore({ mongooseConnection: mongoose.connection })
     })
   );
 

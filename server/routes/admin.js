@@ -1,11 +1,10 @@
 const express = require('express');
-const app = require('../nextApp');
 const router = express.Router();
 
 const page_controller = require('../controllers/pageController');
 
 router.all('*', (req, res, next) => {
-  if (!req.session.admin) {
+  if (!req.session.user) {
     res.redirect('/login');
 
     return;

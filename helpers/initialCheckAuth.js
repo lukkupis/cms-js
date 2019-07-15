@@ -3,8 +3,8 @@ import Router from 'next/router';
 
 export default function initialCheckAuth(req, store, redirect = true) {
   if (req) {
-    if (req.session.admin) {
-      store.dispatch(cmsActions.SET_USER_ADMIN(req.session.admin));
+    if (req.session.user) {
+      store.dispatch(cmsActions.SET_USER(req.session.user.name));
     }
   } else {
     const userAdminName = store.getState().cmsStore.userAdminName;

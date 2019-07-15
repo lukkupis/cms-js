@@ -45,7 +45,9 @@ function Login({ query }) {
 
 Login.getInitialProps = async ({ req, query, store, isServer }) => {
   if (req) {
-    store.dispatch(cmsActions.SET_USER_ADMIN(req.session.admin));
+    if (req.session.user) {
+      store.dispatch(cmsActions.SET_USER(req.session.user.name));
+    }
   } else {
     const userAdminName = store.getState().cmsStore.userAdminName;
 

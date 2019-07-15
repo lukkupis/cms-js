@@ -38,7 +38,7 @@ export default createReducer(initialState, {
     state.GET_PAGES_STARTED = false;
     return state;
   },
-  SET_USER_ADMIN: (state, action) => {
+  SET_USER: (state, action) => {
     state.userAdminName = action.payload;
     return state;
   }
