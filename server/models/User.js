@@ -7,7 +7,7 @@ const pageSchema = new Schema({
   registered: { type: Date, default: Date.now },
   name: { type: String, required: true },
   email: { type: String, unique: true, required: true },
-  permissions: { type: String, required: true }
+  permissions: { type: String, enum: ['admin', 'user'], required: true }
 });
 
 module.exports = mongoose.model('User', pageSchema);
