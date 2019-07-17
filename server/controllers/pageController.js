@@ -3,15 +3,19 @@ const app = require('../nextApp');
 
 // Display list of all pages.
 exports.page_list = (req, res) => {
-  Page.find({}, (err, data) => {
-    app.render(req, res, '/admin/pages', { data });
-  });
+  Page.find()
+    .populate('author')
+    .exec({}, (err, data) => {
+      app.render(req, res, '/admin/pages', { data });
+    });
 };
 
 exports.page_list_api = (req, res) => {
-  Page.find({}, (err, data) => {
-    res.json(data);
-  });
+  Page.find()
+    .populate('author')
+    .exec({}, (err, data) => {
+      res.json(data);
+    });
 };
 
 // Display detail page for a specific page.

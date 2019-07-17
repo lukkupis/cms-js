@@ -2,15 +2,24 @@ import * as cmsActions from 'actions/cmsActions';
 
 import Header from 'components/organisms/Header/Header';
 import React from 'react';
+import styled from 'styled-components';
+
 import { Button, Form, FormGroup, Label, Input, Alert } from 'reactstrap';
+
+const StyledContainer = styled.div`
+  display: flex;
+  align-items: center;
+  height: calc(100vh - 56px);
+  padding-bottom: 100px;
+`;
 
 function Login({ query }) {
   return (
     <>
       <Header />
 
-      <div className="container">
-        <div className="row">
+      <StyledContainer className="container">
+        <div className="row w-100">
           <div className="col-md-4 offset-md-4">
             <Form method="post">
               <FormGroup>
@@ -38,7 +47,7 @@ function Login({ query }) {
             </Form>
           </div>
         </div>
-      </div>
+      </StyledContainer>
     </>
   );
 }

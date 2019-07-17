@@ -10,7 +10,7 @@ function Home(props) {
         <title>Home</title>
       </Head>
       <Header />
-      <div className="container">Welcome to Next.js!</div>
+      <div className="container mt-5">Site under construction.</div>
     </>
   );
 }
