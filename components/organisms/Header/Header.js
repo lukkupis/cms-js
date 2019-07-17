@@ -11,6 +11,8 @@ import {
 } from 'reactstrap';
 import Link from 'next/link';
 
+import '@fortawesome/fontawesome-free/js/all';
+
 import 'theme/index.scss';
 
 function Header(props) {

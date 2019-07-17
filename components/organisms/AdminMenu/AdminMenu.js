@@ -4,15 +4,15 @@ import styled from 'styled-components';
 import Link from 'next/link';
 
 const StyledContainer = styled.div`
-  width: 200px;
+  width: 150px;
   padding-top: 50px;
-  background-color: #363b3f;
+  background-color: #343a40;
 `;
 
 const StyledLink = styled.a`
   display: block;
   width: 100%;
-  padding: 15px;
+  padding: 10px;
   text-align: left;
   color: #fff;
 
@@ -27,10 +27,16 @@ const AdminMenu = () => {
   return (
     <StyledContainer className="flex-shrink-0">
       <Link href="/admin/pages" passHref>
-        <StyledLink>Pages</StyledLink>
+        <StyledLink>
+          <i className="fas fa-file fa-fw mr-2" />
+          Pages
+        </StyledLink>
       </Link>
       <Link href="/adimn/users" passHref>
-        <StyledLink>Users</StyledLink>
+        <StyledLink>
+          <i className="fas fa-users fa-fw mr-2" />
+          Users
+        </StyledLink>
       </Link>
     </StyledContainer>
   );

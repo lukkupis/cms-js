@@ -42,6 +42,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.3.4",
+    "@fortawesome/fontawesome-free": "^5.9.0",
     "babel-jest": "24.1.0",
     "enzyme": "3.4.3",
     "enzyme-adapter-react-16": "1.2.0",
