@@ -19,7 +19,7 @@ function Header(props) {
   const { userAdminName } = cmsStore;
 
   return (
-    <div className="container mb-5">
+    <>
       <Navbar color="light" light expand="md">
         <Link href="/" passHref>
           <NavbarBrand>cms-js</NavbarBrand>
@@ -47,7 +47,7 @@ function Header(props) {
           </Nav>
         </Collapse>
       </Navbar>
-    </div>
+    </>
   );
 }
 

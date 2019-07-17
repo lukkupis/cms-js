@@ -7,6 +7,9 @@ import initialCheckAuth from 'helpers/initialCheckAuth';
 
 import Head from 'next/head';
 import Header from 'components/organisms/Header/Header';
+import AdminList from 'components/organisms/AdminList/AdminList';
+import AdminMenu from 'components/organisms/AdminMenu/AdminMenu';
+import AdminMain from 'components/atoms/AdminMain';
 
 function Admin() {
   const cmsStore = useSelector(state => state.cmsStore);
@@ -16,24 +19,43 @@ function Admin() {
   }, [cmsStore.userAdminName]);
 
   return (
-    <div className="container">
+    <>
       <Head>
         <title>Panel</title>
       </Head>
       <Header />
-      {(cmsStore.SET_PAGES_SUCCEEDED || cmsStore.GET_PAGES_SUCCEEDED) && (
-        <div>
-          <h2>Strony:</h2>
+
+      <AdminMain>
+        <AdminMenu />
+
+        <div className="flex-grow-1 px-5">
+          <div className="d-flex align-items-center">
+            <h1 className="my-5">Pages</h1>
+            <a href="#" className="btn btn-dark ml-4">
+              Add Page
+            </a>
+          </div>
+
           {cmsStore.GET_PAGES_STARTED && 'Loading...'}
-          {cmsStore.pages.map(item => (
-            <div key={item._id}>
-              <div>{item.author}</div>
-              <div>{item.title}</div>
-            </div>
-          ))}
+
+          {(cmsStore.SET_PAGES_SUCCEEDED || cmsStore.GET_PAGES_SUCCEEDED) && (
+            <AdminList
+              list={cmsStore.pages}
+              columns={[
+                { label: 'title', content: 'title' },
+                {
+                  label: 'author',
+                  content: ['author', 'name'],
+                  type: 'object'
+                },
+                { label: 'created', content: 'created', type: 'date' },
+                { label: 'status', content: 'status' }
+              ]}
+            />
+          )}
         </div>
-      )}
-    </div>
+      </AdminMain>
+    </>
   );
 }
 
