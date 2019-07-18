@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Link from 'next/link';
+import NavLink from 'components/atoms/NavLink';
 
 const StyledContainer = styled.div`
   width: 150px;
@@ -16,7 +16,8 @@ const StyledLink = styled.a`
   text-align: left;
   color: #fff;
 
-  &:hover {
+  &:hover,
+  &.active {
     background-color: red;
     color: #fff;
     text-decoration: none;
@@ -26,18 +27,18 @@ const StyledLink = styled.a`
 const AdminMenu = () => {
   return (
     <StyledContainer className="flex-shrink-0">
-      <Link href="/admin/pages" passHref>
+      <NavLink href="/admin/pages" passHref>
         <StyledLink>
           <i className="fas fa-file fa-fw mr-2" />
           Pages
         </StyledLink>
-      </Link>
-      <Link href="/admin/users" passHref>
+      </NavLink>
+      <NavLink href="/admin/users" passHref>
         <StyledLink>
           <i className="fas fa-users fa-fw mr-2" />
           Users
         </StyledLink>
-      </Link>
+      </NavLink>
     </StyledContainer>
   );
 };
