@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const page_controller = require('../controllers/pageController');
+const user_controller = require('../controllers/userController');
 
 router.all('*', (req, res, next) => {
   if (!req.session.user) {
@@ -18,7 +19,8 @@ router.get('/', (req, res) => {
 });
 
 router.get('/pages', page_controller.page_list);
-
 router.post('/page-form', page_controller.page_create_post);
+
+router.get('/users', user_controller.user_list);
 
 module.exports = router;

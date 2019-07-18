@@ -32,7 +32,7 @@ const AdminMenu = () => {
           Pages
         </StyledLink>
       </Link>
-      <Link href="/adimn/users" passHref>
+      <Link href="/admin/users" passHref>
         <StyledLink>
           <i className="fas fa-users fa-fw mr-2" />
           Users

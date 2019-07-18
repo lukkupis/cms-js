@@ -13,7 +13,7 @@ import AdminMain from 'components/atoms/AdminMain';
 import AdminContent from 'components/atoms/AdminContent';
 import AdminHeader from 'components/molecules/AdminHeader';
 
-function Pages() {
+function Users() {
   const cmsStore = useSelector(state => state.cmsStore);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ function Pages() {
   return (
     <>
       <Head>
-        <title>Panel - Pages</title>
+        <title>Panel - Users</title>
       </Head>
       <Header />
 
@@ -32,23 +32,20 @@ function Pages() {
 
         <AdminContent>
           <AdminHeader
-            name="Pages"
-            buttonLabel="Add Page"
-            startedState={cmsStore.GET_PAGES_STARTED}
+            name="Users"
+            buttonLabel="Add User"
+            startedState={cmsStore.GET_USERS_STARTED}
           />
 
-          {(cmsStore.SET_PAGES_SUCCEEDED || cmsStore.GET_PAGES_SUCCEEDED) && (
+          {(cmsStore.SET_USERS_SUCCEEDED || cmsStore.GET_USERS_SUCCEEDED) && (
             <AdminList
-              list={cmsStore.pages}
+              list={cmsStore.users}
               columns={[
-                { label: 'title', content: 'title' },
-                {
-                  label: 'author',
-                  content: ['author', 'name'],
-                  type: 'object'
-                },
-                { label: 'created', content: 'created', type: 'date' },
-                { label: 'status', content: 'status' }
+                { label: 'login', content: 'login' },
+                { label: 'name', content: 'name' },
+                { label: 'email', content: 'email' },
+                { label: 'registered', content: 'registered', type: 'date' },
+                { label: 'permissions', content: 'permissions' }
               ]}
             />
           )}
@@ -58,15 +55,15 @@ function Pages() {
   );
 }
 
-Pages.getInitialProps = async ({ req, query, store, isServer }) => {
+Users.getInitialProps = async ({ req, query, store, isServer }) => {
   initialCheckAuth(req, store);
 
   if (req) {
-    store.dispatch(cmsActions.SET_PAGES_SERVER(query.data));
+    store.dispatch(cmsActions.SET_USERS_SERVER(query.data));
   } else {
-    store.dispatch(cmsActions.GET_PAGES());
+    store.dispatch(cmsActions.GET_USERS());
   }
   return { isServer };
 };
 
-export default Pages;
+export default Users;
