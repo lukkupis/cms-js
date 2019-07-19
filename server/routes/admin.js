@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const app = require('../nextApp');
 
 const page_controller = require('../controllers/pageController');
 const user_controller = require('../controllers/userController');
@@ -19,7 +20,9 @@ router.get('/', (req, res) => {
 });
 
 router.get('/pages', page_controller.page_list);
-router.post('/page-form', page_controller.page_create_post);
+router.get('/page-new', (req, res) => {
+  app.render(req, res, '/admin/page-new', res.query);
+});
 
 router.get('/users', user_controller.user_list);
 

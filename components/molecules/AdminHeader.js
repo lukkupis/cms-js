@@ -6,11 +6,16 @@ import { Spinner } from 'reactstrap';
 const AdminHeader = ({ name, buttonLabel, buttonAction, startedState }) => {
   return (
     <>
-      <div className="mt-5 d-flex align-items-center">
-        <h1 className="my-0">{name}</h1>
-        <a href="#" className="btn btn-dark ml-4">
-          {buttonLabel}
-        </a>
+      <div
+        className={`${(name || buttonLabel) &&
+          'mt-5'} d-flex align-items-center`}
+      >
+        {name && <h1 className="my-0">{name}</h1>}
+        {buttonLabel && (
+          <a href="#" className="btn btn-dark ml-4">
+            {buttonLabel}
+          </a>
+        )}
       </div>
       <div style={{ height: 50 }}>
         {startedState && <Spinner color="danger" />}
@@ -20,10 +25,10 @@ const AdminHeader = ({ name, buttonLabel, buttonAction, startedState }) => {
 };
 
 AdminHeader.propTypes = {
-  name: PropTypes.string.isRequired,
-  buttonLabel: PropTypes.string.isRequired,
+  name: PropTypes.string,
+  buttonLabel: PropTypes.string,
   buttonAction: PropTypes.func,
-  startedState: PropTypes.bool.isRequired
+  startedState: PropTypes.bool
 };
 
 export default AdminHeader;
