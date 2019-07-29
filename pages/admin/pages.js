@@ -34,6 +34,7 @@ function Pages() {
           <AdminHeader
             name="Pages"
             buttonLabel="Add Page"
+            buttonLink="page-new"
             startedState={cmsStore.GET_PAGES_STARTED}
           />
 

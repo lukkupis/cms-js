@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Link from 'next/link';
 
 import { Spinner } from 'reactstrap';
 
-const AdminHeader = ({ name, buttonLabel, buttonAction, startedState }) => {
+const AdminHeader = ({ name, buttonLabel, buttonLink, startedState }) => {
   return (
     <>
       <div
@@ -12,9 +13,9 @@ const AdminHeader = ({ name, buttonLabel, buttonAction, startedState }) => {
       >
         {name && <h1 className="my-0">{name}</h1>}
         {buttonLabel && (
-          <a href="#" className="btn btn-dark ml-4">
-            {buttonLabel}
-          </a>
+          <Link href={buttonLink}>
+            <button className="btn btn-dark ml-4">{buttonLabel}</button>
+          </Link>
         )}
       </div>
       <div style={{ height: 50 }}>
@@ -27,7 +28,7 @@ const AdminHeader = ({ name, buttonLabel, buttonAction, startedState }) => {
 AdminHeader.propTypes = {
   name: PropTypes.string,
   buttonLabel: PropTypes.string,
-  buttonAction: PropTypes.func,
+  buttonLink: PropTypes.string,
   startedState: PropTypes.bool
 };
 

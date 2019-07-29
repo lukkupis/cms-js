@@ -11,7 +11,15 @@ import AdminMenu from 'components/organisms/AdminMenu/AdminMenu';
 import AdminMain from 'components/atoms/AdminMain';
 import AdminContent from 'components/atoms/AdminContent';
 import AdminHeader from 'components/molecules/AdminHeader';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import {
+  Button,
+  Form as FormStrap,
+  FormGroup,
+  Label,
+  Input,
+  FormFeedback
+} from 'reactstrap';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 function Pages() {
   const cmsStore = useSelector(state => state.cmsStore);
@@ -33,22 +41,50 @@ function Pages() {
         <AdminContent>
           <AdminHeader />
 
-          <Form>
-            <FormGroup>
-              <Label for="title">Add a new page</Label>
-              <Input
-                type="text"
-                name="title"
-                id="title"
-                placeholder="Enter the title"
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for="content">Content</Label>
-              <Input type="textarea" name="text" id="content" />
-            </FormGroup>
-            <Button>Submit</Button>
-          </Form>
+          <Formik
+            initialValues={{ title: '', content: '' }}
+            validate={values => {
+              let errors = {};
+              if (!values.title) {
+                errors.title = 'Required';
+              }
+              return errors;
+            }}
+            onSubmit={(values, { setSubmitting }) => {
+              setTimeout(() => {
+                alert(JSON.stringify(values, null, 2));
+                setSubmitting(false);
+              }, 400);
+            }}
+          >
+            {({ errors, touched, isSubmitting }) => (
+              <FormStrap tag={Form}>
+                <FormGroup>
+                  <Label for="title">Add a new page</Label>
+                  <Input
+                    tag={Field}
+                    type="text"
+                    name="title"
+                    placeholder="Enter the title"
+                    invalid={errors.title && touched.title}
+                  />
+                  <FormFeedback>{errors.title}</FormFeedback>
+                </FormGroup>
+                <FormGroup>
+                  <Label for="content">Content</Label>
+                  <Input
+                    tag={Field}
+                    type="textarea"
+                    component="textarea"
+                    name="content"
+                  />
+                </FormGroup>
+                <Button type="submit" disabled={isSubmitting}>
+                  Submit
+                </Button>
+              </FormStrap>
+            )}
+          </Formik>
         </AdminContent>
       </AdminMain>
     </>
