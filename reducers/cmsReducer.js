@@ -6,13 +6,15 @@ import reducerGetData from 'helpers/reducerGetData';
 
 const initialState = {
   userAdminName: '',
+  userAdminId: '',
   ...initialStateGetData('pages'),
   ...initialStateGetData('users')
 };
 
 export default createReducer(initialState, {
   [cmsActions.SET_USER]: (state, action) => {
-    state.userAdminName = action.payload;
+    state.userAdminName = action.payload.name;
+    state.userAdminId = action.payload.id;
     return state;
   },
   [cmsActions.SET_PAGES_SERVER]: (state, action) => {

@@ -1,5 +1,6 @@
 const Page = require('../models/Page');
 const app = require('../nextApp');
+const slugify = require('slugify');
 
 // Display list of all pages.
 exports.page_list = (req, res) => {
@@ -24,20 +25,27 @@ exports.page_detail = (req, res) => {
 };
 
 // Handle page create on POST.
-exports.page_create_post = (req, res) => {
+exports.page_create_post_api = (req, res) => {
   const body = req.body;
+
+  body.slug = slugify(body.title, {
+    replacement: '-',
+    remove: null,
+    lower: true
+  });
 
   const pageData = new Page(body);
   const errors = pageData.validateSync();
 
+  // Model.init().then(function() {
   pageData.save(err => {
     if (err) {
-      res.render('admin/page-form', { errors, body });
+      res.json(errors || err);
       return;
     }
-
-    res.redirect('/admin');
+    res.json({ message: 'Page published.', name: 'Success' });
   });
+  // });
 };
 
 // Display page delete form on GET.

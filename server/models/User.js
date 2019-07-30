@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const pageSchema = new Schema({
+const userSchema = new Schema({
   login: { type: String, unique: true, required: true },
   password: { type: String, required: true },
   registered: { type: Date, default: Date.now },
@@ -10,4 +10,4 @@ const pageSchema = new Schema({
   permissions: { type: String, enum: ['admin', 'user'], required: true }
 });
 
-module.exports = mongoose.model('User', pageSchema);
+module.exports = mongoose.model('User', userSchema);

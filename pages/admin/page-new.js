@@ -4,6 +4,7 @@ import Router from 'next/router';
 
 import * as cmsActions from 'actions/cmsActions';
 import initialCheckAuth from 'helpers/initialCheckAuth';
+import * as api from 'helpers/api';
 
 import Head from 'next/head';
 import Header from 'components/organisms/Header/Header';
@@ -19,7 +20,7 @@ import {
   Input,
   FormFeedback
 } from 'reactstrap';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field } from 'formik';
 
 function Pages() {
   const cmsStore = useSelector(state => state.cmsStore);
@@ -42,7 +43,12 @@ function Pages() {
           <AdminHeader />
 
           <Formik
-            initialValues={{ title: '', content: '' }}
+            initialValues={{
+              title: '',
+              content: '',
+              status: 'published',
+              author: cmsStore.userAdminId
+            }}
             validate={values => {
               let errors = {};
               if (!values.title) {
@@ -51,10 +57,10 @@ function Pages() {
               return errors;
             }}
             onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                alert(JSON.stringify(values, null, 2));
+              api.postPageAdmin(values).then(res => {
+                console.log(res);
                 setSubmitting(false);
-              }, 400);
+              });
             }}
           >
             {({ errors, touched, isSubmitting }) => (

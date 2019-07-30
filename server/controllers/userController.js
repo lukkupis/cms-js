@@ -11,9 +11,9 @@ exports.user_login = (req, res) => {
     } else if (data.password != password) {
       res.redirect('/login?valid=error');
     } else {
-      const { name, login, permissions } = data;
+      const { _id, name, login, permissions } = data;
 
-      req.session.user = { name, login, permissions };
+      req.session.user = { id: _id, name, login, permissions };
       res.redirect('/admin');
     }
   });
