@@ -25,7 +25,7 @@ exports.page_detail = (req, res) => {
 };
 
 // Handle page create on POST.
-exports.page_create_post_api = (req, res) => {
+exports.page_create_post_api = async (req, res) => {
   const body = req.body;
 
   body.slug = slugify(body.title, {
@@ -34,10 +34,33 @@ exports.page_create_post_api = (req, res) => {
     lower: true
   });
 
+  const uniqueSlug = await Page.find({ slug: new RegExp(body.slug, 'i') })
+    .select('slug')
+    .exec()
+    .then(data => {
+      if (data.length > 0) {
+        let index = 2;
+        let slugs = [];
+
+        data.forEach(item => {
+          slugs.push(item.slug);
+        });
+
+        while (slugs.includes(body.slug + '-' + index)) {
+          index += 1;
+        }
+
+        return body.slug + '-' + index;
+      }
+
+      return body.slug;
+    });
+
+  body.slug = uniqueSlug;
+
   const pageData = new Page(body);
   const errors = pageData.validateSync();
 
-  // Model.init().then(function() {
   pageData.save(err => {
     if (err) {
       res.json(errors || err);
@@ -45,7 +68,6 @@ exports.page_create_post_api = (req, res) => {
     }
     res.json({ message: 'Page published.', name: 'Success' });
   });
-  // });
 };
 
 // Display page delete form on GET.
