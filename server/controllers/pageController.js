@@ -66,7 +66,7 @@ exports.page_create_post_api = async (req, res) => {
       res.json(errors || err);
       return;
     }
-    res.json({ message: 'Page published.', name: 'Success' });
+    res.json({ message: 'Page published.', name: 'published' });
   });
 };
 

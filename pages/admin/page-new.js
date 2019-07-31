@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Router from 'next/router';
 
@@ -18,12 +18,15 @@ import {
   FormGroup,
   Label,
   Input,
-  FormFeedback
+  FormFeedback,
+  Alert
 } from 'reactstrap';
 import { Formik, Form, Field } from 'formik';
 
 function Pages() {
   const cmsStore = useSelector(state => state.cmsStore);
+  const [saveStatus, setSaveStatus] = useState('');
+  const [saveMessage, setSaveMessage] = useState('');
 
   useEffect(() => {
     cmsStore.userAdminName === '' && Router.push('/login');
@@ -42,6 +45,12 @@ function Pages() {
         <AdminContent>
           <AdminHeader />
 
+          {saveStatus && (
+            <Alert color={saveStatus === 'published' ? 'success' : 'primary'}>
+              {saveMessage}
+            </Alert>
+          )}
+
           <Formik
             initialValues={{
               title: '',
@@ -58,7 +67,8 @@ function Pages() {
             }}
             onSubmit={(values, { setSubmitting }) => {
               api.postPageAdmin(values).then(res => {
-                console.log(res);
+                setSaveStatus(res.name);
+                setSaveMessage(res.message);
                 setSubmitting(false);
               });
             }}
