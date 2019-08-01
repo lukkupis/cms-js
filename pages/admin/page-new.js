@@ -73,10 +73,11 @@ function Pages() {
             }}
             onSubmit={(values, { setSubmitting }) => {
               api.postPageAdmin(values).then(res => {
-                console.log(res);
                 setSaveStatus(res.name);
                 setSaveMessage(res.message);
                 setSubmitting(false);
+
+                Router.push('/admin/page-new?action=edit');
               });
             }}
           >
@@ -103,7 +104,7 @@ function Pages() {
                   />
                 </FormGroup>
                 <Button type="submit" disabled={isSubmitting}>
-                  Submit
+                  Publish
                 </Button>
               </FormStrap>
             )}
