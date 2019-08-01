@@ -61,12 +61,14 @@ exports.page_create_post_api = async (req, res) => {
   const pageData = new Page(body);
   const errors = pageData.validateSync();
 
-  pageData.save(err => {
-    if (err) {
-      res.json(errors || err);
-      return;
-    }
-    res.json({ message: 'Page published.', name: 'published' });
+  Page.init().then(() => {
+    pageData.save(err => {
+      if (err) {
+        res.json(errors || err);
+        return;
+      }
+      res.json({ message: 'Page published.', name: 'published' });
+    });
   });
 };
 

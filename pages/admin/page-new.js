@@ -46,8 +46,14 @@ function Pages() {
           <AdminHeader />
 
           {saveStatus && (
-            <Alert color={saveStatus === 'published' ? 'success' : 'primary'}>
-              {saveMessage}
+            <Alert
+              color={
+                saveStatus === 'published' || saveStatus === 'save'
+                  ? 'success'
+                  : 'danger'
+              }
+            >
+              {saveMessage || 'Server error. Please try again later.'}
             </Alert>
           )}
 
@@ -67,6 +73,7 @@ function Pages() {
             }}
             onSubmit={(values, { setSubmitting }) => {
               api.postPageAdmin(values).then(res => {
+                console.log(res);
                 setSaveStatus(res.name);
                 setSaveMessage(res.message);
                 setSubmitting(false);
