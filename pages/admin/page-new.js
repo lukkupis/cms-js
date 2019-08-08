@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 
 import * as cmsActions from 'actions/cmsActions';
 import initialCheckAuth from 'helpers/initialCheckAuth';
@@ -23,14 +23,27 @@ import {
 } from 'reactstrap';
 import { Formik, Form, Field } from 'formik';
 
-function Pages() {
+function Pages({ query }) {
   const cmsStore = useSelector(state => state.cmsStore);
   const [saveStatus, setSaveStatus] = useState('');
   const [saveMessage, setSaveMessage] = useState('');
+  const router = useRouter();
 
   useEffect(() => {
-    cmsStore.userAdminName === '' && Router.push('/login');
+    cmsStore.userAdminName === '' && router.push('/login');
   }, [cmsStore.userAdminName]);
+
+  const handleOnSubmit = (values, { setSubmitting }) => {
+    api.postPageAdmin(values).then(res => {
+      setSaveStatus(res.name);
+      setSaveMessage(res.message);
+      setSubmitting(false);
+
+      if (!router.query.action) {
+        router.push('/admin/page-new?action=edit');
+      }
+    });
+  };
 
   return (
     <>
@@ -71,15 +84,7 @@ function Pages() {
               }
               return errors;
             }}
-            onSubmit={(values, { setSubmitting }) => {
-              api.postPageAdmin(values).then(res => {
-                setSaveStatus(res.name);
-                setSaveMessage(res.message);
-                setSubmitting(false);
-
-                Router.push('/admin/page-new?action=edit');
-              });
-            }}
+            onSubmit={handleOnSubmit}
           >
             {({ errors, touched, isSubmitting }) => (
               <FormStrap tag={Form}>
@@ -121,7 +126,7 @@ Pages.getInitialProps = async ({ req, query, store, isServer }) => {
   if (req) {
   } else {
   }
-  return { isServer };
+  return { isServer, query };
 };
 
 export default Pages;

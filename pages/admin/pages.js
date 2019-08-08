@@ -51,6 +51,10 @@ function Pages() {
                 { label: 'created', content: 'created', type: 'date' },
                 { label: 'status', content: 'status' }
               ]}
+              buttons={[
+                { label: 'Edit', link: '' },
+                { label: 'Delete', action: () => {} }
+              ]}
             />
           )}
         </AdminContent>

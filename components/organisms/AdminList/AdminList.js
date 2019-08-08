@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Table } from 'reactstrap';
 import AdminEditButtons from 'components/molecules/AdminEditButtons';
 
-const AdminList = ({ list, columns }) => {
+const AdminList = ({ list, columns, buttons }) => {
   function fieldType(column, item) {
     switch (column.type) {
       case 'date':
@@ -40,14 +40,7 @@ const AdminList = ({ list, columns }) => {
               {columns.map((column, index) => (
                 <td key={index}>
                   {fieldType(column, item)}
-                  {index === 0 && (
-                    <AdminEditButtons
-                      buttons={[
-                        { label: 'Edit', action: () => {} },
-                        { label: 'Delete', action: () => {} }
-                      ]}
-                    />
-                  )}
+                  {index === 0 && <AdminEditButtons buttons={buttons} />}
                 </td>
               ))}
             </tr>
@@ -59,7 +52,12 @@ const AdminList = ({ list, columns }) => {
 
 AdminList.propTypes = {
   list: PropTypes.arrayOf(PropTypes.object).isRequired,
-  columns: PropTypes.arrayOf(PropTypes.object).isRequired
+  columns: PropTypes.arrayOf(PropTypes.object).isRequired,
+  buttons: PropTypes.arrayOf(PropTypes.object)
+};
+
+AdminList.defaultProps = {
+  buttons: []
 };
 
 export default AdminList;

@@ -15,7 +15,7 @@ export const getPagesAdmin = () =>
 export const postPageAdmin = data =>
   new Promise((resolve, reject) => {
     axios
-      .post(process.env.API_URL + '/admin-api/page-new', {
+      .post(process.env.API_URL + '/admin-api/page', {
         ...data
       })
       .then(function(response) {
