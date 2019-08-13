@@ -40,7 +40,9 @@ const AdminList = ({ list, columns, buttons }) => {
               {columns.map((column, index) => (
                 <td key={index}>
                   {fieldType(column, item)}
-                  {index === 0 && <AdminEditButtons buttons={buttons} />}
+                  {index === 0 && (
+                    <AdminEditButtons buttons={buttons} itemTitle={item.title} />
+                  )}
                 </td>
               ))}
             </tr>

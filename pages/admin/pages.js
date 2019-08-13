@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Router from 'next/router';
 
@@ -12,9 +12,14 @@ import AdminMenu from 'components/organisms/AdminMenu/AdminMenu';
 import AdminMain from 'components/atoms/AdminMain';
 import AdminContent from 'components/atoms/AdminContent';
 import AdminHeader from 'components/molecules/AdminHeader';
+import ModalRemove from 'components/molecules/ModalRemove';
 
 function Pages() {
   const cmsStore = useSelector(state => state.cmsStore);
+  const [modalRemove, setModalRemove] = useState({
+    open: false,
+    itemTitle: ''
+  });
 
   useEffect(() => {
     cmsStore.userAdminName === '' && Router.push('/login');
@@ -53,12 +58,23 @@ function Pages() {
               ]}
               buttons={[
                 { label: 'Edit', link: '' },
-                { label: 'Delete', action: () => {} }
+                {
+                  label: 'Delete',
+                  action: itemTitle => setModalRemove({ open: true, itemTitle })
+                }
               ]}
             />
           )}
         </AdminContent>
       </AdminMain>
+      <ModalRemove
+        isOpen={modalRemove.open}
+        toggle={() =>
+          setModalRemove({ ...modalRemove, open: !modalRemove.open })
+        }
+        itemTitle={modalRemove.itemTitle}
+        action={() => {}}
+      />
     </>
   );
 }
