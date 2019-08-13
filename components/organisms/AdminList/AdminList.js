@@ -41,7 +41,11 @@ const AdminList = ({ list, columns, buttons }) => {
                 <td key={index}>
                   {fieldType(column, item)}
                   {index === 0 && (
-                    <AdminEditButtons buttons={buttons} itemTitle={item.title} />
+                    <AdminEditButtons
+                      buttons={buttons}
+                      itemTitle={item.title}
+                      itemId={item._id}
+                    />
                   )}
                 </td>
               ))}

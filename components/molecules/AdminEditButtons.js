@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import ButtonLink from 'components/atoms/ButtonLink';
 
-const AdminEditButtons = ({ buttons, itemTitle }) => {
+const AdminEditButtons = ({ buttons, itemTitle, itemId }) => {
   return (
     <div className="mt-2">
       {buttons.map((item, index, array) => (
@@ -11,7 +11,7 @@ const AdminEditButtons = ({ buttons, itemTitle }) => {
           type="button"
           className="btn"
           key={index}
-          onClick={() => item.action(itemTitle)}
+          onClick={() => item.action(itemTitle, itemId)}
         >
           {item.label}
         </ButtonLink>
@@ -21,7 +21,9 @@ const AdminEditButtons = ({ buttons, itemTitle }) => {
 };
 
 AdminEditButtons.propTypes = {
-  buttons: PropTypes.arrayOf(PropTypes.object).isRequired
+  buttons: PropTypes.arrayOf(PropTypes.object).isRequired,
+  itemTitle: PropTypes.string.isRequired,
+  itemId: PropTypes.string.isRequired
 };
 
 export default AdminEditButtons;

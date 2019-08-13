@@ -18,7 +18,8 @@ function Pages() {
   const cmsStore = useSelector(state => state.cmsStore);
   const [modalRemove, setModalRemove] = useState({
     open: false,
-    itemTitle: ''
+    itemTitle: '',
+    itemId: ''
   });
 
   useEffect(() => {
@@ -60,7 +61,8 @@ function Pages() {
                 { label: 'Edit', link: '' },
                 {
                   label: 'Delete',
-                  action: itemTitle => setModalRemove({ open: true, itemTitle })
+                  action: (itemTitle, itemId) =>
+                    setModalRemove({ open: true, itemTitle, itemId })
                 }
               ]}
             />
@@ -73,7 +75,7 @@ function Pages() {
           setModalRemove({ ...modalRemove, open: !modalRemove.open })
         }
         itemTitle={modalRemove.itemTitle}
-        action={() => {}}
+        action={itemId => {}}
       />
     </>
   );
