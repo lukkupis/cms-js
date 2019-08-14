@@ -65,8 +65,9 @@ function Pages() {
                 { label: 'Edit', link: '' },
                 {
                   label: 'Delete',
-                  action: (itemTitle, itemId) =>
-                    setModalRemove({ open: true, itemTitle, itemId })
+                  action: (itemTitle, itemId) => {
+                    setModalRemove({ open: true, itemTitle, itemId });
+                  }
                 }
               ]}
             />
@@ -79,9 +80,10 @@ function Pages() {
           setModalRemove({ ...modalRemove, open: !modalRemove.open })
         }
         itemTitle={modalRemove.itemTitle}
-        action={modalRemove =>
-          dispatch(cmsActions.DELETE_PAGE(modalRemove.itemId))
-        }
+        action={() => {
+          setModalRemove({ ...modalRemove, open: !modalRemove.open });
+          dispatch(cmsActions.DELETE_PAGE(modalRemove.itemId));
+        }}
       />
     </>
   );

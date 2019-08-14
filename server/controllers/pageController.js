@@ -73,14 +73,14 @@ exports.page_create_post_api = async (req, res) => {
 };
 
 exports.page_delete_api = async (req, res) => {
-  const body = req.body;
+  const id = req.query.id;
 
-  Page.findByIdAndDelete(body, err => {
-    if (err) {
-      res.json(err);
+  Page.findByIdAndDelete(id, (err, doc) => {
+    if (err || !doc) {
+      res.status(404);
       return;
     }
-    res.json({ message: 'Page deleted.', name: 'deleted' });
+    res.json({ id, name: 'deleted' });
   });
 };
 

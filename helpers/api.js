@@ -40,9 +40,8 @@ export const postPageAdmin = data =>
 
 export const deletePageAdmin = id =>
   new Promise((resolve, reject) => {
-    console.log(id);
     axios
-      .delete(process.env.API_URL + '/admin-api/page', { id: 123 })
+      .delete(process.env.API_URL + `/admin-api/page?id=${id}`)
       .then(function(response) {
         resolve(response.data);
       })

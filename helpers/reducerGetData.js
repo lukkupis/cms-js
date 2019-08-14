@@ -1,6 +1,5 @@
 function reducerGetData(name) {
   const nameUpper = name.toUpperCase();
-  const nameLower = name.toLowerCase();
 
   return {
     [`GET_${nameUpper}_STARTED`]: (state, action) => {
@@ -10,7 +9,6 @@ function reducerGetData(name) {
     [`GET_${nameUpper}_SUCCEEDED`]: (state, action) => {
       state[`GET_${nameUpper}_SUCCEEDED`] = true;
       state[`GET_${nameUpper}_STARTED`] = false;
-      state[nameLower] = action.payload;
       return state;
     },
     [`GET_${nameUpper}_FAILED`]: (state, action) => {
