@@ -1,4 +1,4 @@
-function initialStateApi(name) {
+function initialStateGetData(name) {
   const nameUpper = name.toUpperCase();
   const nameLower = name.toLowerCase();
 
@@ -12,4 +12,4 @@ function initialStateApi(name) {
   };
 }
 
-export default initialStateApi;
+export default initialStateGetData;

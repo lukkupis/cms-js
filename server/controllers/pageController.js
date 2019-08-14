@@ -72,6 +72,18 @@ exports.page_create_post_api = async (req, res) => {
   });
 };
 
+exports.page_delete_api = async (req, res) => {
+  const body = req.body;
+
+  Page.findByIdAndDelete(body, err => {
+    if (err) {
+      res.json(err);
+      return;
+    }
+    res.json({ message: 'Page deleted.', name: 'deleted' });
+  });
+};
+
 // Display page delete form on GET.
 exports.page_delete_get = (req, res) => {
   res.send('NOT IMPLEMENTED: page delete GET');

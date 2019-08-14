@@ -1,5 +1,17 @@
 import axios from 'axios';
 
+export const getUsersAdmin = () =>
+  new Promise((resolve, reject) => {
+    axios
+      .get(process.env.API_URL + '/admin-api/users')
+      .then(function(response) {
+        resolve(response.data);
+      })
+      .catch(function(error) {
+        reject(error);
+      });
+  });
+
 export const getPagesAdmin = () =>
   new Promise((resolve, reject) => {
     axios
@@ -22,15 +34,15 @@ export const postPageAdmin = data =>
         resolve(response.data);
       })
       .catch(function(error) {
-        console.log(error);
         reject(error);
       });
   });
 
-export const getUsersAdmin = () =>
+export const deletePageAdmin = id =>
   new Promise((resolve, reject) => {
+    console.log(id);
     axios
-      .get(process.env.API_URL + '/admin-api/users')
+      .delete(process.env.API_URL + '/admin-api/page', { id: 123 })
       .then(function(response) {
         resolve(response.data);
       })

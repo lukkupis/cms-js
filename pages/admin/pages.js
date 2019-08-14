@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Router from 'next/router';
 
 import * as cmsActions from 'actions/cmsActions';
@@ -15,6 +15,8 @@ import AdminHeader from 'components/molecules/AdminHeader';
 import ModalRemove from 'components/molecules/ModalRemove';
 
 function Pages() {
+  const dispatch = useDispatch();
+
   const cmsStore = useSelector(state => state.cmsStore);
   const [modalRemove, setModalRemove] = useState({
     open: false,
@@ -41,7 +43,9 @@ function Pages() {
             name="Pages"
             buttonLabel="Add Page"
             buttonLink="page-new"
-            startedState={cmsStore.GET_PAGES_STARTED}
+            startedState={
+              cmsStore.GET_PAGES_STARTED || cmsStore.DELETE_PAGE_STARTED
+            }
           />
 
           {(cmsStore.SET_PAGES_SUCCEEDED || cmsStore.GET_PAGES_SUCCEEDED) && (
@@ -75,7 +79,9 @@ function Pages() {
           setModalRemove({ ...modalRemove, open: !modalRemove.open })
         }
         itemTitle={modalRemove.itemTitle}
-        action={itemId => {}}
+        action={modalRemove =>
+          dispatch(cmsActions.DELETE_PAGE(modalRemove.itemId))
+        }
       />
     </>
   );

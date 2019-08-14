@@ -4,11 +4,15 @@ import * as cmsActions from '../actions/cmsActions';
 import initialStateGetData from 'helpers/initialStateGetData';
 import reducerGetData from 'helpers/reducerGetData';
 
+import initialStateDeleteData from 'helpers/initialStateDeleteData';
+import reducerDeleteData from 'helpers/reducerDeleteData';
+
 const initialState = {
   userAdminName: '',
   userAdminId: '',
+  ...initialStateGetData('users'),
   ...initialStateGetData('pages'),
-  ...initialStateGetData('users')
+  ...initialStateDeleteData('page')
 };
 
 export default createReducer(initialState, {
@@ -17,6 +21,7 @@ export default createReducer(initialState, {
     state.userAdminId = action.payload.id;
     return state;
   },
+  ...reducerGetData('users'),
   [cmsActions.SET_PAGES_SERVER]: (state, action) => {
     state.SET_PAGES_SUCCEEDED = true;
     state.pages = action.payload;
@@ -28,5 +33,5 @@ export default createReducer(initialState, {
     state.users = action.payload;
     return state;
   },
-  ...reducerGetData('users')
+  ...reducerDeleteData('page')
 });

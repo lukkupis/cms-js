@@ -1,4 +1,4 @@
-function reducerApi(name) {
+function reducerGetData(name) {
   const nameUpper = name.toUpperCase();
   const nameLower = name.toLowerCase();
 
@@ -26,4 +26,4 @@ function reducerApi(name) {
   };
 }
 
-export default reducerApi;
+export default reducerGetData;
