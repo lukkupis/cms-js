@@ -25,25 +25,62 @@ import { Formik, Form, Field } from 'formik';
 
 function Pages({ query }) {
   const cmsStore = useSelector(state => state.cmsStore);
-  const [saveStatus, setSaveStatus] = useState('');
-  const [saveMessage, setSaveMessage] = useState('');
   const router = useRouter();
   const dispatch = useDispatch();
+
+  const [saveStatus, setSaveStatus] = useState('');
+  const [saveMessage, setSaveMessage] = useState('');
+  const [initialValues, setInitialValues] = useState({
+    title: '',
+    content: '',
+    status: 'published',
+    author: cmsStore.userAdminId,
+    slug: ''
+  });
+
+  const action = router.query.action;
 
   useEffect(() => {
     cmsStore.userAdminName === '' && router.push('/login');
   }, [cmsStore.userAdminName]);
 
-  const handleOnSubmit = (values, { setSubmitting }) => {
-    dispatch(cmsActions.ADD_PAGE(values)).then(res => {
-      setSaveStatus(res.name);
-      setSaveMessage(res.message);
+  useEffect(() => {
+    //get page
+    // setInitialValues({
+    //   title: '',
+    //   content: '',
+    //   status: 'published',
+    //   author: cmsStore.userAdminId,
+    //   slug: ''
+    // });
+  }, []);
+
+  const handleOnSubmit = (values, { setSubmitting, setValues }) => {
+    if (action === 'edit') {
+      //edit page
+
+      // setSaveStatus(res.name);
+      // setSaveMessage(res.message);
       setSubmitting(false);
 
-      if (!router.query.action) {
-        router.push('/admin/page-new?action=edit');
-      }
-    });
+      const { title, content, status, author, slug } = res.newPage;
+
+      setValues({ title, content, status, author, slug });
+    } else {
+      dispatch(cmsActions.ADD_PAGE(values)).then(res => {
+        setSaveStatus(res.name);
+        setSaveMessage(res.message);
+        setSubmitting(false);
+
+        const { title, content, status, author, slug, _id: id } = res.newPage;
+
+        setValues({ title, content, status, author, slug });
+
+        if (!action) {
+          router.push(`/admin/page-new?action=edit&id=${id}`);
+        }
+      });
+    }
   };
 
   return (
@@ -72,12 +109,8 @@ function Pages({ query }) {
           )}
 
           <Formik
-            initialValues={{
-              title: '',
-              content: '',
-              status: 'published',
-              author: cmsStore.userAdminId
-            }}
+            initialValues={initialValues}
+            enableReinitialize={true}
             validate={values => {
               let errors = {};
               if (!values.title) {
@@ -87,8 +120,19 @@ function Pages({ query }) {
             }}
             onSubmit={handleOnSubmit}
           >
-            {({ errors, touched, isSubmitting }) => (
+            {({ errors, touched, isSubmitting, values }) => (
               <FormStrap tag={Form}>
+                {values.slug && (
+                  <FormGroup>
+                    <Label for="slug">Slug</Label>
+                    <Input
+                      tag={Field}
+                      type="text"
+                      name="slug"
+                      placeholder="Enter the slug"
+                    />
+                  </FormGroup>
+                )}
                 <FormGroup>
                   <Label for="title">Add a new page</Label>
                   <Input
@@ -110,7 +154,7 @@ function Pages({ query }) {
                   />
                 </FormGroup>
                 <Button type="submit" disabled={isSubmitting}>
-                  Publish
+                  {action === 'edit' ? 'edit' : 'Publish'}
                 </Button>
               </FormStrap>
             )}
