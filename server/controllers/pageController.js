@@ -1,4 +1,5 @@
 const Page = require('../models/Page');
+const User = require('../models/User');
 const app = require('../nextApp');
 const slugify = require('slugify');
 
@@ -6,6 +7,7 @@ const slugify = require('slugify');
 exports.page_list = (req, res) => {
   Page.find()
     .populate('author')
+    .sort('-created')
     .exec({}, (err, data) => {
       app.render(req, res, '/admin/pages', { data });
     });
@@ -14,6 +16,7 @@ exports.page_list = (req, res) => {
 exports.page_list_api = (req, res) => {
   Page.find()
     .populate('author')
+    .sort('-created')
     .exec({}, (err, data) => {
       res.json(data);
     });
@@ -62,12 +65,18 @@ exports.page_create_post_api = async (req, res) => {
   const errors = pageData.validateSync();
 
   Page.init().then(() => {
-    pageData.save(err => {
+    pageData.save((err, page) => {
       if (err) {
         res.json(errors || err);
         return;
       }
-      res.json({ message: 'Page published.', name: 'published' });
+
+      let newPage = JSON.parse(JSON.stringify(page));
+
+      User.findById(page.author, function(err, author) {
+        newPage = { ...newPage, author };
+        res.json({ message: 'Page published.', name: 'published', newPage });
+      });
     });
   });
 };

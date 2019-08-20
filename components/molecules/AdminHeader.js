@@ -26,9 +26,9 @@ const AdminHeader = ({ name, buttonLabel, buttonLink, startedState }) => {
 };
 
 AdminHeader.propTypes = {
-  name: PropTypes.string,
-  buttonLabel: PropTypes.string,
-  buttonLink: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  buttonLabel: PropTypes.string.isRequired,
+  buttonLink: PropTypes.string.isRequired,
   startedState: PropTypes.bool
 };
 

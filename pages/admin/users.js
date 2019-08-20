@@ -34,6 +34,7 @@ function Users() {
           <AdminHeader
             name="Users"
             buttonLabel="Add User"
+            buttonLink="user-new"
             startedState={cmsStore.GET_USERS_STARTED}
           />
 

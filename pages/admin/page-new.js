@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 
 import * as cmsActions from 'actions/cmsActions';
@@ -28,13 +28,14 @@ function Pages({ query }) {
   const [saveStatus, setSaveStatus] = useState('');
   const [saveMessage, setSaveMessage] = useState('');
   const router = useRouter();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     cmsStore.userAdminName === '' && router.push('/login');
   }, [cmsStore.userAdminName]);
 
   const handleOnSubmit = (values, { setSubmitting }) => {
-    api.postPageAdmin(values).then(res => {
+    dispatch(cmsActions.ADD_PAGE(values)).then(res => {
       setSaveStatus(res.name);
       setSaveMessage(res.message);
       setSubmitting(false);

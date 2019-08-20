@@ -11,9 +11,7 @@ const initialState = {
   userAdminName: '',
   userAdminId: '',
   ...initialStateGetData('users'),
-  users: [],
   ...initialStateGetData('pages'),
-  pages: [],
   ...initialStateDeleteData('page')
 };
 
@@ -23,20 +21,22 @@ export default createReducer(initialState, {
     state.userAdminId = action.payload.id;
   },
   ...reducerGetData('users'),
-  GET_USERS_SUCCEEDED: (state, action) => {
-    state.users = action.payload;
-  },
   [cmsActions.SET_PAGES_SERVER]: (state, action) => {
     state.SET_PAGES_SUCCEEDED = true;
     state.pages = action.payload;
   },
   ...reducerGetData('pages'),
-  GET_PAGES_SUCCEEDED: (state, action) => {
-    state.pages = action.payload;
-  },
   [cmsActions.SET_USERS_SERVER]: (state, action) => {
     state.SET_USERS_SUCCEEDED = true;
     state.users = action.payload;
+  },
+  ['ADD_PAGE_SUCCEEDED']: (state, action) => {
+    const { name } = action.payload;
+    const { newPage } = action.payload;
+
+    if (name === 'published') {
+      state.pages.unshift(newPage);
+    }
   },
   ...reducerDeleteData('page'),
   DELETE_PAGE_SUCCEEDED: (state, action) => {
