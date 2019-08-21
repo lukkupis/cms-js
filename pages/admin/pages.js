@@ -20,8 +20,8 @@ function Pages() {
   const cmsStore = useSelector(state => state.cmsStore);
   const [modalRemove, setModalRemove] = useState({
     open: false,
-    itemTitle: '',
-    itemId: ''
+    itemId: '',
+    itemTitle: ''
   });
 
   useEffect(() => {
@@ -61,15 +61,15 @@ function Pages() {
                 { label: 'created', content: 'created', type: 'date' },
                 { label: 'status', content: 'status' }
               ]}
-              buttons={id => [
+              buttons={(itemId, itemTitle) => [
                 {
                   label: 'Edit',
-                  link: `/admin/page-new?action=edit&id=${id}`
+                  link: `/admin/page-new?action=edit&id=${itemId}`
                 },
                 {
                   label: 'Delete',
-                  action: (itemTitle, itemId) => {
-                    setModalRemove({ open: true, itemTitle, itemId });
+                  action: () => {
+                    setModalRemove({ open: true, itemId, itemTitle });
                   }
                 }
               ]}

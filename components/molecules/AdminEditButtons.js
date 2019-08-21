@@ -2,19 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import ButtonDelete from 'components/atoms/ButtonDelete';
-import ButtonEdit from 'components/atoms/ButtonDelete';
+import ButtonEdit from 'components/atoms/ButtonEdit';
 
 const AdminEditButtons = ({ buttons, itemTitle, itemId }) => {
   return (
     <div className="mt-2">
-      {buttons(itemId).map((item, index, array) => {
+      {buttons(itemId, itemTitle).map((item, index, array) => {
         if (item.action) {
           return (
             <ButtonDelete
               type="button"
               className="btn"
               key={index}
-              onClick={() => item.action(itemTitle, itemId)}
+              onClick={() => item.action()}
             >
               {item.label}
             </ButtonDelete>

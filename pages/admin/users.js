@@ -48,6 +48,16 @@ function Users() {
                 { label: 'registered', content: 'registered', type: 'date' },
                 { label: 'permissions', content: 'permissions' }
               ]}
+              buttons={(itemId, itemTitle) => [
+                {
+                  label: 'Edit',
+                  link: `/admin/user-new?action=edit&id=${itemId}`
+                },
+                {
+                  label: 'Delete',
+                  action: () => {}
+                }
+              ]}
             />
           )}
         </AdminContent>
