@@ -1,27 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ButtonLink from 'components/atoms/ButtonLink';
+import ButtonDelete from 'components/atoms/ButtonDelete';
+import ButtonEdit from 'components/atoms/ButtonDelete';
 
 const AdminEditButtons = ({ buttons, itemTitle, itemId }) => {
   return (
     <div className="mt-2">
-      {buttons.map((item, index, array) => (
-        <ButtonLink
-          type="button"
-          className="btn"
-          key={index}
-          onClick={() => item.action(itemTitle, itemId)}
-        >
-          {item.label}
-        </ButtonLink>
-      ))}
+      {buttons(itemId).map((item, index, array) => {
+        if (item.action) {
+          return (
+            <ButtonDelete
+              type="button"
+              className="btn"
+              key={index}
+              onClick={() => item.action(itemTitle, itemId)}
+            >
+              {item.label}
+            </ButtonDelete>
+          );
+        } else if (item.link) {
+          return (
+            <ButtonEdit className="btn" key={index} href={item.link}>
+              {item.label}
+            </ButtonEdit>
+          );
+        }
+      })}
     </div>
   );
 };
 
 AdminEditButtons.propTypes = {
-  buttons: PropTypes.arrayOf(PropTypes.object).isRequired,
+  buttons: PropTypes.func.isRequired,
   itemTitle: PropTypes.string.isRequired,
   itemId: PropTypes.string.isRequired
 };

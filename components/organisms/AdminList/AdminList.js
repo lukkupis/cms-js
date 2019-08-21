@@ -59,7 +59,7 @@ const AdminList = ({ list, columns, buttons }) => {
 AdminList.propTypes = {
   list: PropTypes.arrayOf(PropTypes.object).isRequired,
   columns: PropTypes.arrayOf(PropTypes.object).isRequired,
-  buttons: PropTypes.arrayOf(PropTypes.object)
+  buttons: PropTypes.func
 };
 
 AdminList.defaultProps = {
