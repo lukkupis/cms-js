@@ -89,3 +89,5 @@ typings/
 
 # Server Config
 server/config.js
+
+.history

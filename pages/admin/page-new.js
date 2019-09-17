@@ -30,13 +30,13 @@ function Pages({ query }) {
 
   const [saveStatus, setSaveStatus] = useState('');
   const [saveMessage, setSaveMessage] = useState('');
-  const [initialValues, setInitialValues] = useState({
+  const initialValues = {
     title: '',
     content: '',
     status: 'published',
     author: cmsStore.userAdminId,
     slug: ''
-  });
+  };
 
   const action = router.query.action;
 
@@ -44,26 +44,17 @@ function Pages({ query }) {
     cmsStore.userAdminName === '' && router.push('/login');
   }, [cmsStore.userAdminName]);
 
-  useEffect(() => {
-    //get page
-    // setInitialValues({
-    //   title: '',
-    //   content: '',
-    //   status: 'published',
-    //   author: cmsStore.userAdminId,
-    //   slug: ''
-    // });
-  }, []);
-
   const handleOnSubmit = (values, { setSubmitting, setValues }) => {
     if (action === 'edit') {
       //edit page
-
-      // setSaveStatus(res.name);
-      // setSaveMessage(res.message);
       setSubmitting(false);
 
-      const { title, content, status, author, slug } = res.newPage;
+      let title, content, status, author, slug;
+
+      if (typeof variable !== 'undefined') {
+        let { title, content, status, author, slug } = res.newPage;
+      } else {
+      }
 
       setValues({ title, content, status, author, slug });
     } else {
