@@ -81,6 +81,59 @@ exports.page_create_post_api = async (req, res) => {
   });
 };
 
+exports.page_edit_put_api = async (req, res) => {
+  const body = req.body;
+
+  body.slug = slugify(body.title, {
+    replacement: '-',
+    remove: null,
+    lower: true
+  });
+
+  const uniqueSlug = await Page.find({ slug: new RegExp(body.slug, 'i') })
+    .select('slug')
+    .exec()
+    .then(data => {
+      if (data.length > 0) {
+        let index = 2;
+        let slugs = [];
+
+        data.forEach(item => {
+          slugs.push(item.slug);
+        });
+
+        while (slugs.includes(body.slug + '-' + index)) {
+          index += 1;
+        }
+
+        return body.slug + '-' + index;
+      }
+
+      return body.slug;
+    });
+
+  body.slug = uniqueSlug;
+
+  const pageData = new Page(body);
+  const errors = pageData.validateSync();
+
+  Page.init().then(() => {
+    pageData.save((err, page) => {
+      if (err) {
+        res.json(errors || err);
+        return;
+      }
+
+      let newPage = JSON.parse(JSON.stringify(page));
+
+      User.findById(page.author, function(err, author) {
+        newPage = { ...newPage, author };
+        res.json({ message: 'Page published.', name: 'published', newPage });
+      });
+    });
+  });
+};
+
 exports.page_delete_api = async (req, res) => {
   const id = req.query.id;
 
