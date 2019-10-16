@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import ButtonDelete from 'components/atoms/ButtonDelete';
 import ButtonEdit from 'components/atoms/ButtonEdit';
 
+import Link from 'next/link';
+
 const AdminEditButtons = ({ buttons, itemTitle, itemId }) => {
   return (
     <div className="mt-2">
@@ -21,9 +23,9 @@ const AdminEditButtons = ({ buttons, itemTitle, itemId }) => {
           );
         } else if (item.link) {
           return (
-            <ButtonEdit className="btn" key={index} href={item.link}>
-              {item.label}
-            </ButtonEdit>
+            <Link key={index} href={item.link}>
+              <ButtonEdit className="btn">{item.label}</ButtonEdit>
+            </Link>
           );
         }
       })}

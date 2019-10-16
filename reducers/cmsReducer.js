@@ -2,11 +2,11 @@ import { createReducer } from 'redux-starter-kit';
 
 import * as cmsActions from '../actions/cmsActions';
 import initialStateGetData from 'helpers/initialStateGetData';
-// import initialStatePostData from 'helpers/initialStatePostData';
+import initialStatePostData from 'helpers/initialStatePostData';
 import initialStatePutData from 'helpers/initialStatePutData';
 import initialStateDeleteData from 'helpers/initialStateDeleteData';
 import reducerGetData from 'helpers/reducerGetData';
-// import reducerPostData from 'helpers/reducerPostData';
+import reducerPostData from 'helpers/reducerPostData';
 import reducerPutData from 'helpers/reducerPutData';
 import reducerDeleteData from 'helpers/reducerDeleteData';
 
@@ -14,9 +14,11 @@ const initialState = {
   userAdminName: '',
   userAdminId: '',
   ...initialStateGetData('users'),
+  users: [],
   ...initialStateGetData('pages'),
+  pages: [],
   ...initialStateGetData('page'),
-  // ...initialStatePostData('page'),
+  ...initialStatePostData('page'),
   ...initialStatePutData('page'),
   ...initialStateDeleteData('page')
 };
@@ -26,34 +28,31 @@ export default createReducer(initialState, {
     state.userAdminName = action.payload.name;
     state.userAdminId = action.payload.id;
   },
-  ...reducerGetData('users'),
   [cmsActions.SET_PAGES_SERVER]: (state, action) => {
-    state.SET_PAGES_SUCCEEDED = true;
     state.pages = action.payload;
   },
-  ...reducerGetData('pages'),
   [cmsActions.SET_USERS_SERVER]: (state, action) => {
-    state.SET_USERS_SUCCEEDED = true;
     state.users = action.payload;
   },
-  ...reducerGetData('page'),
-  ['GET_PAGE_SUCCEEDED']: (state, action) => {
+  ...reducerGetData('pages', (state, action) => {
+    state.pages = action.payload;
+  }),
+  ...reducerGetData('page', (state, action) => {
     const { name } = action.payload;
     const { newPage } = action.payload;
 
     if (name === '') {
     }
-  },
-  ['ADD_PAGE_SUCCEEDED']: (state, action) => {
+  }),
+  ...reducerPostData('page', (state, action) => {
     const { name } = action.payload;
     const { newPage } = action.payload;
 
     if (name === 'published') {
       state.pages.unshift(newPage);
     }
-  },
-  ...reducerPutData('page'),
-  ['EDIT_PAGE_SUCCEEDED']: (state, action) => {
+  }),
+  ...reducerPutData('page', (state, action) => {
     const { name } = action.payload;
     let { pages } = state;
     const { newPage } = action.payload;
@@ -61,9 +60,8 @@ export default createReducer(initialState, {
 
     if (name === 'edited') {
     }
-  },
-  ...reducerDeleteData('page'),
-  DELETE_PAGE_SUCCEEDED: (state, action) => {
+  }),
+  ...reducerDeleteData('page', (state, action) => {
     const { name, id } = action.payload;
     let { pages } = state;
 
@@ -75,5 +73,5 @@ export default createReducer(initialState, {
       ...state,
       pages
     };
-  }
+  })
 });

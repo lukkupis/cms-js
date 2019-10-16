@@ -1,6 +1,5 @@
 function initialStatePutData(name) {
   const nameUpper = name.toUpperCase();
-  const nameLower = name.toLowerCase();
 
   return {
     [`PUT_${nameUpper}_STARTED`]: false,

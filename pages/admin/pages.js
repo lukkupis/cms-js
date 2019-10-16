@@ -48,7 +48,7 @@ function Pages() {
             }
           />
 
-          {(cmsStore.SET_PAGES_SUCCEEDED || cmsStore.GET_PAGES_SUCCEEDED) && (
+          {cmsStore.pages.length > 0 && (
             <AdminList
               list={cmsStore.pages}
               columns={[

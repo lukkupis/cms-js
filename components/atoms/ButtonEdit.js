@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const ButtonLink = styled.a`
+const ButtonLink = styled.button`
   padding: 0;
   color: red;
 

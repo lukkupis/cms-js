@@ -1,6 +1,5 @@
-function reducerPutData(name) {
+function reducerPutData(name, succeededCallback) {
   const nameUpper = name.toUpperCase();
-  const nameLower = name.toLowerCase();
 
   return {
     [`PUT_${nameUpper}_STARTED`]: (state, action) => {
@@ -9,6 +8,7 @@ function reducerPutData(name) {
     [`PUT_${nameUpper}_SUCCEEDED`]: (state, action) => {
       state[`PUT_${nameUpper}_SUCCEEDED`] = true;
       state[`PUT_${nameUpper}_STARTED`] = false;
+      succeededCallback(state, action);
     },
     [`PUT_${nameUpper}_FAILED`]: (state, action) => {
       state[`PUT_${nameUpper}_FAILED`] = true;
