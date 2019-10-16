@@ -27,17 +27,8 @@ exports.page_detail = (req, res) => {
   res.send('NOT IMPLEMENTED: page detail: ' + req.params.id);
 };
 
-// Handle page create on POST.
-exports.page_create_post_api = async (req, res) => {
-  const body = req.body;
-
-  body.slug = slugify(body.title, {
-    replacement: '-',
-    remove: null,
-    lower: true
-  });
-
-  const uniqueSlug = await Page.find({ slug: new RegExp(body.slug, 'i') })
+function uniquePageSlug(Page, body) {
+  return Page.find({ slug: new RegExp(body.slug, 'i') })
     .select('slug')
     .exec()
     .then(data => {
@@ -58,6 +49,19 @@ exports.page_create_post_api = async (req, res) => {
 
       return body.slug;
     });
+}
+
+// Handle page create on POST.
+exports.page_create_post_api = async (req, res) => {
+  const body = req.body;
+
+  body.slug = slugify(body.title, {
+    replacement: '-',
+    remove: null,
+    lower: true
+  });
+
+  const uniqueSlug = await uniquePageSlug(Page, body);
 
   body.slug = uniqueSlug;
 
@@ -84,33 +88,13 @@ exports.page_create_post_api = async (req, res) => {
 exports.page_edit_put_api = async (req, res) => {
   const body = req.body;
 
-  body.slug = slugify(body.title, {
+  body.slug = slugify(body.slug, {
     replacement: '-',
     remove: null,
     lower: true
   });
 
-  const uniqueSlug = await Page.find({ slug: new RegExp(body.slug, 'i') })
-    .select('slug')
-    .exec()
-    .then(data => {
-      if (data.length > 0) {
-        let index = 2;
-        let slugs = [];
-
-        data.forEach(item => {
-          slugs.push(item.slug);
-        });
-
-        while (slugs.includes(body.slug + '-' + index)) {
-          index += 1;
-        }
-
-        return body.slug + '-' + index;
-      }
-
-      return body.slug;
-    });
+  const uniqueSlug = await uniquePageSlug(Page, body);
 
   body.slug = uniqueSlug;
 

@@ -14,8 +14,16 @@ export const GET_PAGES = createActionThunk('GET_PAGES', () =>
   api.getPagesAdmin()
 );
 
+export const GET_PAGE = createActionThunk('GET_PAGE', id =>
+  api.getPageAdmin(id)
+);
+
 export const ADD_PAGE = createActionThunk('ADD_PAGE', values =>
   api.postPageAdmin(values)
+);
+
+export const EDIT_PAGE = createActionThunk('EDIT_PAGE', values =>
+  api.putPageAdmin(values)
 );
 
 export const DELETE_PAGE = createActionThunk('DELETE_PAGE', id =>

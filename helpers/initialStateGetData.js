@@ -7,7 +7,7 @@ function initialStateGetData(name) {
     [`GET_${nameUpper}_SUCCEEDED`]: false,
     [`GET_${nameUpper}_FAILED`]: false,
     [`GET_${nameUpper}_ENDED`]: false,
-    [`SET_${nameUpper}_SUCCEEDED`]: false,
+    [`GET_${nameUpper}_SUCCEEDED`]: false,
     [nameLower]: []
   };
 }

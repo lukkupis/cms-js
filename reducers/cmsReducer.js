@@ -2,9 +2,9 @@ import { createReducer } from 'redux-starter-kit';
 
 import * as cmsActions from '../actions/cmsActions';
 import initialStateGetData from 'helpers/initialStateGetData';
-import reducerGetData from 'helpers/reducerGetData';
-
+import initialStatePutData from 'helpers/initialStatePutData';
 import initialStateDeleteData from 'helpers/initialStateDeleteData';
+import reducerGetData from 'helpers/reducerGetData';
 import reducerDeleteData from 'helpers/reducerDeleteData';
 
 const initialState = {
@@ -12,6 +12,8 @@ const initialState = {
   userAdminId: '',
   ...initialStateGetData('users'),
   ...initialStateGetData('pages'),
+  ...initialStateGetData('page'),
+  ...initialStatePutData('page'),
   ...initialStateDeleteData('page')
 };
 
@@ -36,6 +38,15 @@ export default createReducer(initialState, {
 
     if (name === 'published') {
       state.pages.unshift(newPage);
+    }
+  },
+  ['EDIT_PAGE_SUCCEEDED']: (state, action) => {
+    const { name } = action.payload;
+    let { pages } = state;
+    const { newPage } = action.payload;
+    let editedPage;
+
+    if (name === 'edited') {
     }
   },
   ...reducerDeleteData('page'),

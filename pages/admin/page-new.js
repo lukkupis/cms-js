@@ -52,7 +52,7 @@ function Pages({ query }) {
       let title, content, status, author, slug;
 
       if (typeof variable !== 'undefined') {
-        let { title, content, status, author, slug } = res.newPage;
+        // let { title, content, status, author, slug } = res.newPage;
       } else {
       }
 
@@ -84,9 +84,7 @@ function Pages({ query }) {
       <AdminMain>
         <AdminMenu />
 
-        <AdminContent>
-          <AdminHeader />
-
+        <AdminContent className="pt-5">
           {saveStatus && (
             <Alert
               color={
@@ -160,7 +158,11 @@ Pages.getInitialProps = async ({ req, query, store, isServer }) => {
   initialCheckAuth(req, store);
 
   if (req) {
+    if (req.query.action === 'edit') {
+    }
   } else {
+    if (query.action === 'edit') {
+    }
   }
   return { isServer, query };
 };
