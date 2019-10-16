@@ -7,8 +7,7 @@ function initialStatePutData(name) {
     [`PUT_${nameUpper}_SUCCEEDED`]: false,
     [`PUT_${nameUpper}_FAILED`]: false,
     [`PUT_${nameUpper}_ENDED`]: false,
-    [`PUT_${nameUpper}_SUCCEEDED`]: false,
-    [nameLower]: []
+    [`PUT_${nameUpper}_SUCCEEDED`]: false
   };
 }
 

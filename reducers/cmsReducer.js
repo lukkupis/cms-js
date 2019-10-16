@@ -2,9 +2,12 @@ import { createReducer } from 'redux-starter-kit';
 
 import * as cmsActions from '../actions/cmsActions';
 import initialStateGetData from 'helpers/initialStateGetData';
+// import initialStatePostData from 'helpers/initialStatePostData';
 import initialStatePutData from 'helpers/initialStatePutData';
 import initialStateDeleteData from 'helpers/initialStateDeleteData';
 import reducerGetData from 'helpers/reducerGetData';
+// import reducerPostData from 'helpers/reducerPostData';
+import reducerPutData from 'helpers/reducerPutData';
 import reducerDeleteData from 'helpers/reducerDeleteData';
 
 const initialState = {
@@ -13,6 +16,7 @@ const initialState = {
   ...initialStateGetData('users'),
   ...initialStateGetData('pages'),
   ...initialStateGetData('page'),
+  // ...initialStatePostData('page'),
   ...initialStatePutData('page'),
   ...initialStateDeleteData('page')
 };
@@ -32,6 +36,14 @@ export default createReducer(initialState, {
     state.SET_USERS_SUCCEEDED = true;
     state.users = action.payload;
   },
+  ...reducerGetData('page'),
+  ['GET_PAGE_SUCCEEDED']: (state, action) => {
+    const { name } = action.payload;
+    const { newPage } = action.payload;
+
+    if (name === '') {
+    }
+  },
   ['ADD_PAGE_SUCCEEDED']: (state, action) => {
     const { name } = action.payload;
     const { newPage } = action.payload;
@@ -40,6 +52,7 @@ export default createReducer(initialState, {
       state.pages.unshift(newPage);
     }
   },
+  ...reducerPutData('page'),
   ['EDIT_PAGE_SUCCEEDED']: (state, action) => {
     const { name } = action.payload;
     let { pages } = state;

@@ -9,7 +9,6 @@ function reducerPutData(name) {
     [`PUT_${nameUpper}_SUCCEEDED`]: (state, action) => {
       state[`PUT_${nameUpper}_SUCCEEDED`] = true;
       state[`PUT_${nameUpper}_STARTED`] = false;
-      state[nameLower] = action.payload;
     },
     [`PUT_${nameUpper}_FAILED`]: (state, action) => {
       state[`PUT_${nameUpper}_FAILED`] = true;
