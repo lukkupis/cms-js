@@ -37,13 +37,7 @@ export default createReducer(initialState, {
   ...reducerGetData('pages', (state, action) => {
     state.pages = action.payload;
   }),
-  ...reducerGetData('page', (state, action) => {
-    const { name } = action.payload;
-    const { newPage } = action.payload;
-
-    if (name === '') {
-    }
-  }),
+  ...reducerGetData('page', (state, action) => {}),
   ...reducerPostData('page', (state, action) => {
     const { name } = action.payload;
     const { newPage } = action.payload;

@@ -3,30 +3,6 @@ const User = require('../models/User');
 const app = require('../nextApp');
 const slugify = require('slugify');
 
-// Display list of all pages.
-exports.page_list = (req, res) => {
-  Page.find()
-    .populate('author')
-    .sort('-created')
-    .exec({}, (err, data) => {
-      app.render(req, res, '/admin/pages', { data });
-    });
-};
-
-exports.page_list_api = (req, res) => {
-  Page.find()
-    .populate('author')
-    .sort('-created')
-    .exec({}, (err, data) => {
-      res.json(data);
-    });
-};
-
-// Display detail page for a specific page.
-exports.page_detail = (req, res) => {
-  res.send('NOT IMPLEMENTED: page detail: ' + req.params.id);
-};
-
 function uniquePageSlug(Page, body) {
   return Page.find({ slug: new RegExp(body.slug, 'i') })
     .select('slug')
@@ -51,8 +27,46 @@ function uniquePageSlug(Page, body) {
     });
 }
 
-// Handle page create on POST.
-exports.page_create_post_api = async (req, res) => {
+// Display list of all pages.
+exports.page_list = (req, res) => {
+  Page.find()
+    .populate('author')
+    .sort('-created')
+    .exec({}, (err, data) => {
+      app.render(req, res, '/admin/pages', { data });
+    });
+};
+
+exports.page_list_api = (req, res) => {
+  Page.find()
+    .populate('author')
+    .sort('-created')
+    .exec({}, (err, data) => {
+      res.json(data);
+    });
+};
+
+// Display detail page for a specific page.
+exports.page_detail = (req, res) => {
+  Page.findById(req.query.id)
+    .populate('author')
+    .sort('-created')
+    .exec({}, (err, data) => {
+      app.render(req, res, '/admin/page-new', { data });
+    });
+};
+
+exports.page_detail_api = (req, res) => {
+  Page.findById(req.query.id)
+    .populate('author')
+    .sort('-created')
+    .exec({}, (err, data) => {
+      res.json(data);
+    });
+};
+
+// Handle page create
+exports.page_create_api = async (req, res) => {
   const body = req.body;
 
   body.slug = slugify(body.title, {
@@ -85,7 +99,7 @@ exports.page_create_post_api = async (req, res) => {
   });
 };
 
-exports.page_edit_put_api = async (req, res) => {
+exports.page_update_api = async (req, res) => {
   const body = req.body;
 
   body.slug = slugify(body.slug, {
@@ -102,7 +116,7 @@ exports.page_edit_put_api = async (req, res) => {
   const errors = pageData.validateSync();
 
   Page.init().then(() => {
-    pageData.save((err, page) => {
+    Page.findByIdAndUpdate(pageData.id, pageData, (err, page) => {
       if (err) {
         res.json(errors || err);
         return;
@@ -128,14 +142,4 @@ exports.page_delete_api = async (req, res) => {
     }
     res.json({ id, name: 'deleted' });
   });
-};
-
-// Display page delete form on GET.
-exports.page_delete_get = (req, res) => {
-  res.send('NOT IMPLEMENTED: page delete GET');
-};
-
-// Handle page update on POST.
-exports.page_update_post = (req, res) => {
-  res.send('NOT IMPLEMENTED: page update POST');
 };

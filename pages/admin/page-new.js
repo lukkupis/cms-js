@@ -54,6 +54,19 @@ function Pages({ query }) {
       if (typeof variable !== 'undefined') {
         // let { title, content, status, author, slug } = res.newPage;
       } else {
+        dispatch(cmsActions.EDIT_PAGE(values)).then(res => {
+          setSaveStatus(res.name);
+          setSaveMessage(res.message);
+          setSubmitting(false);
+
+          const { title, content, status, author, slug, _id: id } = res.newPage;
+
+          setValues({ title, content, status, author, slug });
+
+          if (!action) {
+            router.push(`/admin/page-new?id=${id}`);
+          }
+        });
       }
 
       setValues({ title, content, status, author, slug });
