@@ -25,9 +25,8 @@ const initialState = {
     title: '',
     content: '',
     status: 'published',
-    author: cmsStore.userAdminId,
-    slug: '',
-    ...initForm
+    author: '',
+    slug: ''
   }
 };
 
