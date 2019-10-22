@@ -20,7 +20,15 @@ const initialState = {
   ...initialStateGetData('page'),
   ...initialStatePostData('page'),
   ...initialStatePutData('page'),
-  ...initialStateDeleteData('page')
+  ...initialStateDeleteData('page'),
+  initialPageForm: {
+    title: '',
+    content: '',
+    status: 'published',
+    author: cmsStore.userAdminId,
+    slug: '',
+    ...initForm
+  }
 };
 
 export default createReducer(initialState, {
@@ -35,10 +43,17 @@ export default createReducer(initialState, {
     state.users = action.payload;
   },
   ...reducerGetData('pages', (state, action) => {
+    //GET_PAGES
     state.pages = action.payload;
   }),
-  ...reducerGetData('page', (state, action) => {}),
+  [cmsActions.SET_PAGE_SERVER]: (state, action) => {
+    console.log(action.payload);
+  },
+  ...reducerGetData('page', (state, action) => {
+    //GET_PAGE
+  }),
   ...reducerPostData('page', (state, action) => {
+    //ADD_PAGE
     const { name } = action.payload;
     const { newPage } = action.payload;
 
@@ -47,6 +62,7 @@ export default createReducer(initialState, {
     }
   }),
   ...reducerPutData('page', (state, action) => {
+    //EDIT_PAGE
     const { name } = action.payload;
     let { pages } = state;
     const { newPage } = action.payload;
@@ -56,16 +72,12 @@ export default createReducer(initialState, {
     }
   }),
   ...reducerDeleteData('page', (state, action) => {
+    //DELETE_PAGE
     const { name, id } = action.payload;
     let { pages } = state;
 
     if (name === 'deleted') {
-      pages = pages.filter(page => page._id != id);
+      pages.splice(pages.map(page => page._id).indexOf(id), 1);
     }
-
-    return {
-      ...state,
-      pages
-    };
   })
 });

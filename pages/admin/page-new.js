@@ -23,7 +23,7 @@ import {
 } from 'reactstrap';
 import { Formik, Form, Field } from 'formik';
 
-function Pages({ query }) {
+function Page({ query }) {
   const cmsStore = useSelector(state => state.cmsStore);
   const router = useRouter();
   const dispatch = useDispatch();
@@ -47,27 +47,18 @@ function Pages({ query }) {
   const handleOnSubmit = (values, { setSubmitting, setValues }) => {
     if (action === 'edit') {
       //edit page
-      setSubmitting(false);
 
-      let title, content, status, author, slug;
+      setSaveMessage('');
 
-      if (typeof variable !== 'undefined') {
-        // let { title, content, status, author, slug } = res.newPage;
-      } else {
-        dispatch(cmsActions.EDIT_PAGE(values)).then(res => {
-          setSaveStatus(res.name);
-          setSaveMessage(res.message);
-          setSubmitting(false);
+      dispatch(cmsActions.EDIT_PAGE(values)).then(res => {
+        setSaveStatus(res.name);
+        setSaveMessage(res.message);
+        setSubmitting(false);
 
-          const { title, content, status, author, slug, _id: id } = res.newPage;
+        const { title, content, status, author, slug, _id: id } = res.newPage;
 
-          setValues({ title, content, status, author, slug });
-
-          if (!action) {
-            router.push(`/admin/page-new?id=${id}`);
-          }
-        });
-      }
+        setValues({ title, content, status, author, slug });
+      });
 
       setValues({ title, content, status, author, slug });
     } else {
@@ -167,11 +158,12 @@ function Pages({ query }) {
   );
 }
 
-Pages.getInitialProps = async ({ req, query, store, isServer }) => {
+Page.getInitialProps = async ({ req, query, store, isServer }) => {
   initialCheckAuth(req, store);
 
   if (req) {
     if (req.query.action === 'edit') {
+      store.dispatch(cmsActions.SET_PAGE_SERVER(query.data));
     }
   } else {
     if (query.action === 'edit') {
@@ -180,4 +172,4 @@ Pages.getInitialProps = async ({ req, query, store, isServer }) => {
   return { isServer, query };
 };
 
-export default Pages;
+export default Page;

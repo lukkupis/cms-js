@@ -14,6 +14,7 @@ export const GET_PAGES = createActionThunk('GET_PAGES', () =>
   api.getPagesAdmin()
 );
 
+export const SET_PAGE_SERVER = createAction('SET_PAGE_SERVER');
 export const GET_PAGE = createActionThunk('GET_PAGE', id =>
   api.getPageAdmin(id)
 );

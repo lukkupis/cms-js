@@ -57,7 +57,7 @@ exports.page_detail = (req, res) => {
 };
 
 exports.page_detail_api = (req, res) => {
-  Page.findById(req.query.id)
+  Page.findById(req.params.id)
     .populate('author')
     .sort('-created')
     .exec({}, (err, data) => {
