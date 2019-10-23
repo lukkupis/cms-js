@@ -50,16 +50,14 @@ exports.page_list_api = (req, res) => {
 exports.page_detail = (req, res) => {
   Page.findById(req.query.id)
     .populate('author')
-    .sort('-created')
     .exec({}, (err, data) => {
       app.render(req, res, '/admin/page-new', { data });
     });
 };
 
 exports.page_detail_api = (req, res) => {
-  Page.findById(req.params.id)
+  Page.findById(req.query.id)
     .populate('author')
-    .sort('-created')
     .exec({}, (err, data) => {
       res.json(data);
     });

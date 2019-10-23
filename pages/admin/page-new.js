@@ -11,7 +11,6 @@ import Header from 'components/organisms/Header/Header';
 import AdminMenu from 'components/organisms/AdminMenu/AdminMenu';
 import AdminMain from 'components/atoms/AdminMain';
 import AdminContent from 'components/atoms/AdminContent';
-import AdminHeader from 'components/molecules/AdminHeader';
 import {
   Button,
   Form as FormStrap,
@@ -28,51 +27,32 @@ function Page({ query }) {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const [saveStatus, setSaveStatus] = useState('');
-  const [saveMessage, setSaveMessage] = useState('');
-  const initialValues = {
-    title: '',
-    content: '',
-    status: 'published',
-    author: cmsStore.userAdminId,
-    slug: ''
-  };
-
   const action = router.query.action;
 
   useEffect(() => {
     cmsStore.userAdminName === '' && router.push('/login');
   }, [cmsStore.userAdminName]);
 
-  const handleOnSubmit = (values, { setSubmitting, setValues }) => {
+  useEffect(() => {
+    if (action !== 'edit') {
+      dispatch(cmsActions.SET_PAGE_AUTHOR());
+    }
+  }, [cmsStore.userAdminId]);
+
+  useEffect(() => {
     if (action === 'edit') {
-      //edit page
+      dispatch(cmsActions.RESET_PAGE_FORM());
+      dispatch(cmsActions.GET_PAGE(query.id));
+    }
+  }, []);
 
-      setSaveMessage('');
-
-      dispatch(cmsActions.EDIT_PAGE(values)).then(res => {
-        setSaveStatus(res.name);
-        setSaveMessage(res.message);
-        setSubmitting(false);
-
-        const { title, content, status, author, slug, _id: id } = res.newPage;
-
-        setValues({ title, content, status, author, slug });
-      });
-
-      setValues({ title, content, status, author, slug });
-    } else {
+  const handleOnSubmit = (values, { setSubmitting, setValues }) => {
+    if (action !== 'edit') {
       dispatch(cmsActions.ADD_PAGE(values)).then(res => {
-        setSaveStatus(res.name);
-        setSaveMessage(res.message);
         setSubmitting(false);
-
-        const { title, content, status, author, slug, _id: id } = res.newPage;
-
-        setValues({ title, content, status, author, slug });
 
         if (!action) {
-          router.push(`/admin/page-new?action=edit&id=${id}`);
+          router.push(`/admin/page-new?action=edit&id=${res.newPage._id}`);
         }
       });
     }
@@ -89,20 +69,22 @@ function Page({ query }) {
         <AdminMenu />
 
         <AdminContent className="pt-5">
-          {saveStatus && (
+          {cmsStore.pageSaveStatus && (
             <Alert
               color={
-                saveStatus === 'published' || saveStatus === 'save'
+                cmsStore.pageSaveStatus === 'published' ||
+                cmsStore.pageSaveStatus === 'save'
                   ? 'success'
                   : 'danger'
               }
             >
-              {saveMessage || 'Server error. Please try again later.'}
+              {cmsStore.pageSaveMessage ||
+                'Server error. Please try again later.'}
             </Alert>
           )}
 
           <Formik
-            initialValues={initialValues}
+            initialValues={cmsStore.pageForm}
             enableReinitialize={true}
             validate={values => {
               let errors = {};

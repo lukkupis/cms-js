@@ -1,33 +1,29 @@
 import { createReducer } from 'redux-starter-kit';
 
 import * as cmsActions from '../actions/cmsActions';
-import initialStateGetData from 'helpers/initialStateGetData';
-import initialStatePostData from 'helpers/initialStatePostData';
-import initialStatePutData from 'helpers/initialStatePutData';
-import initialStateDeleteData from 'helpers/initialStateDeleteData';
-import reducerGetData from 'helpers/reducerGetData';
-import reducerPostData from 'helpers/reducerPostData';
-import reducerPutData from 'helpers/reducerPutData';
-import reducerDeleteData from 'helpers/reducerDeleteData';
+import initialStateApiData from 'helpers/initialStateApiData';
+import reducerApiData from 'helpers/reducerApiData';
+
+const initialPageForm = {
+  title: '',
+  content: '',
+  status: 'published',
+  author: '',
+  slug: ''
+};
 
 const initialState = {
   userAdminName: '',
   userAdminId: '',
-  ...initialStateGetData('users'),
-  users: [],
-  ...initialStateGetData('pages'),
+  ...initialStateApiData('GET_PAGES'),
   pages: [],
-  ...initialStateGetData('page'),
-  ...initialStatePostData('page'),
-  ...initialStatePutData('page'),
-  ...initialStateDeleteData('page'),
-  initialPageForm: {
-    title: '',
-    content: '',
-    status: 'published',
-    author: '',
-    slug: ''
-  }
+  ...initialStateApiData('GET_PAGE'),
+  ...initialStateApiData('ADD_PAGE'),
+  ...initialStateApiData('EDIT_PAGE'),
+  ...initialStateApiData('DELETE_PAGE'),
+  pageSaveStatus: '',
+  pageSaveMessage: '',
+  pageForm: initialPageForm
 };
 
 export default createReducer(initialState, {
@@ -41,27 +37,32 @@ export default createReducer(initialState, {
   [cmsActions.SET_USERS_SERVER]: (state, action) => {
     state.users = action.payload;
   },
-  ...reducerGetData('pages', (state, action) => {
-    //GET_PAGES
+  ...reducerApiData('GET_PAGES', (state, action) => {
     state.pages = action.payload;
   }),
   [cmsActions.SET_PAGE_SERVER]: (state, action) => {
-    console.log(action.payload);
+    state.pageForm = action.payload;
   },
-  ...reducerGetData('page', (state, action) => {
-    //GET_PAGE
+  ...reducerApiData('GET_PAGE', (state, action) => {
+    state.pageForm = action.payload;
   }),
-  ...reducerPostData('page', (state, action) => {
-    //ADD_PAGE
-    const { name } = action.payload;
-    const { newPage } = action.payload;
+  [cmsActions.SET_PAGE_AUTHOR]: (state, action) => {
+    state.pageForm.author = state.userAdminId;
+  },
+  [cmsActions.RESET_PAGE_FORM]: (state, action) => {
+    state.pageForm = initialPageForm;
+  },
+  ...reducerApiData('ADD_PAGE', (state, action) => {
+    const { name, message, newPage } = action.payload;
 
     if (name === 'published') {
       state.pages.unshift(newPage);
+      state.pageSaveStatus = name;
+      state.pageSaveMessage = message;
+      state.pageForm = newPage;
     }
   }),
-  ...reducerPutData('page', (state, action) => {
-    //EDIT_PAGE
+  ...reducerApiData('EDIT_PAGE', (state, action) => {
     const { name } = action.payload;
     let { pages } = state;
     const { newPage } = action.payload;
@@ -70,8 +71,7 @@ export default createReducer(initialState, {
     if (name === 'edited') {
     }
   }),
-  ...reducerDeleteData('page', (state, action) => {
-    //DELETE_PAGE
+  ...reducerApiData('DELETE_PAGE', (state, action) => {
     const { name, id } = action.payload;
     let { pages } = state;
 
