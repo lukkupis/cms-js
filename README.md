@@ -11,4 +11,5 @@ In the process of making.
 - MongoDB (Mongoose)
 - Reactstrap
 - styled-components
+- Atomic Design
 - Sass
