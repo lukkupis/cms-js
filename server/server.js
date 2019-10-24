@@ -8,7 +8,7 @@ const logger = require('morgan');
 const config = require('./config');
 const mongoose = require('mongoose');
 
-mongoose.connect(config.db, { useNewUrlParser: true });
+mongoose.connect(config.db, { useNewUrlParser: true, useFindAndModify: false });
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));

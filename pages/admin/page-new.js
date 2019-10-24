@@ -22,12 +22,13 @@ import {
 } from 'reactstrap';
 import { Formik, Form, Field } from 'formik';
 
-function Page({ query }) {
+function Page({ query, reqAction }) {
   const cmsStore = useSelector(state => state.cmsStore);
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const action = router.query.action;
+  const action = router.query.action || reqAction;
+  console.log(action);
 
   useEffect(() => {
     cmsStore.userAdminName === '' && router.push('/login');
@@ -47,13 +48,16 @@ function Page({ query }) {
   }, []);
 
   const handleOnSubmit = (values, { setSubmitting, setValues }) => {
+    console.log(action);
     if (action !== 'edit') {
       dispatch(cmsActions.ADD_PAGE(values)).then(res => {
         setSubmitting(false);
 
-        if (!action) {
-          router.push(`/admin/page-new?action=edit&id=${res.newPage._id}`);
-        }
+        router.push(`/admin/page-new?action=edit&id=${res.newPage._id}`);
+      });
+    } else if (action == 'edit') {
+      dispatch(cmsActions.EDIT_PAGE(values)).then(res => {
+        setSubmitting(false);
       });
     }
   };
@@ -143,15 +147,19 @@ function Page({ query }) {
 Page.getInitialProps = async ({ req, query, store, isServer }) => {
   initialCheckAuth(req, store);
 
+  let reqAction;
+
   if (req) {
-    if (req.query.action === 'edit') {
+    reqAction = req.query.action;
+
+    if (reqAction === 'edit') {
       store.dispatch(cmsActions.SET_PAGE_SERVER(query.data));
     }
   } else {
     if (query.action === 'edit') {
     }
   }
-  return { isServer, query };
+  return { isServer, query, reqAction };
 };
 
 export default Page;

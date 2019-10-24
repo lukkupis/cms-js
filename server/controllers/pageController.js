@@ -108,23 +108,27 @@ exports.page_update_api = async (req, res) => {
 
   const uniqueSlug = await uniquePageSlug(Page, body);
 
-  body.slug = uniqueSlug;
-
   const pageData = new Page(body);
   const errors = pageData.validateSync();
 
   Page.init().then(() => {
-    Page.findByIdAndUpdate(pageData.id, pageData, (err, page) => {
-      if (err) {
-        res.json(errors || err);
-        return;
+    Page.findById(pageData.id, (err, page) => {
+      if (page.slug !== pageData.slug) {
+        pageData.slug = uniqueSlug;
       }
 
-      let newPage = JSON.parse(JSON.stringify(page));
+      Page.findByIdAndUpdate(pageData.id, pageData, (err, page) => {
+        if (err) {
+          res.json(errors || err);
+          return;
+        }
 
-      User.findById(page.author, function(err, author) {
-        newPage = { ...newPage, author };
-        res.json({ message: 'Page published.', name: 'published', newPage });
+        let newPage = JSON.parse(JSON.stringify(page));
+
+        User.findById(page.author, function(err, author) {
+          newPage = { ...newPage, author };
+          res.json({ message: 'Page published.', name: 'published', newPage });
+        });
       });
     });
   });
