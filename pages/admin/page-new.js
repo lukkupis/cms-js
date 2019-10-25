@@ -22,13 +22,12 @@ import {
 } from 'reactstrap';
 import { Formik, Form, Field } from 'formik';
 
-function Page({ query, reqAction }) {
+function Page({ reqAction, isServer, reqRoutePath }) {
   const cmsStore = useSelector(state => state.cmsStore);
   const router = useRouter();
   const dispatch = useDispatch();
 
   const action = router.query.action || reqAction;
-  console.log(action);
 
   useEffect(() => {
     cmsStore.userAdminName === '' && router.push('/login');
@@ -40,16 +39,9 @@ function Page({ query, reqAction }) {
     }
   }, [cmsStore.userAdminId]);
 
-  useEffect(() => {
-    if (action === 'edit') {
-      dispatch(cmsActions.RESET_PAGE_FORM());
-      dispatch(cmsActions.GET_PAGE(query.id));
-    }
-  }, []);
-
   const handleOnSubmit = (values, { setSubmitting, setValues }) => {
-    console.log(action);
     if (action !== 'edit') {
+      dispatch(cmsActions.RESET_PAGE_FORM());
       dispatch(cmsActions.ADD_PAGE(values)).then(res => {
         setSubmitting(false);
 
@@ -70,7 +62,7 @@ function Page({ query, reqAction }) {
       <Header />
 
       <AdminMain>
-        <AdminMenu />
+        <AdminMenu isServer={isServer} reqRoutePath={reqRoutePath} />
 
         <AdminContent className="pt-5">
           {cmsStore.pageSaveStatus && (
@@ -101,7 +93,7 @@ function Page({ query, reqAction }) {
           >
             {({ errors, touched, isSubmitting, values }) => (
               <FormStrap tag={Form}>
-                {values.slug && (
+                {action == 'edit' && (
                   <FormGroup>
                     <Label for="slug">Slug</Label>
                     <Input
@@ -147,19 +139,23 @@ function Page({ query, reqAction }) {
 Page.getInitialProps = async ({ req, query, store, isServer }) => {
   initialCheckAuth(req, store);
 
-  let reqAction;
+  let reqAction = '';
+  let reqRoutePath = '';
 
   if (req) {
     reqAction = req.query.action;
+    reqRoutePath = req.originalUrl;
 
     if (reqAction === 'edit') {
       store.dispatch(cmsActions.SET_PAGE_SERVER(query.data));
     }
   } else {
     if (query.action === 'edit') {
+      store.dispatch(cmsActions.RESET_PAGE_FORM());
+      store.dispatch(cmsActions.GET_PAGE(query.id));
     }
   }
-  return { isServer, query, reqAction };
+  return { reqAction, isServer, reqRoutePath };
 };
 
 export default Page;

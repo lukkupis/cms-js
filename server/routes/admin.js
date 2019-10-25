@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/pages', page_controller.page_list);
-router.get('/page-new', page_controller.page_detail);
+router.get('/pages/page-new', page_controller.page_detail);
 
 router.get('/users', user_controller.user_list);
 

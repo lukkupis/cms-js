@@ -24,16 +24,26 @@ const StyledLink = styled.a`
   }
 `;
 
-const AdminMenu = () => {
+const AdminMenu = props => {
   return (
     <StyledContainer className="flex-shrink-0">
-      <NavLink href="/admin/pages" passHref>
+      <NavLink
+        href="/admin/pages"
+        passHref
+        isServer={props.isServer}
+        reqRoutePath={props.reqRoutePath}
+      >
         <StyledLink>
           <i className="fas fa-file fa-fw mr-2" />
           Pages
         </StyledLink>
       </NavLink>
-      <NavLink href="/admin/users" passHref>
+      <NavLink
+        href="/admin/users"
+        passHref
+        isServer={props.isServer}
+        reqRoutePath={props.reqRoutePath}
+      >
         <StyledLink>
           <i className="fas fa-users fa-fw mr-2" />
           Users

@@ -14,7 +14,7 @@ import AdminContent from 'components/atoms/AdminContent';
 import AdminHeader from 'components/molecules/AdminHeader';
 import ModalRemove from 'components/molecules/ModalRemove';
 
-function Pages() {
+function Pages({ isServer, reqRoutePath }) {
   const dispatch = useDispatch();
 
   const cmsStore = useSelector(state => state.cmsStore);
@@ -36,13 +36,14 @@ function Pages() {
       <Header />
 
       <AdminMain>
-        <AdminMenu />
+        <AdminMenu isServer={isServer} reqRoutePath={reqRoutePath} />
 
         <AdminContent>
           <AdminHeader
             name="Pages"
             buttonLabel="Add Page"
             buttonLink="page-new"
+            buttonLinkAs="pages/page-new"
             startedState={
               cmsStore.GET_PAGES_STARTED || cmsStore.DELETE_PAGE_STARTED
             }
@@ -64,7 +65,8 @@ function Pages() {
               buttons={(itemId, itemTitle) => [
                 {
                   label: 'Edit',
-                  link: `/admin/page-new?action=edit&id=${itemId}`
+                  link: `/admin/page-new?action=edit&id=${itemId}`,
+                  as: `/admin/pages/page-new?action=edit&id=${itemId}`
                 },
                 {
                   label: 'Delete',
@@ -95,12 +97,16 @@ function Pages() {
 Pages.getInitialProps = async ({ req, query, store, isServer }) => {
   initialCheckAuth(req, store);
 
+  let reqRoutePath = '';
+
   if (req) {
+    reqRoutePath = req.originalUrl;
+
     store.dispatch(cmsActions.SET_PAGES_SERVER(query.data));
   } else {
     store.dispatch(cmsActions.GET_PAGES());
   }
-  return { isServer };
+  return { isServer, reqRoutePath };
 };
 
 export default Pages;

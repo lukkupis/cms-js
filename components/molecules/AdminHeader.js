@@ -4,7 +4,13 @@ import Link from 'next/link';
 
 import { Spinner } from 'reactstrap';
 
-const AdminHeader = ({ name, buttonLabel, buttonLink, startedState }) => {
+const AdminHeader = ({
+  name,
+  buttonLabel,
+  buttonLink,
+  buttonLinkAs,
+  startedState
+}) => {
   return (
     <>
       <div
@@ -13,7 +19,7 @@ const AdminHeader = ({ name, buttonLabel, buttonLink, startedState }) => {
       >
         {name && <h1 className="my-0">{name}</h1>}
         {buttonLabel && (
-          <Link href={buttonLink}>
+          <Link href={buttonLink} as={buttonLinkAs}>
             <button className="btn btn-dark ml-4">{buttonLabel}</button>
           </Link>
         )}

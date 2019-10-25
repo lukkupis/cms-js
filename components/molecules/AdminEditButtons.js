@@ -23,7 +23,7 @@ const AdminEditButtons = ({ buttons, itemTitle, itemId }) => {
           );
         } else if (item.link) {
           return (
-            <Link key={index} href={item.link}>
+            <Link key={index} href={item.link} as={item.as}>
               <ButtonEdit className="btn">{item.label}</ButtonEdit>
             </Link>
           );

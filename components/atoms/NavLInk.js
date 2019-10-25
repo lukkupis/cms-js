@@ -6,7 +6,14 @@ const NavLink = ({ router, children, ...props }) => {
   const child = Children.only(children);
 
   let className = child.props.className || null;
-  if (router.pathname === props.href && props.activeClassName) {
+
+  let pathname = router.asPath;
+
+  if (props.isServer) {
+    pathname = props.reqRoutePath;
+  }
+
+  if (pathname.includes(props.href) && props.activeClassName) {
     className = `${className !== null ? className : ''} ${
       props.activeClassName
     }`.trim();
