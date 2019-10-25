@@ -48,8 +48,10 @@ function Page({ reqAction, isServer, reqRoutePath }) {
         router.push(`/admin/page-new?action=edit&id=${res.newPage._id}`);
       });
     } else if (action == 'edit') {
+      dispatch(cmsActions.RESET_STATUS_FORM());
       dispatch(cmsActions.EDIT_PAGE(values)).then(res => {
         setSubmitting(false);
+        // setValues(cmsStore.pageForm);
       });
     }
   };
@@ -69,6 +71,7 @@ function Page({ reqAction, isServer, reqRoutePath }) {
             <Alert
               color={
                 cmsStore.pageSaveStatus === 'published' ||
+                cmsStore.pageSaveStatus === 'edited' ||
                 cmsStore.pageSaveStatus === 'save'
                   ? 'success'
                   : 'danger'

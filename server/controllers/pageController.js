@@ -2,6 +2,7 @@ const Page = require('../models/Page');
 const User = require('../models/User');
 const app = require('../nextApp');
 const slugify = require('slugify');
+const clone = require('clone');
 
 function uniquePageSlug(Page, body) {
   return Page.find({ slug: new RegExp(body.slug, 'i') })
@@ -87,10 +88,11 @@ exports.page_create_api = async (req, res) => {
         return;
       }
 
-      let newPage = JSON.parse(JSON.stringify(page));
+      let newPage = clone(page);
 
       User.findById(page.author, function(err, author) {
-        newPage = { ...newPage, author };
+        newPage.author = author;
+
         res.json({ message: 'Page published.', name: 'published', newPage });
       });
     });
@@ -123,11 +125,12 @@ exports.page_update_api = async (req, res) => {
           return;
         }
 
-        let newPage = JSON.parse(JSON.stringify(page));
+        let newPage = clone(page);
 
         User.findById(page.author, function(err, author) {
-          newPage = { ...newPage, author };
-          res.json({ message: 'Page published.', name: 'published', newPage });
+          newPage.author = author;
+
+          res.json({ message: 'Page edited.', name: 'edited', newPage });
         });
       });
     });
