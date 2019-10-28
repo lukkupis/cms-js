@@ -12,6 +12,16 @@ const initialPageForm = {
   slug: ''
 };
 
+const initialCurrentPageData = {
+  slug: '',
+  template: '',
+  title: '',
+  author: '',
+  content: '',
+  status: '',
+  created: ''
+};
+
 const initialState = {
   userAdminName: '',
   userAdminId: '',
@@ -24,15 +34,7 @@ const initialState = {
   pageSaveStatus: '',
   pageSaveMessage: '',
   pageForm: initialPageForm,
-  currentPageData: {
-    slug: '',
-    template: '',
-    title: '',
-    author: '',
-    content: '',
-    status: '',
-    created: ''
-  }
+  currentPageData: initialCurrentPageData
 };
 
 export default createReducer(initialState, {
@@ -98,8 +100,13 @@ export default createReducer(initialState, {
     }
   }),
   ...reducerApiData('GET_PAGE_DATA', (state, action) => {
-    state.currentPageData = action.payload;
+    if (action.payload) {
+      state.currentPageData = action.payload;
+    }
   }),
+  [cmsActions.RESET_PAGE_DATA]: (state, action) => {
+    state.currentPageData = initialCurrentPageData;
+  },
   [cmsActions.SET_PAGE_DATA_SERVER]: (state, action) => {
     if (action.payload) {
       state.currentPageData = action.payload;

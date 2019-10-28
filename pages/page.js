@@ -37,6 +37,7 @@ Home.getInitialProps = async ({ req, query, store, isServer }) => {
   if (req) {
     store.dispatch(cmsActions.SET_PAGE_DATA_SERVER(query.data));
   } else {
+    store.dispatch(cmsActions.RESET_PAGE_DATA());
     store.dispatch(cmsActions.GET_PAGE_DATA(query.slug));
   }
 

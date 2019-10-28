@@ -22,12 +22,14 @@ import {
 } from 'reactstrap';
 import { Formik, Form, Field } from 'formik';
 
-function Page({ reqAction, isServer, reqRoutePath }) {
+function Page({ reqAction, isServer, reqRoutePath, reqHost }) {
   const cmsStore = useSelector(state => state.cmsStore);
   const router = useRouter();
   const dispatch = useDispatch();
 
   const action = router.query.action || reqAction;
+
+  const host = reqHost || window.location.host;
 
   useEffect(() => {
     cmsStore.userAdminName === '' && router.push('/login');
@@ -51,7 +53,6 @@ function Page({ reqAction, isServer, reqRoutePath }) {
     } else if (action === 'edit') {
       dispatch(cmsActions.EDIT_PAGE(values)).then(res => {
         setSubmitting(false);
-        // setValues(cmsStore.pageForm);
       });
     }
   };
@@ -83,8 +84,13 @@ function Page({ reqAction, isServer, reqRoutePath }) {
           )}
 
           {cmsStore.pageForm.slug && (
-            <Link href="page" as={'/' + cmsStore.pageForm.slug}>
-              <a className="d-block mb-4">{cmsStore.pageForm.slug}</a>
+            <Link
+              href={'/page?slug=' + cmsStore.pageForm.slug}
+              as={'/' + cmsStore.pageForm.slug}
+            >
+              <a className="d-block mb-4">
+                {host + '/' + cmsStore.pageForm.slug}
+              </a>
             </Link>
           )}
 
@@ -114,7 +120,7 @@ function Page({ reqAction, isServer, reqRoutePath }) {
                   </FormGroup>
                 )}
                 <FormGroup>
-                  <Label for="title">Add a new page</Label>
+                  <Label for="title">Title</Label>
                   <Input
                     tag={Field}
                     type="text"
@@ -150,10 +156,12 @@ Page.getInitialProps = async ({ req, query, store, isServer }) => {
 
   let reqAction = '';
   let reqRoutePath = '';
+  let reqHost = '';
 
   if (req) {
     reqAction = req.query.action;
     reqRoutePath = req.originalUrl;
+    reqHost = req.headers.host;
 
     if (reqAction === 'edit') {
       store.dispatch(cmsActions.SET_PAGE_SERVER(query.data));
@@ -166,7 +174,7 @@ Page.getInitialProps = async ({ req, query, store, isServer }) => {
       store.dispatch(cmsActions.GET_PAGE(query.id));
     }
   }
-  return { reqAction, isServer, reqRoutePath };
+  return { reqAction, isServer, reqRoutePath, reqHost };
 };
 
 export default Page;
