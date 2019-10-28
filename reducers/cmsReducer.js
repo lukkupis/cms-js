@@ -51,6 +51,7 @@ export default createReducer(initialState, {
   },
   [cmsActions.RESET_PAGE_FORM]: (state, action) => {
     state.pageForm = initialPageForm;
+    state.pageForm.author = state.userAdminId;
   },
   [cmsActions.RESET_STATUS_FORM]: (state, action) => {
     state.pageSaveStatus = '';
@@ -68,11 +69,9 @@ export default createReducer(initialState, {
   }),
   ...reducerApiData('EDIT_PAGE', (state, action) => {
     const { name, message, newPage } = action.payload;
-    console.log(newPage);
+
     if (name === 'edited') {
-      const index = parseInt(
-        state.pages.map(page => page._id).indexOf(newPage._id)
-      );
+      const index = state.pages.map(page => page._id).indexOf(newPage._id);
 
       state.pages[index] = newPage;
 

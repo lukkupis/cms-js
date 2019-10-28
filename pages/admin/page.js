@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 
 import * as cmsActions from 'actions/cmsActions';
 import initialCheckAuth from 'helpers/initialCheckAuth';
-import * as api from 'helpers/api';
 
 import Head from 'next/head';
 import Header from 'components/organisms/Header/Header';
@@ -34,21 +33,21 @@ function Page({ reqAction, isServer, reqRoutePath }) {
   }, [cmsStore.userAdminName]);
 
   useEffect(() => {
-    if (action !== 'edit') {
+    if (action === 'new') {
       dispatch(cmsActions.SET_PAGE_AUTHOR());
     }
   }, [cmsStore.userAdminId]);
 
-  const handleOnSubmit = (values, { setSubmitting, setValues }) => {
-    if (action !== 'edit') {
-      dispatch(cmsActions.RESET_PAGE_FORM());
+  const handleOnSubmit = (values, { setSubmitting, setValues, resetForm }) => {
+    dispatch(cmsActions.RESET_STATUS_FORM());
+
+    if (action === 'new') {
       dispatch(cmsActions.ADD_PAGE(values)).then(res => {
         setSubmitting(false);
 
-        router.push(`/admin/page-new?action=edit&id=${res.newPage._id}`);
+        router.push(`/admin/page?action=edit&id=${res.newPage._id}`);
       });
-    } else if (action == 'edit') {
-      dispatch(cmsActions.RESET_STATUS_FORM());
+    } else if (action === 'edit') {
       dispatch(cmsActions.EDIT_PAGE(values)).then(res => {
         setSubmitting(false);
         // setValues(cmsStore.pageForm);
@@ -96,7 +95,7 @@ function Page({ reqAction, isServer, reqRoutePath }) {
           >
             {({ errors, touched, isSubmitting, values }) => (
               <FormStrap tag={Form}>
-                {action == 'edit' && (
+                {action === 'edit' && (
                   <FormGroup>
                     <Label for="slug">Slug</Label>
                     <Input
@@ -153,8 +152,10 @@ Page.getInitialProps = async ({ req, query, store, isServer }) => {
       store.dispatch(cmsActions.SET_PAGE_SERVER(query.data));
     }
   } else {
+    store.dispatch(cmsActions.RESET_PAGE_FORM());
+    store.dispatch(cmsActions.RESET_STATUS_FORM());
+
     if (query.action === 'edit') {
-      store.dispatch(cmsActions.RESET_PAGE_FORM());
       store.dispatch(cmsActions.GET_PAGE(query.id));
     }
   }

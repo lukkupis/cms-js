@@ -52,7 +52,7 @@ exports.page_detail = (req, res) => {
   Page.findById(req.query.id)
     .populate('author')
     .exec({}, (err, data) => {
-      app.render(req, res, '/admin/page-new', { data });
+      app.render(req, res, '/admin/page', { data });
     });
 };
 
@@ -110,28 +110,30 @@ exports.page_update_api = async (req, res) => {
 
   const uniqueSlug = await uniquePageSlug(Page, body);
 
-  const pageData = new Page(body);
-  const errors = pageData.validateSync();
+  Page.findById(body._id, (err, page) => {
+    if (page.slug !== body.slug) {
+      page.slug = uniqueSlug;
+    }
 
-  Page.init().then(() => {
-    Page.findById(pageData.id, (err, page) => {
-      if (page.slug !== pageData.slug) {
-        pageData.slug = uniqueSlug;
+    page.template = body.template;
+    page.title = body.title;
+    page.content = body.content;
+    page.status = body.status;
+    page.author = body.author._id;
+    page.created = body.created;
+
+    page.save((err, page) => {
+      if (err) {
+        res.json(err);
+        return;
       }
 
-      Page.findByIdAndUpdate(pageData.id, pageData, (err, page) => {
-        if (err) {
-          res.json(errors || err);
-          return;
-        }
+      let newPage = clone(page);
 
-        let newPage = clone(page);
+      User.findById(page.author, function(err, author) {
+        newPage.author = author;
 
-        User.findById(page.author, function(err, author) {
-          newPage.author = author;
-
-          res.json({ message: 'Page edited.', name: 'edited', newPage });
-        });
+        res.json({ message: 'Page edited.', name: 'edited', newPage });
       });
     });
   });

@@ -42,8 +42,8 @@ function Pages({ isServer, reqRoutePath }) {
           <AdminHeader
             name="Pages"
             buttonLabel="Add Page"
-            buttonLink="page-new"
-            buttonLinkAs="pages/page-new"
+            buttonLink="page?action=new"
+            buttonLinkAs="pages/page?action=new"
             startedState={
               cmsStore.GET_PAGES_STARTED || cmsStore.DELETE_PAGE_STARTED
             }
@@ -65,8 +65,8 @@ function Pages({ isServer, reqRoutePath }) {
               buttons={(itemId, itemTitle) => [
                 {
                   label: 'Edit',
-                  link: `/admin/page-new?action=edit&id=${itemId}`,
-                  as: `/admin/pages/page-new?action=edit&id=${itemId}`
+                  link: `/admin/page?action=edit&id=${itemId}`,
+                  as: `/admin/pages/page?action=edit&id=${itemId}`
                 },
                 {
                   label: 'Delete',
