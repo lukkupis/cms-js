@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 import * as cmsActions from 'actions/cmsActions';
 import initialCheckAuth from 'helpers/initialCheckAuth';
@@ -79,6 +80,12 @@ function Page({ reqAction, isServer, reqRoutePath }) {
               {cmsStore.pageSaveMessage ||
                 'Server error. Please try again later.'}
             </Alert>
+          )}
+
+          {cmsStore.pageForm.slug && (
+            <Link href="page" as={'/' + cmsStore.pageForm.slug}>
+              <a className="d-block mb-4">{cmsStore.pageForm.slug}</a>
+            </Link>
           )}
 
           <Formik

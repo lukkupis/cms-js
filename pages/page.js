@@ -1,5 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import Link from 'next/link';
+
 import initialCheckAuth from 'helpers/initialCheckAuth';
 
 import * as cmsActions from 'actions/cmsActions';
