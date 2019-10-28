@@ -83,7 +83,7 @@ export const deletePageAdmin = id =>
 export const getPageData = slug =>
   new Promise((resolve, reject) => {
     axios
-      .get(process.env.API_URL + '/admin-api/page-data', {
+      .get(process.env.API_URL + '/api/page-data', {
         params: {
           slug
         }

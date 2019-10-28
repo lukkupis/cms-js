@@ -19,6 +19,7 @@ const handle = app.getRequestHandler();
 const indexRouter = require('./routes/index');
 const adminRouter = require('./routes/admin');
 const adminApiRouter = require('./routes/api/admin-api');
+const apiRouter = require('./routes/api/api');
 
 app.prepare().then(() => {
   const server = express();
@@ -48,6 +49,7 @@ app.prepare().then(() => {
 
   server.use('/admin', adminRouter);
   server.use('/admin-api', adminApiRouter);
+  server.use('/api', apiRouter);
   server.use('/', indexRouter);
 
   server.get('*', (req, res) => {

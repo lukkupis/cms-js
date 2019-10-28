@@ -20,8 +20,6 @@ router.post('/page', page_controller.page_create_api);
 router.put('/page', page_controller.page_update_api);
 router.delete('/page', page_controller.page_delete_api);
 
-router.get('/page-data', page_controller.page_data_api);
-
 router.get('/users', user_controller.user_list_api);
 
 module.exports = router;
