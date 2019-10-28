@@ -150,3 +150,19 @@ exports.page_delete_api = async (req, res) => {
     res.json({ id, name: 'deleted' });
   });
 };
+
+exports.page_data = (req, res) => {
+  Page.findOne({ slug: req.params.slug })
+    .populate('author', 'name')
+    .exec({}, (err, data) => {
+      app.render(req, res, '/page', { data });
+    });
+};
+
+exports.page_data_api = (req, res) => {
+  Page.findOne({ slug: req.query.slug })
+    .populate('author', 'name')
+    .exec({}, (err, data) => {
+      res.json(data);
+    });
+};

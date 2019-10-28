@@ -46,9 +46,9 @@ app.prepare().then(() => {
     next();
   });
 
-  server.use('/', indexRouter);
   server.use('/admin', adminRouter);
   server.use('/admin-api', adminApiRouter);
+  server.use('/', indexRouter);
 
   server.get('*', (req, res) => {
     return handle(req, res);

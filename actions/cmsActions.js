@@ -35,3 +35,8 @@ export const EDIT_PAGE = createActionThunk('EDIT_PAGE', values =>
 export const DELETE_PAGE = createActionThunk('DELETE_PAGE', id =>
   api.deletePageAdmin(id)
 );
+
+export const GET_PAGE_DATA = createActionThunk('GET_PAGE_DATA', slug =>
+  api.getPageData(slug)
+);
+export const SET_PAGE_DATA_SERVER = createAction('SET_PAGE_DATA_SERVER');

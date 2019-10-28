@@ -79,3 +79,19 @@ export const deletePageAdmin = id =>
         reject(error);
       });
   });
+
+export const getPageData = slug =>
+  new Promise((resolve, reject) => {
+    axios
+      .get(process.env.API_URL + '/admin-api/page-data', {
+        params: {
+          slug
+        }
+      })
+      .then(function(response) {
+        resolve(response.data);
+      })
+      .catch(function(error) {
+        reject(error);
+      });
+  });

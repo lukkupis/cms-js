@@ -29,7 +29,16 @@ function Header(props) {
         <NavbarToggler onClick={() => setOpen(!open)} />
         <Collapse isOpen={open} navbar>
           <Nav className="ml-auto" navbar>
-            <NavItem>
+            <NavItem className="mx-2">
+              <Link
+                href="/page?slug=strona-testowa"
+                as="/strona-testowa"
+                passHref
+              >
+                <NavLink>Strona testowa</NavLink>
+              </Link>
+            </NavItem>
+            <NavItem className="mx-2">
               <Link href="/admin" passHref>
                 <NavLink>Admin</NavLink>
               </Link>
