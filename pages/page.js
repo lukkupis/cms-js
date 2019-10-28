@@ -33,7 +33,7 @@ Home.getInitialProps = async ({ req, query, store, isServer }) => {
   initialCheckAuth(req, store, false);
 
   if (req) {
-    store.dispatch(cmsActions.SET_PAGE_DATA_SERVER());
+    store.dispatch(cmsActions.SET_PAGE_DATA_SERVER(query.data));
   } else {
     store.dispatch(cmsActions.GET_PAGE_DATA(query.slug));
   }
