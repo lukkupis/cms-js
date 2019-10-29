@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-import * as cmsPageActions from 'actions/cmsPageActions';
+import * as cmsUserActions from 'actions/cmsUserActions';
 import initialCheckAuth from 'helpers/initialCheckAuth';
 
 import Head from 'next/head';
@@ -22,8 +22,7 @@ import {
 } from 'reactstrap';
 import { Formik, Form, Field } from 'formik';
 
-function Page({ reqAction, isServer, reqRoutePath, reqHost }) {
-  const cmsPageStore = useSelector(state => state.cmsPageStore);
+function User({ reqAction, isServer, reqRoutePath, reqHost }) {
   const cmsUserStore = useSelector(state => state.cmsUserStore);
   const router = useRouter();
   const dispatch = useDispatch();
@@ -38,21 +37,21 @@ function Page({ reqAction, isServer, reqRoutePath, reqHost }) {
 
   useEffect(() => {
     if (action === 'new') {
-      dispatch(cmsPageActions.SET_PAGE_AUTHOR(cmsUserStore.userAdminId));
+      dispatch(cmsUserActions.SET_PAGE_AUTHOR(cmsUserStore.userAdminId));
     }
   }, [cmsUserStore.userAdminId]);
 
   const handleOnSubmit = (values, { setSubmitting, setValues, resetForm }) => {
-    dispatch(cmsPageActions.RESET_STATUS_FORM());
+    dispatch(cmsUserActions.RESET_STATUS_FORM());
 
     if (action === 'new') {
-      dispatch(cmsPageActions.ADD_PAGE(values)).then(res => {
+      dispatch(cmsUserActions.ADD_PAGE(values)).then(res => {
         setSubmitting(false);
 
         router.push(`/admin/page?action=edit&id=${res.newPage._id}`);
       });
     } else if (action === 'edit') {
-      dispatch(cmsPageActions.EDIT_PAGE(values)).then(res => {
+      dispatch(cmsUserActions.EDIT_PAGE(values)).then(res => {
         setSubmitting(false);
       });
     }
@@ -61,7 +60,7 @@ function Page({ reqAction, isServer, reqRoutePath, reqHost }) {
   return (
     <>
       <Head>
-        <title>Panel - Page</title>
+        <title>Panel - User</title>
       </Head>
       <Header />
 
@@ -152,7 +151,7 @@ function Page({ reqAction, isServer, reqRoutePath, reqHost }) {
   );
 }
 
-Page.getInitialProps = async ({ req, query, store, isServer }) => {
+User.getInitialProps = async ({ req, query, store, isServer }) => {
   initialCheckAuth(req, store);
 
   let reqAction = '';
@@ -165,19 +164,19 @@ Page.getInitialProps = async ({ req, query, store, isServer }) => {
     reqHost = req.headers.host;
 
     if (reqAction === 'edit') {
-      store.dispatch(cmsPageActions.SET_PAGE_SERVER(query.data));
+      store.dispatch(cmsUserActions.SET_PAGE_SERVER(query.data));
     }
   } else {
     store.dispatch(
-      cmsPageActions.RESET_PAGE_FORM(store.getState().cmsUserStore.userAdminId)
+      cmsUserActions.RESET_PAGE_FORM(store.getState().cmsUserStore.userAdminId)
     );
-    store.dispatch(cmsPageActions.RESET_STATUS_FORM());
+    store.dispatch(cmsUserActions.RESET_STATUS_FORM());
 
     if (query.action === 'edit') {
-      store.dispatch(cmsPageActions.GET_PAGE(query.id));
+      store.dispatch(cmsUserActions.GET_PAGE(query.id));
     }
   }
   return { reqAction, isServer, reqRoutePath, reqHost };
 };
 
-export default Page;
+export default User;
