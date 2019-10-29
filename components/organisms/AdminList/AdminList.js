@@ -43,7 +43,7 @@ const AdminList = ({ list, columns, buttons }) => {
                   {index === 0 && (
                     <AdminEditButtons
                       buttons={buttons}
-                      itemTitle={item.title}
+                      itemTitle={item.title || item.name}
                       itemId={item._id}
                     />
                   )}

@@ -6,7 +6,9 @@ import reducerApiData from 'helpers/reducerApiData';
 
 const initialState = {
   userAdminName: '',
-  userAdminId: ''
+  userAdminId: '',
+  ...initialStateApiData('GET_USERS'),
+  users: []
 };
 
 export default createReducer(initialState, {
@@ -16,5 +18,8 @@ export default createReducer(initialState, {
   },
   [cmsUserActions.SET_USERS_SERVER]: (state, action) => {
     state.users = action.payload;
-  }
+  },
+  ...reducerApiData('GET_USERS', (state, action) => {
+    state.users = action.payload;
+  })
 });

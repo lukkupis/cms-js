@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Router from 'next/router';
 
+import * as cmsUserActions from 'actions/cmsUserActions';
 import initialCheckAuth from 'helpers/initialCheckAuth';
 
 import Head from 'next/head';
@@ -11,9 +12,17 @@ import AdminMenu from 'components/organisms/AdminMenu/AdminMenu';
 import AdminMain from 'components/atoms/AdminMain';
 import AdminContent from 'components/atoms/AdminContent';
 import AdminHeader from 'components/molecules/AdminHeader';
+import ModalRemove from 'components/molecules/ModalRemove';
 
-function Users() {
+function Users({ isServer, reqRoutePath }) {
+  const dispatch = useDispatch();
+
   const cmsUserStore = useSelector(state => state.cmsUserStore);
+  const [modalRemove, setModalRemove] = useState({
+    open: false,
+    itemId: '',
+    itemName: ''
+  });
 
   useEffect(() => {
     cmsUserStore.userAdminName === '' && Router.push('/login');
@@ -27,41 +36,57 @@ function Users() {
       <Header />
 
       <AdminMain>
-        <AdminMenu />
+        <AdminMenu isServer={isServer} reqRoutePath={reqRoutePath} />
 
         <AdminContent>
           <AdminHeader
             name="Users"
             buttonLabel="Add User"
-            buttonLink="user-new"
-            startedState={cmsPageStore.GET_USERS_STARTED}
+            buttonLink="user?action=new"
+            buttonLinkAs="users/user?action=new"
+            startedState={
+              cmsUserStore.GET_USERS_STARTED || cmsUserStore.DELETE_USER_STARTED
+            }
           />
 
-          {(cmsUserStore.SET_USERS_SUCCEEDED ||
-            cmsUserStore.GET_USERS_SUCCEEDED) && (
+          {cmsUserStore.users.length > 0 && (
             <AdminList
               list={cmsUserStore.users}
               columns={[
-                { label: 'login', content: 'login' },
                 { label: 'name', content: 'name' },
+                { label: 'login', content: 'login' },
                 { label: 'email', content: 'email' },
                 { label: 'registered', content: 'registered', type: 'date' },
                 { label: 'permissions', content: 'permissions' }
               ]}
-              buttons={(itemId, itemTitle) => [
+              buttons={(itemId, itemName) => [
                 {
                   label: 'Edit',
-                  link: `/admin/user-new?action=edit&id=${itemId}`
+                  link: `/admin/user?action=edit&id=${itemId}`,
+                  as: `/admin/users/page?action=edit&id=${itemId}`
                 },
                 {
                   label: 'Delete',
-                  action: () => {}
+                  action: () => {
+                    setModalRemove({ open: true, itemId, itemName });
+                  }
                 }
               ]}
             />
           )}
         </AdminContent>
       </AdminMain>
+      <ModalRemove
+        isOpen={modalRemove.open}
+        toggle={() =>
+          setModalRemove({ ...modalRemove, open: !modalRemove.open })
+        }
+        itemTitle={modalRemove.itemName}
+        action={() => {
+          setModalRemove({ ...modalRemove, open: !modalRemove.open });
+          dispatch(cmsUserActions.DELETE_USER(modalRemove.itemId));
+        }}
+      />
     </>
   );
 }
@@ -69,12 +94,16 @@ function Users() {
 Users.getInitialProps = async ({ req, query, store, isServer }) => {
   initialCheckAuth(req, store);
 
+  let reqRoutePath = '';
+
   if (req) {
+    reqRoutePath = req.originalUrl;
+
     store.dispatch(cmsUserActions.SET_USERS_SERVER(query.data));
   } else {
     store.dispatch(cmsUserActions.GET_USERS());
   }
-  return { isServer };
+  return { isServer, reqRoutePath };
 };
 
 export default Users;

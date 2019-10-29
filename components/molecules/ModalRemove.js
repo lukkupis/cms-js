@@ -11,10 +11,8 @@ const ModalRemove = ({ className, isOpen, toggle, action, itemTitle }) => {
       centered={true}
       className={className}
     >
-      <ModalHeader toggle={toggle}>Delete page</ModalHeader>
-      <ModalBody>
-        Are you sure you want to delete the page: {itemTitle}?
-      </ModalBody>
+      <ModalHeader toggle={toggle}>Delete</ModalHeader>
+      <ModalBody>Are you sure you want to delete: {itemTitle}?</ModalBody>
       <ModalFooter>
         <Button color="danger" onClick={action}>
           Delete
