@@ -17,8 +17,8 @@ import 'theme/index.scss';
 
 function Header(props) {
   const [open, setOpen] = useState(false);
-  const cmsStore = useSelector(state => state.cmsStore);
-  const { userAdminName } = cmsStore;
+  const cmsUserStore = useSelector(state => state.cmsUserStore);
+  const { userAdminName } = cmsUserStore;
 
   return (
     <>

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-import * as cmsActions from 'actions/cmsActions';
+import * as cmsPageActions from 'actions/cmsPageActions';
 import initialCheckAuth from 'helpers/initialCheckAuth';
 
 import Head from 'next/head';
@@ -23,7 +23,8 @@ import {
 import { Formik, Form, Field } from 'formik';
 
 function Page({ reqAction, isServer, reqRoutePath, reqHost }) {
-  const cmsStore = useSelector(state => state.cmsStore);
+  const cmsPageStore = useSelector(state => state.cmsPageStore);
+  const cmsUserStore = useSelector(state => state.cmsUserStore);
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -32,26 +33,26 @@ function Page({ reqAction, isServer, reqRoutePath, reqHost }) {
   const host = reqHost || window.location.host;
 
   useEffect(() => {
-    cmsStore.userAdminName === '' && router.push('/login');
-  }, [cmsStore.userAdminName]);
+    cmsUserStore.userAdminName === '' && router.push('/login');
+  }, [cmsUserStore.userAdminName]);
 
   useEffect(() => {
     if (action === 'new') {
-      dispatch(cmsActions.SET_PAGE_AUTHOR());
+      dispatch(cmsPageActions.SET_PAGE_AUTHOR(cmsUserStore.userAdminId));
     }
-  }, [cmsStore.userAdminId]);
+  }, [cmsUserStore.userAdminId]);
 
   const handleOnSubmit = (values, { setSubmitting, setValues, resetForm }) => {
-    dispatch(cmsActions.RESET_STATUS_FORM());
+    dispatch(cmsPageActions.RESET_STATUS_FORM());
 
     if (action === 'new') {
-      dispatch(cmsActions.ADD_PAGE(values)).then(res => {
+      dispatch(cmsPageActions.ADD_PAGE(values)).then(res => {
         setSubmitting(false);
 
         router.push(`/admin/page?action=edit&id=${res.newPage._id}`);
       });
     } else if (action === 'edit') {
-      dispatch(cmsActions.EDIT_PAGE(values)).then(res => {
+      dispatch(cmsPageActions.EDIT_PAGE(values)).then(res => {
         setSubmitting(false);
       });
     }
@@ -68,34 +69,34 @@ function Page({ reqAction, isServer, reqRoutePath, reqHost }) {
         <AdminMenu isServer={isServer} reqRoutePath={reqRoutePath} />
 
         <AdminContent className="pt-5">
-          {cmsStore.pageSaveStatus && (
+          {cmsPageStore.pageSaveStatus && (
             <Alert
               color={
-                cmsStore.pageSaveStatus === 'published' ||
-                cmsStore.pageSaveStatus === 'edited' ||
-                cmsStore.pageSaveStatus === 'save'
+                cmsPageStore.pageSaveStatus === 'published' ||
+                cmsPageStore.pageSaveStatus === 'edited' ||
+                cmsPageStore.pageSaveStatus === 'save'
                   ? 'success'
                   : 'danger'
               }
             >
-              {cmsStore.pageSaveMessage ||
+              {cmsPageStore.pageSaveMessage ||
                 'Server error. Please try again later.'}
             </Alert>
           )}
 
-          {cmsStore.pageForm.slug && (
+          {cmsPageStore.pageForm.slug && (
             <Link
-              href={'/page?slug=' + cmsStore.pageForm.slug}
-              as={'/' + cmsStore.pageForm.slug}
+              href={'/page?slug=' + cmsPageStore.pageForm.slug}
+              as={'/' + cmsPageStore.pageForm.slug}
             >
               <a className="d-block mb-4">
-                {host + '/' + cmsStore.pageForm.slug}
+                {host + '/' + cmsPageStore.pageForm.slug}
               </a>
             </Link>
           )}
 
           <Formik
-            initialValues={cmsStore.pageForm}
+            initialValues={cmsPageStore.pageForm}
             enableReinitialize={true}
             validate={values => {
               let errors = {};
@@ -164,14 +165,16 @@ Page.getInitialProps = async ({ req, query, store, isServer }) => {
     reqHost = req.headers.host;
 
     if (reqAction === 'edit') {
-      store.dispatch(cmsActions.SET_PAGE_SERVER(query.data));
+      store.dispatch(cmsPageActions.SET_PAGE_SERVER(query.data));
     }
   } else {
-    store.dispatch(cmsActions.RESET_PAGE_FORM());
-    store.dispatch(cmsActions.RESET_STATUS_FORM());
+    store.dispatch(
+      cmsPageActions.RESET_PAGE_FORM(store.getState().cmsUserStore.userAdminId)
+    );
+    store.dispatch(cmsPageActions.RESET_STATUS_FORM());
 
     if (query.action === 'edit') {
-      store.dispatch(cmsActions.GET_PAGE(query.id));
+      store.dispatch(cmsPageActions.GET_PAGE(query.id));
     }
   }
   return { reqAction, isServer, reqRoutePath, reqHost };

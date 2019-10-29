@@ -6,10 +6,10 @@ import Head from 'next/head';
 import Header from 'components/organisms/Header/Header';
 
 function Index() {
-  const cmsStore = useSelector(state => state.cmsStore);
+  const cmsUserStore = useSelector(state => state.cmsUserStore);
 
   useEffect(() => {
-    if (cmsStore.userAdminName === '') {
+    if (cmsUserStore.userAdminName === '') {
       Router.push('/login');
     } else {
       Router.push('/admin/pages');

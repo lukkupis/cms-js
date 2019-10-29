@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
 
-import cmsReducer from 'reducers/cmsReducer';
-// import themeReducer from 'reducers/themeReducer';
+import cmsPageReducer from 'reducers/cmsPageReducer';
+import cmsUserReducer from 'reducers/cmsUserReducer';
+import themeReducer from 'reducers/themeReducer';
 
 const rootReducer = combineReducers({
-  cmsStore: cmsReducer
+  cmsPageStore: cmsPageReducer,
+  cmsUserStore: cmsUserReducer
   // themeStore: themeReducer
 });
 

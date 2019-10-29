@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Router from 'next/router';
 
-import * as cmsActions from 'actions/cmsActions';
 import initialCheckAuth from 'helpers/initialCheckAuth';
 
 import Head from 'next/head';
@@ -14,11 +13,11 @@ import AdminContent from 'components/atoms/AdminContent';
 import AdminHeader from 'components/molecules/AdminHeader';
 
 function Users() {
-  const cmsStore = useSelector(state => state.cmsStore);
+  const cmsUserStore = useSelector(state => state.cmsUserStore);
 
   useEffect(() => {
-    cmsStore.userAdminName === '' && Router.push('/login');
-  }, [cmsStore.userAdminName]);
+    cmsUserStore.userAdminName === '' && Router.push('/login');
+  }, [cmsUserStore.userAdminName]);
 
   return (
     <>
@@ -35,12 +34,13 @@ function Users() {
             name="Users"
             buttonLabel="Add User"
             buttonLink="user-new"
-            startedState={cmsStore.GET_USERS_STARTED}
+            startedState={cmsPageStore.GET_USERS_STARTED}
           />
 
-          {(cmsStore.SET_USERS_SUCCEEDED || cmsStore.GET_USERS_SUCCEEDED) && (
+          {(cmsUserStore.SET_USERS_SUCCEEDED ||
+            cmsUserStore.GET_USERS_SUCCEEDED) && (
             <AdminList
-              list={cmsStore.users}
+              list={cmsUserStore.users}
               columns={[
                 { label: 'login', content: 'login' },
                 { label: 'name', content: 'name' },
@@ -70,9 +70,9 @@ Users.getInitialProps = async ({ req, query, store, isServer }) => {
   initialCheckAuth(req, store);
 
   if (req) {
-    store.dispatch(cmsActions.SET_USERS_SERVER(query.data));
+    store.dispatch(cmsUserActions.SET_USERS_SERVER(query.data));
   } else {
-    store.dispatch(cmsActions.GET_USERS());
+    store.dispatch(cmsUserActions.GET_USERS());
   }
   return { isServer };
 };

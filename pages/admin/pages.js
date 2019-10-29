@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Router from 'next/router';
 
-import * as cmsActions from 'actions/cmsActions';
+import * as cmsPageActions from 'actions/cmsPageActions';
 import initialCheckAuth from 'helpers/initialCheckAuth';
 
 import Head from 'next/head';
@@ -17,7 +17,8 @@ import ModalRemove from 'components/molecules/ModalRemove';
 function Pages({ isServer, reqRoutePath }) {
   const dispatch = useDispatch();
 
-  const cmsStore = useSelector(state => state.cmsStore);
+  const cmsPageStore = useSelector(state => state.cmsPageStore);
+  const cmsUserStore = useSelector(state => state.cmsUserStore);
   const [modalRemove, setModalRemove] = useState({
     open: false,
     itemId: '',
@@ -25,8 +26,8 @@ function Pages({ isServer, reqRoutePath }) {
   });
 
   useEffect(() => {
-    cmsStore.userAdminName === '' && Router.push('/login');
-  }, [cmsStore.userAdminName]);
+    cmsUserStore.userAdminName === '' && Router.push('/login');
+  }, [cmsUserStore.userAdminName]);
 
   return (
     <>
@@ -45,13 +46,13 @@ function Pages({ isServer, reqRoutePath }) {
             buttonLink="page?action=new"
             buttonLinkAs="pages/page?action=new"
             startedState={
-              cmsStore.GET_PAGES_STARTED || cmsStore.DELETE_PAGE_STARTED
+              cmsPageStore.GET_PAGES_STARTED || cmsPageStore.DELETE_PAGE_STARTED
             }
           />
 
-          {cmsStore.pages.length > 0 && (
+          {cmsPageStore.pages.length > 0 && (
             <AdminList
-              list={cmsStore.pages}
+              list={cmsPageStore.pages}
               columns={[
                 { label: 'title', content: 'title' },
                 {
@@ -87,7 +88,7 @@ function Pages({ isServer, reqRoutePath }) {
         itemTitle={modalRemove.itemTitle}
         action={() => {
           setModalRemove({ ...modalRemove, open: !modalRemove.open });
-          dispatch(cmsActions.DELETE_PAGE(modalRemove.itemId));
+          dispatch(cmsPageActions.DELETE_PAGE(modalRemove.itemId));
         }}
       />
     </>
@@ -102,9 +103,9 @@ Pages.getInitialProps = async ({ req, query, store, isServer }) => {
   if (req) {
     reqRoutePath = req.originalUrl;
 
-    store.dispatch(cmsActions.SET_PAGES_SERVER(query.data));
+    store.dispatch(cmsPageActions.SET_PAGES_SERVER(query.data));
   } else {
-    store.dispatch(cmsActions.GET_PAGES());
+    store.dispatch(cmsPageActions.GET_PAGES());
   }
   return { isServer, reqRoutePath };
 };

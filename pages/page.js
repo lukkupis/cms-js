@@ -4,14 +4,14 @@ import Link from 'next/link';
 
 import initialCheckAuth from 'helpers/initialCheckAuth';
 
-import * as cmsActions from 'actions/cmsActions';
+import * as cmsPageActions from 'actions/cmsPageActions';
 
 import Head from 'next/head';
 import Header from 'components/organisms/Header/Header';
 
 function Home(props) {
-  const cmsStore = useSelector(state => state.cmsStore);
-  const page = cmsStore.currentPageData;
+  const cmsPageStore = useSelector(state => state.cmsPageStore);
+  const page = cmsPageStore.currentPageData;
 
   return (
     <>
@@ -35,10 +35,10 @@ Home.getInitialProps = async ({ req, query, store, isServer }) => {
   initialCheckAuth(req, store, false);
 
   if (req) {
-    store.dispatch(cmsActions.SET_PAGE_DATA_SERVER(query.data));
+    store.dispatch(cmsPageActions.SET_PAGE_DATA_SERVER(query.data));
   } else {
-    store.dispatch(cmsActions.RESET_PAGE_DATA());
-    store.dispatch(cmsActions.GET_PAGE_DATA(query.slug));
+    store.dispatch(cmsPageActions.RESET_PAGE_DATA());
+    store.dispatch(cmsPageActions.GET_PAGE_DATA(query.slug));
   }
 
   return { isServer };

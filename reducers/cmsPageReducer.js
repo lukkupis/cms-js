@@ -1,6 +1,6 @@
 import { createReducer } from 'redux-starter-kit';
 
-import * as cmsActions from '../actions/cmsActions';
+import * as cmsPageActions from '../actions/cmsPageActions';
 import initialStateApiData from 'helpers/initialStateApiData';
 import reducerApiData from 'helpers/reducerApiData';
 
@@ -23,8 +23,6 @@ const initialCurrentPageData = {
 };
 
 const initialState = {
-  userAdminName: '',
-  userAdminId: '',
   ...initialStateApiData('GET_PAGES'),
   pages: [],
   ...initialStateApiData('GET_PAGE'),
@@ -38,33 +36,26 @@ const initialState = {
 };
 
 export default createReducer(initialState, {
-  [cmsActions.SET_USER]: (state, action) => {
-    state.userAdminName = action.payload.name;
-    state.userAdminId = action.payload.id;
-  },
-  [cmsActions.SET_PAGES_SERVER]: (state, action) => {
+  [cmsPageActions.SET_PAGES_SERVER]: (state, action) => {
     state.pages = action.payload;
-  },
-  [cmsActions.SET_USERS_SERVER]: (state, action) => {
-    state.users = action.payload;
   },
   ...reducerApiData('GET_PAGES', (state, action) => {
     state.pages = action.payload;
   }),
-  [cmsActions.SET_PAGE_SERVER]: (state, action) => {
+  [cmsPageActions.SET_PAGE_SERVER]: (state, action) => {
     state.pageForm = action.payload;
   },
   ...reducerApiData('GET_PAGE', (state, action) => {
     state.pageForm = action.payload;
   }),
-  [cmsActions.SET_PAGE_AUTHOR]: (state, action) => {
-    state.pageForm.author = state.userAdminId;
+  [cmsPageActions.SET_PAGE_AUTHOR]: (state, action) => {
+    state.pageForm.author = action.payload;
   },
-  [cmsActions.RESET_PAGE_FORM]: (state, action) => {
+  [cmsPageActions.RESET_PAGE_FORM]: (state, action) => {
     state.pageForm = initialPageForm;
-    state.pageForm.author = state.userAdminId;
+    state.pageForm.author = action.payload;
   },
-  [cmsActions.RESET_STATUS_FORM]: (state, action) => {
+  [cmsPageActions.RESET_STATUS_FORM]: (state, action) => {
     state.pageSaveStatus = '';
     state.pageSaveMessage = '';
   },
@@ -104,10 +95,10 @@ export default createReducer(initialState, {
       state.currentPageData = action.payload;
     }
   }),
-  [cmsActions.RESET_PAGE_DATA]: (state, action) => {
+  [cmsPageActions.RESET_PAGE_DATA]: (state, action) => {
     state.currentPageData = initialCurrentPageData;
   },
-  [cmsActions.SET_PAGE_DATA_SERVER]: (state, action) => {
+  [cmsPageActions.SET_PAGE_DATA_SERVER]: (state, action) => {
     if (action.payload) {
       state.currentPageData = action.payload;
     }

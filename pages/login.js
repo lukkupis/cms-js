@@ -1,4 +1,4 @@
-import * as cmsActions from 'actions/cmsActions';
+import * as cmsUserActions from 'actions/cmsUserActions';
 
 import Header from 'components/organisms/Header/Header';
 import React from 'react';
@@ -55,10 +55,10 @@ function Login({ query }) {
 Login.getInitialProps = async ({ req, query, store, isServer }) => {
   if (req) {
     if (req.session.user) {
-      store.dispatch(cmsActions.SET_USER(req.session.user.name));
+      store.dispatch(cmsUserActions.SET_USER(req.session.user.name));
     }
   } else {
-    const userAdminName = store.getState().cmsStore.userAdminName;
+    const userAdminName = store.getState().cmsUserStore.userAdminName;
 
     if (userAdminName != '') {
       Router.push('/admin');
