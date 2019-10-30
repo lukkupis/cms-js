@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const app = require('../nextApp');
 
-const page_controller = require('../controllers/pageController');
-const user_controller = require('../controllers/userController');
+const pageCmsController = require('../controllers/pageCmsController');
+const userCmsController = require('../controllers/userCmsController');
 
 router.all('*', (req, res, next) => {
   if (!req.session.user) {
@@ -19,9 +18,10 @@ router.get('/', (req, res) => {
   res.redirect('/admin/pages');
 });
 
-router.get('/pages', page_controller.page_list);
-router.get('/pages/page', page_controller.page_detail);
+router.get('/pages', pageCmsController.page_list);
+router.get('/pages/page', pageCmsController.page_detail);
 
-router.get('/users', user_controller.user_list);
+router.get('/users', userCmsController.user_list);
+router.get('/users/user', userCmsController.user_detail);
 
 module.exports = router;

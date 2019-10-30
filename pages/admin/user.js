@@ -35,23 +35,17 @@ function User({ reqAction, isServer, reqRoutePath, reqHost }) {
     cmsUserStore.userAdminName === '' && router.push('/login');
   }, [cmsUserStore.userAdminName]);
 
-  useEffect(() => {
-    if (action === 'new') {
-      dispatch(cmsUserActions.SET_PAGE_AUTHOR(cmsUserStore.userAdminId));
-    }
-  }, [cmsUserStore.userAdminId]);
-
   const handleOnSubmit = (values, { setSubmitting, setValues, resetForm }) => {
     dispatch(cmsUserActions.RESET_STATUS_FORM());
 
     if (action === 'new') {
-      dispatch(cmsUserActions.ADD_PAGE(values)).then(res => {
+      dispatch(cmsUserActions.ADD_USER(values)).then(res => {
         setSubmitting(false);
 
         router.push(`/admin/user?action=edit&id=${res.newUser._id}`);
       });
     } else if (action === 'edit') {
-      dispatch(cmsUserActions.EDIT_PAGE(values)).then(res => {
+      dispatch(cmsUserActions.EDIT_USER(values)).then(res => {
         setSubmitting(false);
       });
     }
@@ -153,9 +147,7 @@ function User({ reqAction, isServer, reqRoutePath, reqHost }) {
                     name="permissions"
                     id="permissions"
                   >
-                    <option value="admin" selected>
-                      Administrator
-                    </option>
+                    <option value="admin">Administrator</option>
                     <option value="user">User</option>
                   </Input>
                 </FormGroup>
@@ -184,16 +176,16 @@ User.getInitialProps = async ({ req, query, store, isServer }) => {
     reqHost = req.headers.host;
 
     if (reqAction === 'edit') {
-      store.dispatch(cmsUserActions.SET_PAGE_SERVER(query.data));
+      store.dispatch(cmsUserActions.SET_USER_SERVER(query.data));
     }
   } else {
     store.dispatch(
-      cmsUserActions.RESET_PAGE_FORM(store.getState().cmsUserStore.userAdminId)
+      cmsUserActions.RESET_USER_FORM(store.getState().cmsUserStore.userAdminId)
     );
     store.dispatch(cmsUserActions.RESET_STATUS_FORM());
 
     if (query.action === 'edit') {
-      store.dispatch(cmsUserActions.GET_PAGE(query.id));
+      store.dispatch(cmsUserActions.GET_USER(query.id));
     }
   }
   return { reqAction, isServer, reqRoutePath, reqHost };

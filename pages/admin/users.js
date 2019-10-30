@@ -63,7 +63,7 @@ function Users({ isServer, reqRoutePath }) {
                 {
                   label: 'Edit',
                   link: `/admin/user?action=edit&id=${itemId}`,
-                  as: `/admin/users/page?action=edit&id=${itemId}`
+                  as: `/admin/users/user?action=edit&id=${itemId}`
                 },
                 {
                   label: 'Delete',

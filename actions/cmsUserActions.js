@@ -30,3 +30,7 @@ export const EDIT_USER = createActionThunk('EDIT_USER', values =>
 export const DELETE_USER = createActionThunk('DELETE_USER', id =>
   apiUsersCms.deleteUserAdmin(id)
 );
+
+export const SET_USER_DATA_SERVER = createAction('SET_USER_DATA_SERVER');
+
+export const RESET_USER_DATA = createAction('RESET_USER_DATA');

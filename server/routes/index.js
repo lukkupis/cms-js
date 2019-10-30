@@ -2,8 +2,8 @@ const express = require('express');
 const app = require('../nextApp');
 const router = express.Router();
 
-const user_controller = require('../controllers/userController');
-const page_controller = require('../controllers/pageController');
+const userCmsController = require('../controllers/userCmsController');
+const pageController = require('../controllers/pageController');
 
 /* GET home page. */
 router.get('/', (req, res) => {
@@ -23,8 +23,8 @@ router.get('/logout', (req, res) => {
   res.redirect('/login');
 });
 
-router.post('/login', user_controller.user_login);
+router.post('/login', userCmsController.user_login);
 
-router.get('/:slug', page_controller.page_data);
+router.get('/:slug', pageController.page_data);
 
 module.exports = router;

@@ -24,6 +24,7 @@ module.exports = withSass({
     config.resolve.alias['templates'] = path.join(__dirname, 'templates');
     config.resolve.alias['theme'] = path.join(__dirname, 'theme');
     config.resolve.alias['helpers'] = path.join(__dirname, 'helpers');
+    config.resolve.alias['api'] = path.join(__dirname, 'api');
     return config;
   }
 });

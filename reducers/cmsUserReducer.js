@@ -8,7 +8,7 @@ const initialUserForm = {
   name: '',
   login: '',
   email: '',
-  permissions: ''
+  permissions: 'admin'
 };
 
 const initialState = {
@@ -82,13 +82,5 @@ export default createReducer(initialState, {
     if (action.payload) {
       state.currentUserData = action.payload;
     }
-  }),
-  [cmsUserActions.RESET_USER_DATA]: (state, action) => {
-    state.currentUserData = initialUserForm;
-  },
-  [cmsUserActions.SET_USER_DATA_SERVER]: (state, action) => {
-    if (action.payload) {
-      state.currentUserData = action.payload;
-    }
-  }
+  })
 });
