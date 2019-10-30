@@ -61,7 +61,7 @@ function User({ reqAction, isServer, reqRoutePath, reqHost }) {
       <AdminMain>
         <AdminMenu isServer={isServer} reqRoutePath={reqRoutePath} />
 
-        <AdminContent className="pt-5">
+        <AdminContent className="pt-5 col-xl-6">
           {cmsUserStore.userSaveStatus && (
             <Alert
               color={

@@ -68,7 +68,7 @@ function Page({ reqAction, isServer, reqRoutePath, reqHost }) {
       <AdminMain>
         <AdminMenu isServer={isServer} reqRoutePath={reqRoutePath} />
 
-        <AdminContent className="pt-5">
+        <AdminContent className="pt-5 col-xl-6">
           {cmsPageStore.pageSaveStatus && (
             <Alert
               color={
@@ -138,6 +138,7 @@ function Page({ reqAction, isServer, reqRoutePath, reqHost }) {
                     type="textarea"
                     component="textarea"
                     name="content"
+                    rows="8"
                   />
                 </FormGroup>
                 <Button type="submit" disabled={isSubmitting}>

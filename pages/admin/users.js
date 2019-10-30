@@ -49,7 +49,7 @@ function Users({ isServer, reqRoutePath }) {
             }
           />
 
-          {cmsUserStore.users.length > 0 && (
+          {cmsUserStore.users.length > 0 ? (
             <AdminList
               list={cmsUserStore.users}
               columns={[
@@ -73,6 +73,8 @@ function Users({ isServer, reqRoutePath }) {
                 }
               ]}
             />
+          ) : (
+            'Create a new administrator.'
           )}
         </AdminContent>
       </AdminMain>

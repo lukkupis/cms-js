@@ -5,16 +5,30 @@ const app = require('../nextApp');
 exports.user_login = (req, res) => {
   const { login, password } = req.body;
 
-  User.findOne({ login }, (err, data) => {
-    if (!data) {
-      res.redirect('/login?valid=error');
-    } else if (data.password != password) {
-      res.redirect('/login?valid=error');
-    } else {
-      const { _id, name, login, permissions } = data;
+  User.find({ permissions: 'admin' }, (err, data) => {
+    if (data.length) {
+      User.findOne({ login }, (err, data) => {
+        if (!data) {
+          res.redirect('/login?valid=error');
+        } else if (data.password != password) {
+          res.redirect('/login?valid=error');
+        } else {
+          const { _id, name, login, permissions } = data;
 
-      req.session.user = { id: _id, name, login, permissions };
-      res.redirect('/admin');
+          req.session.user = { id: _id, name, login, permissions };
+          res.redirect('/admin');
+        }
+      });
+    } else if (login === 'admin' && password === 'admin') {
+      req.session.user = {
+        id: 0,
+        name: 'Admin',
+        login: 'admin',
+        permissions: 'admin'
+      };
+      res.redirect('/admin/users');
+    } else {
+      res.redirect('/login?valid=error');
     }
   });
 };
