@@ -48,7 +48,7 @@ function User({ reqAction, isServer, reqRoutePath, reqHost }) {
       dispatch(cmsUserActions.ADD_PAGE(values)).then(res => {
         setSubmitting(false);
 
-        router.push(`/admin/page?action=edit&id=${res.newPage._id}`);
+        router.push(`/admin/user?action=edit&id=${res.newUser._id}`);
       });
     } else if (action === 'edit') {
       dispatch(cmsUserActions.EDIT_PAGE(values)).then(res => {
@@ -68,39 +68,42 @@ function User({ reqAction, isServer, reqRoutePath, reqHost }) {
         <AdminMenu isServer={isServer} reqRoutePath={reqRoutePath} />
 
         <AdminContent className="pt-5">
-          {cmsPageStore.pageSaveStatus && (
+          {cmsUserStore.userSaveStatus && (
             <Alert
               color={
-                cmsPageStore.pageSaveStatus === 'published' ||
-                cmsPageStore.pageSaveStatus === 'edited' ||
-                cmsPageStore.pageSaveStatus === 'save'
+                cmsUserStore.userSaveStatus === 'added' ||
+                cmsUserStore.userSaveStatus === 'edited' ||
+                cmsUserStore.userSaveStatus === 'save'
                   ? 'success'
                   : 'danger'
               }
             >
-              {cmsPageStore.pageSaveMessage ||
+              {cmsUserStore.userSaveMessage ||
                 'Server error. Please try again later.'}
             </Alert>
           )}
 
-          {cmsPageStore.pageForm.slug && (
+          {cmsUserStore.userForm.slug && (
             <Link
-              href={'/page?slug=' + cmsPageStore.pageForm.slug}
-              as={'/' + cmsPageStore.pageForm.slug}
+              href={'/user?slug=' + cmsUserStore.userForm.slug}
+              as={'/' + cmsUserStore.userForm.slug}
             >
               <a className="d-block mb-4">
-                {host + '/' + cmsPageStore.pageForm.slug}
+                {host + '/' + cmsUserStore.userForm.slug}
               </a>
             </Link>
           )}
 
           <Formik
-            initialValues={cmsPageStore.pageForm}
+            initialValues={cmsUserStore.userForm}
             enableReinitialize={true}
             validate={values => {
               let errors = {};
               if (!values.title) {
-                errors.title = 'Required';
+                errors.login = 'Required';
+                errors.name = 'Required';
+                errors.email = 'Required';
+                errors.permissions = 'Required';
               }
               return errors;
             }}
@@ -108,39 +111,56 @@ function User({ reqAction, isServer, reqRoutePath, reqHost }) {
           >
             {({ errors, touched, isSubmitting, values }) => (
               <FormStrap tag={Form}>
-                {action === 'edit' && (
-                  <FormGroup>
-                    <Label for="slug">Slug</Label>
-                    <Input
-                      tag={Field}
-                      type="text"
-                      name="slug"
-                      placeholder="Enter the slug"
-                    />
-                  </FormGroup>
-                )}
                 <FormGroup>
-                  <Label for="title">Title</Label>
+                  <Label for="title">Login</Label>
                   <Input
                     tag={Field}
                     type="text"
                     name="title"
-                    placeholder="Enter the title"
-                    invalid={errors.title && touched.title}
+                    placeholder="Enter the login"
+                    invalid={errors.login && touched.login}
                   />
-                  <FormFeedback>{errors.title}</FormFeedback>
+                  <FormFeedback>{errors.login}</FormFeedback>
                 </FormGroup>
                 <FormGroup>
-                  <Label for="content">Content</Label>
+                  <Label for="content">Name</Label>
                   <Input
                     tag={Field}
-                    type="textarea"
-                    component="textarea"
-                    name="content"
+                    type="text"
+                    name="name"
+                    placeholder="Enter the name"
+                    invalid={errors.name && touched.name}
                   />
+                  <FormFeedback>{errors.name}</FormFeedback>
+                </FormGroup>
+                <FormGroup>
+                  <Label for="content">E-mail</Label>
+                  <Input
+                    tag={Field}
+                    type="email"
+                    name="email"
+                    placeholder="Enter the E-mail"
+                    invalid={errors.email && touched.email}
+                  />
+                  <FormFeedback>{errors.email}</FormFeedback>
+                </FormGroup>
+                <FormGroup>
+                  <Label for="permissions">Permissions</Label>
+                  <Input
+                    tag={Field}
+                    type="select"
+                    as="select"
+                    name="permissions"
+                    id="permissions"
+                  >
+                    <option value="admin" selected>
+                      Administrator
+                    </option>
+                    <option value="user">User</option>
+                  </Input>
                 </FormGroup>
                 <Button type="submit" disabled={isSubmitting}>
-                  {action === 'edit' ? 'edit' : 'Publish'}
+                  {action === 'edit' ? 'Edit' : 'Add'}
                 </Button>
               </FormStrap>
             )}

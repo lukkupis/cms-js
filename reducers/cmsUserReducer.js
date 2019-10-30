@@ -11,14 +11,6 @@ const initialUserForm = {
   permissions: ''
 };
 
-const initialCurrentUserData = {
-  name: '',
-  login: '',
-  email: '',
-  permissions: '',
-  registered: ''
-};
-
 const initialState = {
   userAdminName: '',
   userAdminId: '',
@@ -31,7 +23,7 @@ const initialState = {
   userSaveStatus: '',
   userSaveMessage: '',
   userForm: initialUserForm,
-  currentuserData: initialCurrentUserData
+  currentuserData: initialUserForm
 };
 
 export default createReducer(initialState, {
@@ -54,49 +46,49 @@ export default createReducer(initialState, {
   [cmsUserActions.RESET_STATUS_FORM]: (state, action) => {
     state.userSaveStatus = '';
     state.userSaveMessage = '';
+  },
+  ...reducerApiData('ADD_USER', (state, action) => {
+    const { name, message, newUser } = action.payload;
+
+    if (name === 'published') {
+      state.users.unshift(newUser);
+      state.userSaveStatus = name;
+      state.userSaveMessage = message;
+      state.userForm = newUser;
+    }
+  }),
+  ...reducerApiData('EDIT_USER', (state, action) => {
+    const { name, message, newUser } = action.payload;
+
+    if (name === 'edited') {
+      const index = state.users.map(user => user._id).indexOf(newUser._id);
+
+      state.users[index] = newUser;
+
+      state.userSaveStatus = name;
+      state.userSaveMessage = message;
+      state.userForm = newUser;
+    }
+  }),
+  ...reducerApiData('DELETE_USER', (state, action) => {
+    const { name, id } = action.payload;
+    let { users } = state;
+
+    if (name === 'deleted') {
+      users.splice(users.map(user => user._id).indexOf(id), 1);
+    }
+  }),
+  ...reducerApiData('GET_USER_DATA', (state, action) => {
+    if (action.payload) {
+      state.currentUserData = action.payload;
+    }
+  }),
+  [cmsUserActions.RESET_USER_DATA]: (state, action) => {
+    state.currentUserData = initialUserForm;
+  },
+  [cmsUserActions.SET_USER_DATA_SERVER]: (state, action) => {
+    if (action.payload) {
+      state.currentUserData = action.payload;
+    }
   }
-  // ...reducerApiData('ADD_USER', (state, action) => {
-  //   const { name, message, newPage } = action.payload;
-
-  //   if (name === 'published') {
-  //     state.pages.unshift(newPage);
-  //     state.pageSaveStatus = name;
-  //     state.pageSaveMessage = message;
-  //     state.pageForm = newPage;
-  //   }
-  // }),
-  // ...reducerApiData('EDIT_PAGE', (state, action) => {
-  //   const { name, message, newPage } = action.payload;
-
-  //   if (name === 'edited') {
-  //     const index = state.pages.map(page => page._id).indexOf(newPage._id);
-
-  //     state.pages[index] = newPage;
-
-  //     state.pageSaveStatus = name;
-  //     state.pageSaveMessage = message;
-  //     state.pageForm = newPage;
-  //   }
-  // }),
-  // ...reducerApiData('DELETE_PAGE', (state, action) => {
-  //   const { name, id } = action.payload;
-  //   let { pages } = state;
-
-  //   if (name === 'deleted') {
-  //     pages.splice(pages.map(page => page._id).indexOf(id), 1);
-  //   }
-  // }),
-  // ...reducerApiData('GET_PAGE_DATA', (state, action) => {
-  //   if (action.payload) {
-  //     state.currentPageData = action.payload;
-  //   }
-  // }),
-  // [cmsPageActions.RESET_PAGE_DATA]: (state, action) => {
-  //   state.currentPageData = initialCurrentPageData;
-  // },
-  // [cmsPageActions.SET_PAGE_DATA_SERVER]: (state, action) => {
-  //   if (action.payload) {
-  //     state.currentPageData = action.payload;
-  //   }
-  // }
 });
