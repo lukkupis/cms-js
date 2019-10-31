@@ -49,7 +49,11 @@ function Page({ reqAction, isServer, reqRoutePath, reqHost }) {
       dispatch(cmsPageActions.ADD_PAGE(values)).then(res => {
         setSubmitting(false);
 
-        router.push(`/admin/page?action=edit&id=${res.newPage._id}`);
+        if (!res.code) {
+          router.push(`/admin/page?action=edit&id=${res.newPage._id}`);
+        } else {
+          setErrors({ login: 'Error creating page.' });
+        }
       });
     } else if (action === 'edit') {
       dispatch(cmsPageActions.EDIT_PAGE(values)).then(res => {
@@ -115,6 +119,7 @@ function Page({ reqAction, isServer, reqRoutePath, reqHost }) {
                     <Input
                       tag={Field}
                       type="text"
+                      id="slug"
                       name="slug"
                       placeholder="Enter the slug"
                     />
@@ -125,6 +130,7 @@ function Page({ reqAction, isServer, reqRoutePath, reqHost }) {
                   <Input
                     tag={Field}
                     type="text"
+                    id="title"
                     name="title"
                     placeholder="Enter the title"
                     invalid={errors.title && touched.title}
@@ -137,6 +143,7 @@ function Page({ reqAction, isServer, reqRoutePath, reqHost }) {
                     tag={Field}
                     type="textarea"
                     component="textarea"
+                    id="content"
                     name="content"
                     rows="8"
                   />

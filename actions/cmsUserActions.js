@@ -14,8 +14,6 @@ export const GET_USER = createActionThunk('GET_USER', id =>
   apiUsersCms.getUserAdmin(id)
 );
 
-export const SET_USER_AUTHOR = createAction('SET_USER_AUTHOR');
-
 export const RESET_USER_FORM = createAction('RESET_USER_FORM');
 export const RESET_STATUS_FORM = createAction('RESET_STATUS_FORM');
 
@@ -31,6 +29,4 @@ export const DELETE_USER = createActionThunk('DELETE_USER', id =>
   apiUsersCms.deleteUserAdmin(id)
 );
 
-export const SET_USER_DATA_SERVER = createAction('SET_USER_DATA_SERVER');
-
-export const RESET_USER_DATA = createAction('RESET_USER_DATA');
+// RESET_USER_PASS

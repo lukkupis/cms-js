@@ -8,7 +8,9 @@ const initialUserForm = {
   name: '',
   login: '',
   email: '',
-  permissions: 'admin'
+  permissions: 'admin',
+  password: '',
+  confirmPassword: ''
 };
 
 const initialState = {
@@ -22,8 +24,7 @@ const initialState = {
   ...initialStateApiData('DELETE_USER'),
   userSaveStatus: '',
   userSaveMessage: '',
-  userForm: initialUserForm,
-  currentuserData: initialUserForm
+  userForm: initialUserForm
 };
 
 export default createReducer(initialState, {
@@ -37,6 +38,9 @@ export default createReducer(initialState, {
   ...reducerApiData('GET_USERS', (state, action) => {
     state.users = action.payload;
   }),
+  [cmsUserActions.SET_USER_SERVER]: (state, action) => {
+    state.userForm = action.payload;
+  },
   ...reducerApiData('GET_USER', (state, action) => {
     state.userForm = action.payload;
   }),
@@ -76,11 +80,6 @@ export default createReducer(initialState, {
 
     if (name === 'deleted') {
       users.splice(users.map(user => user._id).indexOf(id), 1);
-    }
-  }),
-  ...reducerApiData('GET_USER_DATA', (state, action) => {
-    if (action.payload) {
-      state.currentUserData = action.payload;
     }
   })
 });

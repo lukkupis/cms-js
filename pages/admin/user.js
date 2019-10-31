@@ -29,20 +29,24 @@ function User({ reqAction, isServer, reqRoutePath, reqHost }) {
 
   const action = router.query.action || reqAction;
 
-  const host = reqHost || window.location.host;
-
   useEffect(() => {
     cmsUserStore.userAdminName === '' && router.push('/login');
   }, [cmsUserStore.userAdminName]);
 
-  const handleOnSubmit = (values, { setSubmitting, setValues, resetForm }) => {
+  const handleOnSubmit = (values, { setSubmitting, setErrors }) => {
     dispatch(cmsUserActions.RESET_STATUS_FORM());
 
     if (action === 'new') {
       dispatch(cmsUserActions.ADD_USER(values)).then(res => {
         setSubmitting(false);
 
-        router.push(`/admin/user?action=edit&id=${res.newUser._id}`);
+        if (!res.code) {
+          router.push(`/admin/user?action=edit&id=${res.newUser._id}`);
+        } else if ((res.code = 11000)) {
+          setErrors({ login: 'A user with this login already exists.' });
+        } else {
+          setErrors({ login: 'Error creating member.' });
+        }
       });
     } else if (action === 'edit') {
       dispatch(cmsUserActions.EDIT_USER(values)).then(res => {
@@ -77,27 +81,36 @@ function User({ reqAction, isServer, reqRoutePath, reqHost }) {
             </Alert>
           )}
 
-          {cmsUserStore.userForm.slug && (
-            <Link
-              href={'/user?slug=' + cmsUserStore.userForm.slug}
-              as={'/' + cmsUserStore.userForm.slug}
-            >
-              <a className="d-block mb-4">
-                {host + '/' + cmsUserStore.userForm.slug}
-              </a>
-            </Link>
-          )}
-
           <Formik
             initialValues={cmsUserStore.userForm}
             enableReinitialize={true}
             validate={values => {
               let errors = {};
-              if (!values.title) {
-                errors.login = 'Required';
-                errors.name = 'Required';
-                errors.email = 'Required';
-                errors.permissions = 'Required';
+
+              if (!values.login) {
+                errors.login = 'Login is required';
+              }
+              if (!values.name) {
+                errors.name = 'Name is required';
+              }
+              if (!values.email) {
+                errors.email = 'E-mail is required';
+              }
+              if (!values.password && action === 'new') {
+                errors.password = 'Password is required';
+              }
+              if (values.password.length < 6 && action === 'new') {
+                errors.password = 'Passwords must be at least 6 characters';
+              }
+              if (
+                values.password.length &&
+                values.password.length < 6 &&
+                action === 'edit'
+              ) {
+                errors.password = 'Passwords must be at least 6 characters';
+              }
+              if (values.password !== values.confirmPassword) {
+                errors.confirmPassword = 'Passwords are not the same';
               }
               return errors;
             }}
@@ -110,17 +123,43 @@ function User({ reqAction, isServer, reqRoutePath, reqHost }) {
                   <Input
                     tag={Field}
                     type="text"
-                    name="title"
+                    id="title"
+                    name="login"
                     placeholder="Enter the login"
                     invalid={errors.login && touched.login}
                   />
                   <FormFeedback>{errors.login}</FormFeedback>
                 </FormGroup>
                 <FormGroup>
-                  <Label for="content">Name</Label>
+                  <Label for="password">Password</Label>
+                  <Input
+                    tag={Field}
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter the password"
+                    invalid={errors.password && touched.password}
+                  />
+                  <FormFeedback>{errors.password}</FormFeedback>
+                </FormGroup>
+                <FormGroup>
+                  <Label for="confirmPassword">Confirm password</Label>
+                  <Input
+                    tag={Field}
+                    type="password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    placeholder="Confirm password"
+                    invalid={errors.confirmPassword && touched.confirmPassword}
+                  />
+                  <FormFeedback>{errors.confirmPassword}</FormFeedback>
+                </FormGroup>
+                <FormGroup>
+                  <Label for="name">Name</Label>
                   <Input
                     tag={Field}
                     type="text"
+                    id="name"
                     name="name"
                     placeholder="Enter the name"
                     invalid={errors.name && touched.name}
@@ -128,10 +167,11 @@ function User({ reqAction, isServer, reqRoutePath, reqHost }) {
                   <FormFeedback>{errors.name}</FormFeedback>
                 </FormGroup>
                 <FormGroup>
-                  <Label for="content">E-mail</Label>
+                  <Label for="email">E-mail</Label>
                   <Input
                     tag={Field}
                     type="email"
+                    id="email"
                     name="email"
                     placeholder="Enter the E-mail"
                     invalid={errors.email && touched.email}
@@ -144,6 +184,7 @@ function User({ reqAction, isServer, reqRoutePath, reqHost }) {
                     tag={Field}
                     type="select"
                     as="select"
+                    id="permissions"
                     name="permissions"
                     id="permissions"
                   >
@@ -179,9 +220,7 @@ User.getInitialProps = async ({ req, query, store, isServer }) => {
       store.dispatch(cmsUserActions.SET_USER_SERVER(query.data));
     }
   } else {
-    store.dispatch(
-      cmsUserActions.RESET_USER_FORM(store.getState().cmsUserStore.userAdminId)
-    );
+    store.dispatch(cmsUserActions.RESET_USER_FORM());
     store.dispatch(cmsUserActions.RESET_STATUS_FORM());
 
     if (query.action === 'edit') {
