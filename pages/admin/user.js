@@ -41,7 +41,10 @@ function User({ reqAction, isServer, reqRoutePath, reqHost }) {
         setSubmitting(false);
 
         if (!res.code) {
-          router.push(`/admin/user?action=edit&id=${res.newUser._id}`);
+          router.push(
+            `/admin/user?action=edit&id=${res.newUser._id}`,
+            `/admin/users/user?action=edit&id=${res.newUser._id}`
+          );
         } else if ((res.code = 11000)) {
           setErrors({ login: 'A user with this login already exists.' });
         } else {

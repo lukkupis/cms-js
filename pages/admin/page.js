@@ -50,7 +50,10 @@ function Page({ reqAction, isServer, reqRoutePath, reqHost }) {
         setSubmitting(false);
 
         if (!res.code) {
-          router.push(`/admin/page?action=edit&id=${res.newPage._id}`);
+          router.push(
+            `/admin/page?action=edit&id=${res.newPage._id}`,
+            `/admin/pages/page?action=edit&id=${res.newPage._id}`
+          );
         } else {
           setErrors({ login: 'Error creating page.' });
         }
