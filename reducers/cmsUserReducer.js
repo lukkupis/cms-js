@@ -10,12 +10,14 @@ const initialUserForm = {
   email: '',
   permissions: 'admin',
   password: '',
-  confirmPassword: ''
+  confirmPassword: '',
+  modalMessage: ''
 };
 
 const initialState = {
   userAdminName: '',
   userAdminId: '',
+  userPermission: '',
   ...initialStateApiData('GET_USERS'),
   users: [],
   ...initialStateApiData('GET_USER'),
@@ -31,6 +33,7 @@ export default createReducer(initialState, {
   [cmsUserActions.SET_USER]: (state, action) => {
     state.userAdminName = action.payload.name;
     state.userAdminId = action.payload.id;
+    state.userPermission = action.payload.permissions;
   },
   [cmsUserActions.SET_USERS_SERVER]: (state, action) => {
     state.users = action.payload;
@@ -54,7 +57,7 @@ export default createReducer(initialState, {
   ...reducerApiData('ADD_USER', (state, action) => {
     const { name, message, newUser } = action.payload;
 
-    if (name === 'published') {
+    if (name === 'added') {
       state.users.unshift(newUser);
       state.userSaveStatus = name;
       state.userSaveMessage = message;
@@ -76,10 +79,14 @@ export default createReducer(initialState, {
   }),
   ...reducerApiData('DELETE_USER', (state, action) => {
     const { name, id } = action.payload;
-    let { users } = state;
 
     if (name === 'deleted') {
-      users.splice(users.map(user => user._id).indexOf(id), 1);
+      state.users.splice(state.users.map(user => user._id).indexOf(id), 1);
+    } else if (name === 'error') {
+      state.modalMessage = action.payload.message;
     }
-  })
+  }),
+  [cmsUserActions.CLEAR_MODAL_MESSAGE]: (state, action) => {
+    state.modalMessage = '';
+  }
 });

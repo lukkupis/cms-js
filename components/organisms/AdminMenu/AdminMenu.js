@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import NavLink from 'components/atoms/NavLink';
@@ -25,6 +26,8 @@ const StyledLink = styled.a`
 `;
 
 const AdminMenu = props => {
+  const cmsUserStore = useSelector(state => state.cmsUserStore);
+
   return (
     <StyledContainer className="flex-shrink-0">
       <NavLink
@@ -38,17 +41,19 @@ const AdminMenu = props => {
           Pages
         </StyledLink>
       </NavLink>
-      <NavLink
-        href="/admin/users"
-        passHref
-        isServer={props.isServer}
-        reqRoutePath={props.reqRoutePath}
-      >
-        <StyledLink>
-          <i className="fas fa-users fa-fw mr-2" />
-          Users
-        </StyledLink>
-      </NavLink>
+      {cmsUserStore.userPermission === 'admin' && (
+        <NavLink
+          href="/admin/users"
+          passHref
+          isServer={props.isServer}
+          reqRoutePath={props.reqRoutePath}
+        >
+          <StyledLink>
+            <i className="fas fa-users fa-fw mr-2" />
+            Users
+          </StyledLink>
+        </NavLink>
+      )}
     </StyledContainer>
   );
 };

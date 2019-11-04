@@ -12,6 +12,7 @@ import AdminMenu from 'components/organisms/AdminMenu/AdminMenu';
 import AdminMain from 'components/atoms/AdminMain';
 import AdminContent from 'components/atoms/AdminContent';
 import AdminHeader from 'components/molecules/AdminHeader';
+import ModalInfo from 'components/molecules/ModalInfo';
 import ModalRemove from 'components/molecules/ModalRemove';
 
 function Users({ isServer, reqRoutePath }) {
@@ -34,7 +35,6 @@ function Users({ isServer, reqRoutePath }) {
         <title>Panel - Users</title>
       </Head>
       <Header />
-
       <AdminMain>
         <AdminMenu isServer={isServer} reqRoutePath={reqRoutePath} />
 
@@ -88,6 +88,10 @@ function Users({ isServer, reqRoutePath }) {
           setModalRemove({ ...modalRemove, open: !modalRemove.open });
           dispatch(cmsUserActions.DELETE_USER(modalRemove.itemId));
         }}
+      />
+      <ModalInfo
+        toggle={() => dispatch(cmsUserActions.CLEAR_MODAL_MESSAGE())}
+        message={cmsUserStore.modalMessage}
       />
     </>
   );

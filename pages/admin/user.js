@@ -33,6 +33,10 @@ function User({ reqAction, isServer, reqRoutePath, reqHost }) {
     cmsUserStore.userAdminName === '' && router.push('/login');
   }, [cmsUserStore.userAdminName]);
 
+  useEffect(() => {
+    dispatch(cmsUserActions.RESET_STATUS_FORM());
+  }, []);
+
   const handleOnSubmit = (values, { setSubmitting, setErrors }) => {
     dispatch(cmsUserActions.RESET_STATUS_FORM());
 
@@ -219,12 +223,11 @@ User.getInitialProps = async ({ req, query, store, isServer }) => {
     reqRoutePath = req.originalUrl;
     reqHost = req.headers.host;
 
-    if (reqAction === 'edit') {
-      store.dispatch(cmsUserActions.SET_USER_SERVER(query.data));
+    if (reqAction === 'edit' && query) {
+      store.dispatch(cmsUserActions.SET_USER_SERVER(query));
     }
   } else {
     store.dispatch(cmsUserActions.RESET_USER_FORM());
-    store.dispatch(cmsUserActions.RESET_STATUS_FORM());
 
     if (query.action === 'edit') {
       store.dispatch(cmsUserActions.GET_USER(query.id));

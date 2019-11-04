@@ -29,4 +29,4 @@ export const DELETE_USER = createActionThunk('DELETE_USER', id =>
   apiUsersCms.deleteUserAdmin(id)
 );
 
-// RESET_USER_PASS
+export const CLEAR_MODAL_MESSAGE = createAction('CLEAR_MODAL_MESSAGE');

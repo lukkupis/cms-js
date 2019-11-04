@@ -37,6 +37,10 @@ function Page({ reqAction, isServer, reqRoutePath, reqHost }) {
   }, [cmsUserStore.userAdminName]);
 
   useEffect(() => {
+    dispatch(cmsPageActions.RESET_STATUS_FORM());
+  }, []);
+
+  useEffect(() => {
     if (action === 'new') {
       dispatch(cmsPageActions.SET_PAGE_AUTHOR(cmsUserStore.userAdminId));
     }
@@ -182,7 +186,6 @@ Page.getInitialProps = async ({ req, query, store, isServer }) => {
     store.dispatch(
       cmsPageActions.RESET_PAGE_FORM(store.getState().cmsUserStore.userAdminId)
     );
-    store.dispatch(cmsPageActions.RESET_STATUS_FORM());
 
     if (query.action === 'edit') {
       store.dispatch(cmsPageActions.GET_PAGE(query.id));

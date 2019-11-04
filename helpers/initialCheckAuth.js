@@ -7,7 +7,8 @@ export default function initialCheckAuth(req, store, redirect = true) {
       store.dispatch(
         cmsUserActions.SET_USER({
           name: req.session.user.name,
-          id: req.session.user.id
+          id: req.session.user.id,
+          permissions: req.session.user.permissions
         })
       );
     }
