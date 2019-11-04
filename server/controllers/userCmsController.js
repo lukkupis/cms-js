@@ -7,20 +7,24 @@ exports.user_login = (req, res) => {
   const { login, password } = req.body;
 
   User.find({ permissions: 'admin' }, (err, data) => {
-    if (data.length) {
+    if (data && data.length) {
       User.findOne({ login }, (err, data) => {
-        bcrypt.compare(password, data.password, function(err, passCorrect) {
-          if (!data) {
-            res.redirect('/login?valid=error');
-          } else if (!passCorrect) {
-            res.redirect('/login?valid=error');
-          } else {
-            const { _id, name, login, permissions } = data;
+        if (data) {
+          bcrypt.compare(password, data.password, function(err, passCorrect) {
+            if (!data) {
+              res.redirect('/login?valid=error');
+            } else if (!passCorrect) {
+              res.redirect('/login?valid=error');
+            } else {
+              const { _id, name, login, permissions } = data;
 
-            req.session.user = { id: _id, name, login, permissions };
-            res.redirect('/admin');
-          }
-        });
+              req.session.user = { id: _id, name, login, permissions };
+              res.redirect('/admin');
+            }
+          });
+        } else {
+          res.redirect('/login?valid=error');
+        }
       });
     } else if (login === 'admin' && password === 'admin') {
       req.session.user = {
@@ -100,7 +104,13 @@ exports.user_create_api = async (req, res) => {
 
     if (body.password === body.confirmPassword) {
       bcrypt.hash(body.password, 10, function(err, hash) {
-        body.password = hash;
+        if (body.password.length !== 0 && body.password.length >= 6) {
+          userData.password = hash;
+        } else if (body.password.length !== 0 && body.password.length < 6) {
+          return res.json({
+            error: 'Passwords must be at least 6 characters'
+          });
+        }
 
         User.init().then(() => {
           userData.save((err, newUser) => {
@@ -121,8 +131,10 @@ exports.user_create_api = async (req, res) => {
           });
         });
       });
-    } else {
+    } else if (body.password !== body.confirmPassword) {
       res.json({ error: 'Passwords are not the same' });
+    } else {
+      res.json({ error: 'Error saving' });
     }
   } else {
     res.json({ error: 'No permission;' });
