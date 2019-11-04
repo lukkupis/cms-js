@@ -137,7 +137,7 @@ exports.user_create_api = async (req, res) => {
       res.json({ error: 'Error saving' });
     }
   } else {
-    res.json({ error: 'No permission;' });
+    res.json({ error: 'No permission' });
   }
 };
 
@@ -145,44 +145,46 @@ exports.user_update_api = async (req, res) => {
   if (req.session.user.permissions === 'admin') {
     const body = req.body;
 
-    User.findById(req.params.id, (err, user) => {
-      if (body.password === body.confirmPassword) {
-        bcrypt.hash(body.password, 10, function(err, hash) {
-          if (body.password.length !== 0 && body.password.length >= 6) {
-            user.password = hash;
-          } else if (body.password.length !== 0 && body.password.length < 6) {
-            return res.json({
-              error: 'Passwords must be at least 6 characters'
-            });
-          }
-
-          user.name = body.name;
-          user.login = body.login;
-          user.email = body.email;
-          user.permissions = body.permissions;
-
-          user.save((err, user) => {
-            if (err) {
-              res.json(errors || err);
-              return;
+    User.find({ permissions: 'admin' }, (err, admin) => {
+      User.findById(req.params.id, (err, user) => {
+        if (body.password === body.confirmPassword) {
+          bcrypt.hash(body.password, 10, function(err, hash) {
+            if (body.password.length !== 0 && body.password.length >= 6) {
+              user.password = hash;
+            } else if (body.password.length !== 0 && body.password.length < 6) {
+              return res.json({
+                error: 'Passwords must be at least 6 characters'
+              });
             }
 
-            let newUser = { ...user._doc };
-            newUser.password = '';
-            newUser.confirmPassword = '';
+            user.name = body.name;
+            user.login = body.login;
+            user.email = body.email;
+            user.permissions = body.permissions;
 
-            res.json({
-              message: 'User edited.',
-              name: 'edited',
-              newUser
+            user.save((err, user) => {
+              if (err) {
+                res.json(errors || err);
+                return;
+              }
+
+              let newUser = { ...user._doc };
+              newUser.password = '';
+              newUser.confirmPassword = '';
+
+              res.json({
+                message: 'User edited.',
+                name: 'edited',
+                newUser
+              });
             });
           });
-        });
-      } else if (body.password !== body.confirmPassword) {
-        res.json({ error: 'Passwords are not the same' });
-      } else {
-        res.json({ error: 'Error saving' });
-      }
+        } else if (body.password !== body.confirmPassword) {
+          res.json({ error: 'Passwords are not the same' });
+        } else {
+          res.json({ error: 'Error saving' });
+        }
+      });
     });
   } else {
     res.json({ error: 'No permission;' });
