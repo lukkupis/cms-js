@@ -156,7 +156,7 @@ function Page({ reqAction, isServer, reqRoutePath, reqHost }) {
                   />
                 </FormGroup>
                 <Button type="submit" disabled={isSubmitting}>
-                  {action === 'Edit' ? 'edit' : 'Publish'}
+                  {action === 'edit' ? 'Edit' : 'Publish'}
                 </Button>
               </FormStrap>
             )}

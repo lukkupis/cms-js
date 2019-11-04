@@ -19,11 +19,7 @@ export const getPagesAdmin = () =>
 export const getPageAdmin = id =>
   new Promise((resolve, reject) => {
     axios
-      .get(process.env.API_URL + '/admin-api/page', {
-        params: {
-          id
-        }
-      })
+      .get(process.env.API_URL + '/admin-api/page/' + id)
       .then(function(response) {
         resolve(response.data);
       })
@@ -49,7 +45,7 @@ export const postPageAdmin = data =>
 export const putPageAdmin = data =>
   new Promise((resolve, reject) => {
     axios
-      .put(process.env.API_URL + '/admin-api/page', {
+      .put(process.env.API_URL + '/admin-api/page/' + data._id, {
         ...data
       })
       .then(function(response) {
@@ -63,7 +59,7 @@ export const putPageAdmin = data =>
 export const deletePageAdmin = id =>
   new Promise((resolve, reject) => {
     axios
-      .delete(process.env.API_URL + `/admin-api/page?id=${id}`)
+      .delete(process.env.API_URL + '/admin-api/page/' + id)
       .then(function(response) {
         resolve(response.data);
       })

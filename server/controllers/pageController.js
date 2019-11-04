@@ -10,7 +10,7 @@ exports.page_data = (req, res) => {
 };
 
 exports.page_data_api = (req, res) => {
-  Page.findOne({ slug: req.query.slug })
+  Page.findOne({ slug: req.params.slug })
     .populate('author', 'name')
     .exec({}, (err, data) => {
       res.json(data);

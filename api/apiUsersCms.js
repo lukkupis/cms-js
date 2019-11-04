@@ -19,11 +19,7 @@ export const getUsersAdmin = () =>
 export const getUserAdmin = id =>
   new Promise((resolve, reject) => {
     axios
-      .get(process.env.API_URL + '/admin-api/user', {
-        params: {
-          id
-        }
-      })
+      .get(process.env.API_URL + '/admin-api/user/' + id)
       .then(function(response) {
         resolve(response.data);
       })
@@ -49,7 +45,7 @@ export const postUserAdmin = data =>
 export const putUserAdmin = data =>
   new Promise((resolve, reject) => {
     axios
-      .put(process.env.API_URL + '/admin-api/user', {
+      .put(process.env.API_URL + '/admin-api/user/' + data._id, {
         ...data
       })
       .then(function(response) {
@@ -63,7 +59,7 @@ export const putUserAdmin = data =>
 export const deleteUserAdmin = id =>
   new Promise((resolve, reject) => {
     axios
-      .delete(process.env.API_URL + `/admin-api/user?id=${id}`)
+      .delete(process.env.API_URL + '/admin-api/user/' + id)
       .then(function(response) {
         resolve(response.data);
       })

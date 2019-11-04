@@ -15,15 +15,15 @@ router.all('*', (req, res, next) => {
 });
 
 router.get('/pages', pageCmsController.page_list_api);
-router.get('/page', pageCmsController.page_detail_api);
+router.get('/page/:id', pageCmsController.page_detail_api);
 router.post('/page', pageCmsController.page_create_api);
-router.put('/page', pageCmsController.page_update_api);
-router.delete('/page', pageCmsController.page_delete_api);
+router.put('/page/:id', pageCmsController.page_update_api);
+router.delete('/page/:id', pageCmsController.page_delete_api);
 
 router.get('/users', userCmsController.user_list_api);
-router.get('/user', userCmsController.user_detail_api);
+router.get('/user/:id', userCmsController.user_detail_api);
 router.post('/user', userCmsController.user_create_api);
-router.put('/user', userCmsController.user_update_api);
-router.delete('/user', userCmsController.user_delete_api);
+router.put('/user/:id', userCmsController.user_update_api);
+router.delete('/user/:id', userCmsController.user_delete_api);
 
 module.exports = router;

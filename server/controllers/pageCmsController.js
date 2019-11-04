@@ -57,7 +57,7 @@ exports.page_detail = (req, res) => {
 };
 
 exports.page_detail_api = (req, res) => {
-  Page.findById(req.query.id)
+  Page.findById(req.params.id)
     .populate('author')
     .exec({}, (err, data) => {
       res.json(data);
@@ -110,7 +110,7 @@ exports.page_update_api = async (req, res) => {
 
   const uniqueSlug = await uniquePageSlug(Page, body);
 
-  Page.findById(body._id, (err, page) => {
+  Page.findById(req.params.id, (err, page) => {
     if (page.slug !== body.slug) {
       page.slug = uniqueSlug;
     }
@@ -140,7 +140,7 @@ exports.page_update_api = async (req, res) => {
 };
 
 exports.page_delete_api = async (req, res) => {
-  const id = req.query.id;
+  const id = req.params.id;
 
   Page.findByIdAndDelete(id, (err, doc) => {
     if (err || !doc) {

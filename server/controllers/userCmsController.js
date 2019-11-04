@@ -84,7 +84,7 @@ exports.user_detail = (req, res) => {
 
 exports.user_detail_api = (req, res) => {
   if (req.session.user.permissions === 'admin') {
-    User.findById(req.query.id)
+    User.findById(req.params.id)
       .select('-password')
       .exec({}, (err, data) => {
         res.json({ ...data._doc, password: '', confirmPassword: '' });
@@ -145,7 +145,7 @@ exports.user_update_api = async (req, res) => {
   if (req.session.user.permissions === 'admin') {
     const body = req.body;
 
-    User.findById(body._id, (err, user) => {
+    User.findById(req.params.id, (err, user) => {
       if (body.password === body.confirmPassword) {
         bcrypt.hash(body.password, 10, function(err, hash) {
           if (body.password.length !== 0 && body.password.length >= 6) {
@@ -191,7 +191,7 @@ exports.user_update_api = async (req, res) => {
 
 exports.user_delete_api = async (req, res) => {
   if (req.session.user.permissions === 'admin') {
-    const id = req.query.id;
+    const id = req.params.id;
 
     User.find({ permissions: 'admin' }, (err, admin) => {
       User.findById(id, (err, user) => {
