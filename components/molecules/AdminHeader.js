@@ -33,8 +33,8 @@ const AdminHeader = ({
 
 AdminHeader.propTypes = {
   name: PropTypes.string.isRequired,
-  buttonLabel: PropTypes.string.isRequired,
-  buttonLink: PropTypes.string.isRequired,
+  buttonLabel: PropTypes.string,
+  buttonLink: PropTypes.string,
   startedState: PropTypes.bool
 };
 

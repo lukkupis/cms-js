@@ -3,6 +3,33 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Sortable from 'react-sortablejs';
 
+import styled from 'styled-components';
+
+const SortableList = styled(Sortable)`
+  padding: 0;
+  max-width: 360px;
+  background-color: #fff;
+  border: 1px solid #eee;
+  list-style: none;
+
+  &:empty {
+    padding: 20px 0;
+  }
+
+  & > * {
+    padding: 10px 40px;
+  }
+  & > *:not(:first-child) {
+    border-top: 1px solid #eee;
+  }
+  & > *:not(:last-child) {
+    border-bottom: 1px solid #eee;
+  }
+  & > *:hover {
+    cursor: move;
+  }
+`;
+
 class MenuSortable extends React.Component {
   state = {
     pages: [
@@ -31,48 +58,48 @@ class MenuSortable extends React.Component {
 
     return (
       <div>
-        <div>
-          <div className="title" style={{ marginTop: 50 }}>
-            Uncontrolled Component
+        <div className="row">
+          <div className="col-sm-6">
+            <div className="mb-4">
+              <strong>Pages:</strong>
+            </div>
+
+            <SortableList
+              options={{
+                animation: 150,
+                sort: false,
+                group: {
+                  name: 'clone1',
+                  pull: 'clone',
+                  put: false
+                }
+              }}
+              tag="ul"
+            >
+              {pages}
+            </SortableList>
           </div>
-          <h4>Clone items from left to right. DOM elements are duplicated.</h4>
-          <div className="row">
-            <div className="col-sm-6">
-              <Sortable
-                options={{
-                  animation: 150,
-                  sort: false,
-                  group: {
-                    name: 'clone1',
-                    pull: 'clone',
-                    put: false
-                  }
-                }}
-                className="block-list"
-                tag="ul"
-              >
-                {pages}
-              </Sortable>
+          <div className="col-sm-6">
+            <div className="mb-4">
+              <strong className="mb-4">Menu:</strong>
             </div>
-            <div className="col-sm-6">
-              <Sortable
-                options={{
-                  animation: 150,
-                  group: {
-                    name: 'clone1',
-                    pull: false,
-                    put: true
-                  }
-                }}
-                className="block-list"
-                tag="ul"
-                onChange={items => {
-                  this.setState({ menu: items });
-                }}
-              >
-                {menu}
-              </Sortable>
-            </div>
+
+            <SortableList
+              options={{
+                animation: 150,
+                group: {
+                  name: 'clone1',
+                  pull: false,
+                  put: true
+                }
+              }}
+              tag="ul"
+              onChange={items => {
+                this.setState({ menu: items });
+              }}
+            >
+              {menu}
+            </SortableList>
           </div>
         </div>
       </div>
