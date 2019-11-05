@@ -8,7 +8,8 @@ export default function initialCheckAuth(req, store, redirect = true) {
         cmsUserActions.SET_USER({
           name: req.session.user.name,
           id: req.session.user.id,
-          permissions: req.session.user.permissions
+          permissions: req.session.user.permissions,
+          demoMode: req.session.user.demoMode
         })
       );
     }

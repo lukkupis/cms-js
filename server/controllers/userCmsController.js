@@ -1,13 +1,23 @@
 const User = require('../models/User');
 const app = require('../nextApp');
 const bcrypt = require('bcrypt');
+const config = require('../config');
 
 // Login user.
 exports.user_login = (req, res) => {
   const { login, password } = req.body;
 
   User.find({ permissions: 'admin' }, (err, data) => {
-    if (data && data.length) {
+    if (config.demoMode === true && login === 'demo' && password === 'demo') {
+      req.session.user = {
+        id: 0,
+        name: 'Demo Mode',
+        login: 'demo',
+        permissions: 'admin',
+        demoMode: config.demoMode
+      };
+      res.redirect('/admin');
+    } else if (data && data.length) {
       User.findOne({ login }, (err, data) => {
         if (data) {
           bcrypt.compare(password, data.password, function(err, passCorrect) {
@@ -18,7 +28,13 @@ exports.user_login = (req, res) => {
             } else {
               const { _id, name, login, permissions } = data;
 
-              req.session.user = { id: _id, name, login, permissions };
+              req.session.user = {
+                id: _id,
+                name,
+                login,
+                permissions,
+                demoMode: config.demoMode
+              };
               res.redirect('/admin');
             }
           });
@@ -31,7 +47,8 @@ exports.user_login = (req, res) => {
         id: 0,
         name: 'Admin',
         login: 'admin',
-        permissions: 'admin'
+        permissions: 'admin',
+        demoMode: config.demoMode
       };
       res.redirect('/admin/users');
     } else {
@@ -61,7 +78,7 @@ exports.user_list_api = (req, res) => {
         res.json(data);
       });
   } else {
-    res.json({ error: 'No permission;' });
+    res.json({ error: 'No permission.' });
   }
 };
 
@@ -90,7 +107,7 @@ exports.user_detail_api = (req, res) => {
         res.json({ ...data._doc, password: '', confirmPassword: '' });
       });
   } else {
-    res.json({ error: 'No permission;' });
+    res.json({ error: 'No permission.' });
   }
 };
 
@@ -160,7 +177,15 @@ exports.user_update_api = async (req, res) => {
             user.name = body.name;
             user.login = body.login;
             user.email = body.email;
-            user.permissions = body.permissions;
+
+            if (admin.length <= 1 && body.permissions !== 'admin') {
+              return res.json({
+                error:
+                  'You can not change the permission for the last administrator.'
+              });
+            } else {
+              user.permissions = body.permissions;
+            }
 
             user.save((err, user) => {
               if (err) {
@@ -187,7 +212,7 @@ exports.user_update_api = async (req, res) => {
       });
     });
   } else {
-    res.json({ error: 'No permission;' });
+    res.json({ error: 'No permission.' });
   }
 };
 
@@ -230,6 +255,6 @@ exports.user_delete_api = async (req, res) => {
       });
     });
   } else {
-    res.json({ error: 'No permission;' });
+    res.json({ error: 'No permission.' });
   }
 };

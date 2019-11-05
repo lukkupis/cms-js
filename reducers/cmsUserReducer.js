@@ -18,6 +18,7 @@ const initialState = {
   userAdminName: '',
   userAdminId: '',
   userPermission: '',
+  demoMode: false,
   ...initialStateApiData('GET_USERS'),
   users: [],
   ...initialStateApiData('GET_USER'),
@@ -34,6 +35,7 @@ export default createReducer(initialState, {
     state.userAdminName = action.payload.name;
     state.userAdminId = action.payload.id;
     state.userPermission = action.payload.permissions;
+    state.demoMode = action.payload.demoMode;
   },
   [cmsUserActions.SET_USERS_SERVER]: (state, action) => {
     state.users = action.payload;
@@ -75,6 +77,8 @@ export default createReducer(initialState, {
       state.userSaveStatus = name;
       state.userSaveMessage = message;
       state.userForm = newUser;
+    } else if (action.payload.error) {
+      state.modalMessage = action.payload.error;
     }
   }),
   ...reducerApiData('DELETE_USER', (state, action) => {

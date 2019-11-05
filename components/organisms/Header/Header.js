@@ -26,6 +26,9 @@ function Header(props) {
         <Link href="/" passHref>
           <NavbarBrand>cms-js</NavbarBrand>
         </Link>
+        {cmsUserStore.demoMode === true && (
+          <span style={{ color: 'red' }}>Demo mode is active.</span>
+        )}
         <NavbarToggler onClick={() => setOpen(!open)} />
         <Collapse isOpen={open} navbar>
           <Nav className="ml-auto" navbar>

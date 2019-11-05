@@ -11,6 +11,7 @@ import Header from 'components/organisms/Header/Header';
 import AdminMenu from 'components/organisms/AdminMenu/AdminMenu';
 import AdminMain from 'components/atoms/AdminMain';
 import AdminContent from 'components/atoms/AdminContent';
+import ModalInfo from 'components/molecules/ModalInfo';
 import {
   Button,
   Form as FormStrap,
@@ -207,6 +208,10 @@ function User({ reqAction, isServer, reqRoutePath, reqHost }) {
           </Formik>
         </AdminContent>
       </AdminMain>
+      <ModalInfo
+        toggle={() => dispatch(cmsUserActions.CLEAR_MODAL_MESSAGE())}
+        message={cmsUserStore.modalMessage}
+      />
     </>
   );
 }
