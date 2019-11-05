@@ -54,6 +54,17 @@ const AdminMenu = props => {
           </StyledLink>
         </NavLink>
       )}
+      <NavLink
+        href="/admin/menu"
+        passHref
+        isServer={props.isServer}
+        reqRoutePath={props.reqRoutePath}
+      >
+        <StyledLink>
+          <i className="fas fa-bars fa-fw mr-2" />
+          Menu
+        </StyledLink>
+      </NavLink>
     </StyledContainer>
   );
 };
