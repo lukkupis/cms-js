@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import initialCheckAuth from 'helpers/initialCheckAuth';
 
 import * as cmsPageActions from 'actions/cmsPageActions';
+import * as cmsMenuActions from 'actions/cmsMenuActions';
 
 import Head from 'next/head';
 import Header from 'components/organisms/Header/Header';
@@ -15,6 +16,7 @@ import MenuSortable from 'components/organisms/MenuSortable';
 
 function Menu({ isServer, reqRoutePath }) {
   const cmsPageStore = useSelector(state => state.cmsPageStore);
+  const cmsMenuStore = useSelector(state => state.cmsMenuStore);
 
   return (
     <>
@@ -30,7 +32,7 @@ function Menu({ isServer, reqRoutePath }) {
           <AdminHeader
             name="Menu"
             startedState={
-              cmsPageStore.GET_PAGES_STARTED || cmsPageStore.DELETE_PAGE_STARTED
+              cmsPageStore.GET_PAGES_STARTED || cmsMenuStore.GET_MENU_STARTED
             }
           />
 
@@ -52,7 +54,12 @@ Menu.getInitialProps = async ({ req, query, store, isServer }) => {
 
   if (req) {
     reqRoutePath = req.originalUrl;
+
+    store.dispatch(cmsPageActions.SET_PAGES_SERVER(query.pages));
+    store.dispatch(cmsMenuActions.SET_MENU_SERVER(query.menu));
   } else {
+    store.dispatch(cmsPageActions.GET_PAGES());
+    store.dispatch(cmsMenuActions.GET_MENU());
   }
 
   return { isServer, reqRoutePath };

@@ -1,70 +1,82 @@
-import uniqueId from 'lodash/uniqueId';
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { useEffect } from 'react';
 import Sortable from 'react-sortablejs';
+import { useSelector, useDispatch } from 'react-redux';
+
+import * as cmsPageActions from 'actions/cmsPageActions';
+import * as cmsMenuActions from 'actions/cmsMenuActions';
 
 import styled from 'styled-components';
+import { ListGroupItem } from 'reactstrap';
 
-const SortableList = styled(Sortable)`
-  padding: 0;
-  max-width: 360px;
-  background-color: #fff;
-  border: 1px solid #eee;
-  list-style: none;
+const SortablePages = styled(Sortable)`
+  height: 495px;
+  overflow: auto;
 
-  &:empty {
-    padding: 20px 0;
-  }
-
-  & > * {
-    padding: 10px 40px;
-  }
-  & > *:not(:first-child) {
-    border-top: 1px solid #eee;
-  }
-  & > *:not(:last-child) {
-    border-bottom: 1px solid #eee;
-  }
-  & > *:hover {
+  li {
     cursor: move;
   }
 `;
 
-class MenuSortable extends React.Component {
-  state = {
-    pages: [
-      'page 1',
-      'page 2',
-      'page 3',
-      'page 4',
-      'page 5',
-      'page 6',
-      'page 7'
-    ],
-    menu: []
-  };
+const SortableMenu = styled(Sortable)`
+  max-height: 495px;
+  overflow: auto;
+  padding-bottom: 50px;
 
-  render() {
-    const pages = this.state.pages.map((val, key) => (
-      <li key={uniqueId()} data-id={val}>
-        {val}
-      </li>
-    ));
-    const menu = this.state.menu.map((val, key) => (
-      <li key={uniqueId()} data-id={val}>
-        {val}
-      </li>
+  &:empty {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+  }
+`;
+
+function MenuSortable(props) {
+  const cmsPageStore = useSelector(state => state.cmsPageStore);
+  const cmsMenuStore = useSelector(state => state.cmsMenuStore);
+  const dispatch = useDispatch();
+
+  const Pages = () =>
+    cmsPageStore.pages.map(item => (
+      <ListGroupItem key={item._id} data-id={item._id}>
+        {item.title}
+      </ListGroupItem>
     ));
 
-    return (
-      <div>
-        <div className="row">
-          <div className="col-sm-6">
-            <div className="mb-4">
-              <strong>Pages:</strong>
-            </div>
+  const Menu = () =>
+    cmsMenuStore.menu.map(item => (
+      <ListGroupItem key={item._id} data-id={item._id}>
+        {item.title}
+      </ListGroupItem>
+    ));
 
-            <SortableList
+  const SortableMenuList = () => (
+    <SortableMenu
+      options={{
+        animation: 150,
+        group: {
+          name: 'clone1',
+          pull: false,
+          put: true
+        }
+      }}
+      tag="ul"
+      className="list-group"
+      onChange={items => {
+        dispatch(cmsMenuActions.SET_MENU(items));
+      }}
+    >
+      {<Menu />}
+    </SortableMenu>
+  );
+
+  return (
+    <div>
+      <div className="row">
+        <div className="col-sm-6">
+          <div className="mb-4">
+            <strong>Pages:</strong>
+          </div>
+
+          {cmsPageStore.pages.length > 0 && (
+            <SortablePages
               options={{
                 animation: 150,
                 sort: false,
@@ -75,36 +87,26 @@ class MenuSortable extends React.Component {
                 }
               }}
               tag="ul"
+              className="list-group"
             >
-              {pages}
-            </SortableList>
+              {<Pages />}
+            </SortablePages>
+          )}
+        </div>
+        <div className="col-sm-6">
+          <div className="mb-4">
+            <strong className="mb-4">Menu:</strong>
           </div>
-          <div className="col-sm-6">
-            <div className="mb-4">
-              <strong className="mb-4">Menu:</strong>
-            </div>
 
-            <SortableList
-              options={{
-                animation: 150,
-                group: {
-                  name: 'clone1',
-                  pull: false,
-                  put: true
-                }
-              }}
-              tag="ul"
-              onChange={items => {
-                this.setState({ menu: items });
-              }}
-            >
-              {menu}
-            </SortableList>
-          </div>
+          {cmsMenuStore.menu.length > 0 ? (
+            <SortableMenuList />
+          ) : (
+            <SortableMenuList />
+          )}
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default MenuSortable;
