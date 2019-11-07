@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Sortable from 'react-sortablejs';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -32,12 +32,11 @@ const SortableMenu = styled(Sortable)`
 `;
 
 function MenuSortable(props) {
-  const cmsPageStore = useSelector(state => state.cmsPageStore);
   const cmsMenuStore = useSelector(state => state.cmsMenuStore);
   const dispatch = useDispatch();
 
   const Pages = () =>
-    cmsPageStore.pages.map((item, key) => (
+    cmsMenuStore.pages.map((item, key) => (
       <ListGroupItem key={key} data-id={item._id}>
         {item.title}
       </ListGroupItem>
@@ -65,7 +64,7 @@ function MenuSortable(props) {
       onChange={items => {
         const itemsMenu = items
           .map((item, key) => {
-            const page = cmsPageStore.pages.find(
+            const page = cmsMenuStore.pages.find(
               page => String(page._id) === item
             );
 
@@ -95,7 +94,7 @@ function MenuSortable(props) {
             <strong>Pages:</strong>
           </div>
 
-          {cmsPageStore.pages.length > 0 && (
+          {cmsMenuStore.pages.length > 0 && (
             <SortablePages
               options={{
                 animation: 150,

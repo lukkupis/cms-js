@@ -4,7 +4,6 @@ const Menu = require('../models/Menu');
 
 exports.menu_list = (req, res) => {
   Page.find()
-    .populate('author')
     .sort('-created')
     .exec({}, (err, pages) => {
       Menu.find()
@@ -17,11 +16,15 @@ exports.menu_list = (req, res) => {
 };
 
 exports.menu_list_api = (req, res) => {
-  Menu.find()
-    .sort('order')
-    .populate('page')
-    .exec({}, (err, menu) => {
-      res.json(menu);
+  Page.find()
+    .sort('-created')
+    .exec({}, (err, pages) => {
+      Menu.find()
+        .sort('order')
+        .populate('page')
+        .exec({}, (err, menu) => {
+          res.json({ pages, menu });
+        });
     });
 };
 

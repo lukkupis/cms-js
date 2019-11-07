@@ -6,15 +6,18 @@ import reducerApiData from 'helpers/reducerApiData';
 
 const initialState = {
   ...initialStateApiData('GET_MENU'),
+  pages: [],
   menu: []
 };
 
 export default createReducer(initialState, {
   [cmsMenuActions.SET_MENU_SERVER]: (state, action) => {
-    state.menu = action.payload;
+    state.pages = action.payload.pages;
+    state.menu = action.payload.menu;
   },
   ...reducerApiData('GET_MENU', (state, action) => {
-    state.menu = action.payload;
+    state.pages = action.payload.pages;
+    state.menu = action.payload.menu;
   }),
   [cmsMenuActions.REFRESH_MENU]: (state, action) => {
     state.menu = action.payload;
