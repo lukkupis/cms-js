@@ -16,6 +16,9 @@ export default createReducer(initialState, {
   ...reducerApiData('GET_MENU', (state, action) => {
     state.menu = action.payload;
   }),
+  [cmsMenuActions.REFRESH_MENU]: (state, action) => {
+    state.menu = action.payload;
+  },
   ...reducerApiData('SET_MENU', (state, action) => {
     state.menu = action.payload;
   })

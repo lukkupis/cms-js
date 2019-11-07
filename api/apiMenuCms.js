@@ -19,9 +19,7 @@ export const getMenuAdmin = () =>
 export const postMenuAdmin = data =>
   new Promise((resolve, reject) => {
     axios
-      .post(process.env.API_URL + '/admin-api/menu', {
-        ...data
-      })
+      .post(process.env.API_URL + '/admin-api/menu', data)
       .then(function(response) {
         resolve(response.data);
       })

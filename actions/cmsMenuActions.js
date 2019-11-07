@@ -7,6 +7,7 @@ export const GET_MENU = createActionThunk('GET_MENU', id =>
   apiMenuCms.getMenuAdmin(id)
 );
 
+export const REFRESH_MENU = createAction('REFRESH_MENU');
 export const SET_MENU = createActionThunk('SET_MENU', values =>
   apiMenuCms.postMenuAdmin(values)
 );

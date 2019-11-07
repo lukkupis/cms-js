@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import Sortable from 'react-sortablejs';
 import { useSelector, useDispatch } from 'react-redux';
 
-import * as cmsPageActions from 'actions/cmsPageActions';
 import * as cmsMenuActions from 'actions/cmsMenuActions';
 
 import styled from 'styled-components';
@@ -22,6 +21,10 @@ const SortableMenu = styled(Sortable)`
   overflow: auto;
   padding-bottom: 50px;
 
+  li {
+    cursor: move;
+  }
+
   &:empty {
     border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 0.25rem;
@@ -34,15 +37,15 @@ function MenuSortable(props) {
   const dispatch = useDispatch();
 
   const Pages = () =>
-    cmsPageStore.pages.map(item => (
-      <ListGroupItem key={item._id} data-id={item._id}>
+    cmsPageStore.pages.map((item, key) => (
+      <ListGroupItem key={key} data-id={item._id}>
         {item.title}
       </ListGroupItem>
     ));
 
   const Menu = () =>
-    cmsMenuStore.menu.map(item => (
-      <ListGroupItem key={item._id} data-id={item._id}>
+    cmsMenuStore.menu.map((item, key) => (
+      <ListGroupItem key={key} data-id={item.page._id}>
         {item.title}
       </ListGroupItem>
     ));
@@ -60,6 +63,23 @@ function MenuSortable(props) {
       tag="ul"
       className="list-group"
       onChange={items => {
+        const itemsMenu = items
+          .map((item, key) => {
+            const page = cmsPageStore.pages.find(
+              page => String(page._id) === item
+            );
+
+            if (page) {
+              return {
+                title: page.title,
+                order: key,
+                page: page._id
+              };
+            }
+          })
+          .filter(item => item !== undefined);
+
+        dispatch(cmsMenuActions.REFRESH_MENU(itemsMenu));
         dispatch(cmsMenuActions.SET_MENU(items));
       }}
     >
