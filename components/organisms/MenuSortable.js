@@ -6,6 +6,7 @@ import * as cmsMenuActions from 'actions/cmsMenuActions';
 
 import styled from 'styled-components';
 import { ListGroupItem, Button } from 'reactstrap';
+import InputAutoSave from 'components/molecules/InputAutoSave';
 
 const SortablePages = styled(Sortable)`
   height: 495px;
@@ -45,17 +46,38 @@ function MenuSortable(props) {
   const Menu = () =>
     cmsMenuStore.menu.map((item, key) => (
       <ListGroupItem key={key} data-id={item.page._id}>
-        {item.title}
-        <div>
-          <Button
-            color="link"
-            className="p-0 mt-3 text-danger"
-            disabled={cmsMenuStore.REMOVE_MENU_STARTED}
-            onClick={() => dispatch(cmsMenuActions.REMOVE_MENU(item._id))}
-          >
-            Remove
-          </Button>
+        <div className="mb-3">
+          <div>Page:</div>
+          <div>
+            <strong>{item.title}</strong>
+          </div>
         </div>
+
+        <InputAutoSave
+          label="Input name:"
+          name="inputName"
+          placeholder="Enter the input name"
+          initialValue={
+            cmsMenuStore.menu.find(menuItem => menuItem._id === item._id).title
+          }
+          validate={values => {
+            let errors = {};
+            if (!values.linkName) {
+              errors.linkName = 'Link name is required';
+            }
+            return errors;
+          }}
+          onInput={() => console.log('input')}
+        />
+
+        <Button
+          color="link"
+          className="p-0 text-danger"
+          disabled={cmsMenuStore.REMOVE_MENU_STARTED}
+          onClick={() => dispatch(cmsMenuActions.REMOVE_MENU(item._id))}
+        >
+          Remove
+        </Button>
       </ListGroupItem>
     ));
 
