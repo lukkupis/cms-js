@@ -62,3 +62,15 @@ exports.menu_insert_api = (req, res) => {
     );
   });
 };
+
+exports.menu_delete_api = (req, res) => {
+  const id = req.params.id;
+
+  Menu.findByIdAndDelete(id, (err, doc) => {
+    if (err || !doc) {
+      res.status(404);
+      return;
+    }
+    res.json({ id, name: 'deleted' });
+  });
+};

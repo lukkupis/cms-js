@@ -29,5 +29,6 @@ router.delete('/user/:id', userCmsController.user_delete_api);
 
 router.get('/menu', menuCmsController.menu_list_api);
 router.post('/menu', menuCmsController.menu_insert_api);
+router.delete('/menu/:id', menuCmsController.menu_delete_api);
 
 module.exports = router;

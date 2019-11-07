@@ -24,5 +24,12 @@ export default createReducer(initialState, {
   },
   ...reducerApiData('SET_MENU', (state, action) => {
     state.menu = action.payload;
+  }),
+  ...reducerApiData('REMOVE_MENU', (state, action) => {
+    const { id, name } = action.payload;
+
+    if (name === 'deleted') {
+      state.menu.splice(state.menu.map(menu => menu._id).indexOf(id), 1);
+    }
   })
 });

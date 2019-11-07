@@ -11,3 +11,7 @@ export const REFRESH_MENU = createAction('REFRESH_MENU');
 export const SET_MENU = createActionThunk('SET_MENU', values =>
   apiMenuCms.postMenuAdmin(values)
 );
+
+export const REMOVE_MENU = createActionThunk('REMOVE_MENU', id =>
+  apiMenuCms.deleteMenuAdmin(id)
+);

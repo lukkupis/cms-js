@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import * as cmsMenuActions from 'actions/cmsMenuActions';
 
 import styled from 'styled-components';
-import { ListGroupItem } from 'reactstrap';
+import { ListGroupItem, Button } from 'reactstrap';
 
 const SortablePages = styled(Sortable)`
   height: 495px;
@@ -46,6 +46,16 @@ function MenuSortable(props) {
     cmsMenuStore.menu.map((item, key) => (
       <ListGroupItem key={key} data-id={item.page._id}>
         {item.title}
+        <div>
+          <Button
+            color="link"
+            className="p-0 mt-3 text-danger"
+            disabled={cmsMenuStore.REMOVE_MENU_STARTED}
+            onClick={() => dispatch(cmsMenuActions.REMOVE_MENU(item._id))}
+          >
+            Remove
+          </Button>
+        </div>
       </ListGroupItem>
     ));
 

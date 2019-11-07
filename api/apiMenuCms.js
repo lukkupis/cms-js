@@ -27,3 +27,15 @@ export const postMenuAdmin = data =>
         reject(error);
       });
   });
+
+export const deleteMenuAdmin = id =>
+  new Promise((resolve, reject) => {
+    axios
+      .delete(process.env.API_URL + '/admin-api/menu/' + id)
+      .then(function(response) {
+        resolve(response.data);
+      })
+      .catch(function(error) {
+        reject(error);
+      });
+  });
