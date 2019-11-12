@@ -28,40 +28,41 @@ exports.menu_list_api = (req, res) => {
     });
 };
 
-exports.menu_insert_api = (req, res) => {
+exports.menu_insert_api = async (req, res) => {
   const menu = req.body;
 
-  Page.find().exec({}, (err, pages) => {
-    const menuPages = menu
-      .map((item, key) => {
-        const page = pages.find(page => String(page._id) === item);
+  const pages = await Page.find();
+  const prevMenu = await Menu.find();
 
-        if (page) {
-          return {
-            title: page.title,
-            linkName: page.title,
-            order: key,
-            page: page._id
-          };
-        }
-      })
-      .filter(item => item !== undefined);
+  const menuPages = menu
+    .map((item, key) => {
+      const page = pages.find(page => String(page._id) === item);
 
-    Menu.deleteMany({}, () =>
-      Menu.insertMany(menuPages, (err, menu) => {
-        if (err) {
-          return res.json(err);
-        }
+      if (page) {
+        return {
+          title: page.title,
+          linkName: page.title,
+          order: key,
+          page: page._id
+        };
+      }
+    })
+    .filter(item => item !== undefined);
 
-        Menu.find()
-          .sort('order')
-          .populate('page')
-          .exec({}, (err, menu) => {
-            res.json(menu);
-          });
-      })
-    );
-  });
+  Menu.deleteMany({}, () =>
+    Menu.insertMany(menuPages, (err, menu) => {
+      if (err) {
+        return res.json(err);
+      }
+
+      Menu.find()
+        .sort('order')
+        .populate('page')
+        .exec({}, (err, menu) => {
+          res.json(menu);
+        });
+    })
+  );
 };
 
 exports.menu_delete_api = (req, res) => {
