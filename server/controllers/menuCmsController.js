@@ -39,7 +39,7 @@ exports.menu_insert_api = (req, res) => {
         if (page) {
           return {
             title: page.title,
-            name: page.title,
+            linkName: page.title,
             order: key,
             page: page._id
           };
@@ -81,7 +81,7 @@ exports.menu_update_api = (req, res) => {
   const linkName = req.body.linkName;
 
   Menu.findById(id, (err, menu) => {
-    menu.name = linkName;
+    menu.linkName = linkName;
 
     menu.save(err => {
       if (err) {

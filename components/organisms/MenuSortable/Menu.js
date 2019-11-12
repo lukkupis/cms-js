@@ -23,7 +23,7 @@ const Menu = () => {
         label="Link name:"
         name="linkName"
         placeholder="Enter the link name"
-        initialValue={item.name}
+        initialValue={item.linkName}
         validate={values => {
           let errors = {};
           if (!values.linkName) {
@@ -34,7 +34,13 @@ const Menu = () => {
         onSubmit={(values, { setSubmitting, setFieldValue }) => {
           setSubmitting(false);
 
-          dispatch(cmsMenuActions.UPDATE_LINK_NAME(item._id, values.linkName));
+          const newLinkName = {
+            id: item._id,
+            linkName: values.linkName
+          };
+
+          dispatch(cmsMenuActions.REFRESH_LINK_NAME(newLinkName));
+          dispatch(cmsMenuActions.UPDATE_LINK_NAME(newLinkName));
         }}
       />
       <Button

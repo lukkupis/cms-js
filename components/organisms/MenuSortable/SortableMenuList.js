@@ -48,7 +48,7 @@ const SortableMenuList = () => {
             if (page) {
               return {
                 title: page.title,
-                name: page.title,
+                linkName: '',
                 order: key,
                 page: page._id
               };

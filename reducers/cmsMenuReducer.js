@@ -32,13 +32,20 @@ export default createReducer(initialState, {
       state.menu.splice(state.menu.map(menu => menu._id).indexOf(id), 1);
     }
   }),
+  [cmsMenuActions.REFRESH_LINK_NAME]: (state, action) => {
+    const { id, linkName } = action.payload;
+
+    const index = state.menu.map(item => item._id).indexOf(id);
+
+    state.menu[index].linkName = linkName;
+  },
   ...reducerApiData('UPDATE_LINK_NAME', (state, action) => {
     const { id, linkName, name } = action.payload;
 
     if (name === 'updated') {
       const index = state.menu.map(item => item._id).indexOf(id);
 
-      state.menu[index].name = linkName;
+      state.menu[index].linkName = linkName;
     }
   })
 });

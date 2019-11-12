@@ -16,7 +16,7 @@ export const REMOVE_MENU = createActionThunk('REMOVE_MENU', id =>
   apiMenuCms.deleteMenuAdmin(id)
 );
 
-export const UPDATE_LINK_NAME = createActionThunk(
-  'UPDATE_LINK_NAME',
-  (id, linkName) => apiMenuCms.putMenuAdmin({ id, linkName })
+export const REFRESH_LINK_NAME = createAction('REFRESH_LINK_NAME');
+export const UPDATE_LINK_NAME = createActionThunk('UPDATE_LINK_NAME', data =>
+  apiMenuCms.putMenuAdmin(data)
 );
