@@ -1,17 +1,17 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React from "react";
+import { useSelector } from "react-redux";
 
-import initialCheckAuth from 'helpers/initialCheckAuth';
+import initialCheckAuth from "helpers/initialCheckAuth";
 
-import * as cmsMenuActions from 'actions/cmsMenuActions';
+import * as cmsMenuActions from "actions/cmsMenuActions";
 
-import Head from 'next/head';
-import Header from 'components/organisms/Header/Header';
-import AdminMenu from 'components/organisms/AdminMenu/AdminMenu';
-import AdminMain from 'components/atoms/AdminMain';
-import AdminContent from 'components/atoms/AdminContent';
-import AdminHeader from 'components/molecules/AdminHeader';
-import MenuSortable from 'components/organisms/MenuSortable';
+import Head from "next/head";
+import Header from "components/organisms/Header/Header";
+import AdminMenu from "components/organisms/AdminMenu/AdminMenu";
+import AdminMain from "components/atoms/AdminMain";
+import AdminContent from "components/atoms/AdminContent";
+import AdminHeader from "components/molecules/AdminHeader";
+import MenuSortable from "components/organisms/MenuSortable/MenuSortable";
 
 function Menu({ isServer, reqRoutePath }) {
   const cmsMenuStore = useSelector(state => state.cmsMenuStore);
@@ -46,7 +46,7 @@ function Menu({ isServer, reqRoutePath }) {
 Menu.getInitialProps = async ({ req, query, store, isServer }) => {
   initialCheckAuth(req, store, false);
 
-  let reqRoutePath = '';
+  let reqRoutePath = "";
 
   if (req) {
     reqRoutePath = req.originalUrl;

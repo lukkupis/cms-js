@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
 import {
   Form as FormStrap,
@@ -7,19 +7,17 @@ import {
   Label,
   Input,
   FormFeedback
-} from 'reactstrap';
-import { Formik, Form, Field } from 'formik';
+} from "reactstrap";
+import { Formik, Form, Field } from "formik";
 
-const InputAutoSave = ({
+const InputSave = ({
   label,
   name,
   placeholder,
   initialValue,
   validate,
-  onInput
+  onSubmit
 }) => {
-  let timer;
-
   return (
     <Formik
       initialValues={{
@@ -27,7 +25,7 @@ const InputAutoSave = ({
       }}
       enableReinitialize={true}
       validate={validate}
-      onSubmit={() => {}}
+      onSubmit={onSubmit}
     >
       {({ errors, touched }) => (
         <FormStrap tag={Form}>
@@ -40,16 +38,6 @@ const InputAutoSave = ({
               name={name}
               placeholder={placeholder}
               invalid={errors.linkName && touched.linkName}
-              onInput={() => {
-                function changeLinkName() {
-                  onInput();
-                }
-
-                if (timer) {
-                  clearTimeout(timer);
-                }
-                timer = setTimeout(changeLinkName, 1000);
-              }}
             />
             <FormFeedback>{errors.linkName}</FormFeedback>
           </FormGroup>
@@ -59,13 +47,13 @@ const InputAutoSave = ({
   );
 };
 
-InputAutoSave.propTypes = {
+InputSave.propTypes = {
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   initialValue: PropTypes.string.isRequired,
   validate: PropTypes.func.isRequired,
-  onInput: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired
 };
 
-export default InputAutoSave;
+export default InputSave;
