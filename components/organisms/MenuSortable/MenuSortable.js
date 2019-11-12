@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import SortablePagesList from "components/organisms/MenuSortable/SortablePagesList";
-import SortableMenuList from "components/organisms/MenuSortable/SortableMenuList";
+import SortablePagesList from 'components/organisms/MenuSortable/SortablePagesList';
+import SortableMenuList from 'components/organisms/MenuSortable/SortableMenuList';
 
 function MenuSortable(props) {
   return (

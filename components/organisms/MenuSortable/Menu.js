@@ -1,12 +1,14 @@
-import React from "react";
-import InputSave from "components/molecules/InputSave";
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { useSelector } from "react-redux";
+import * as cmsMenuActions from 'actions/cmsMenuActions';
 
-import { ListGroupItem, Button } from "reactstrap";
+import { ListGroupItem, Button } from 'reactstrap';
+import InputSave from 'components/molecules/InputSave';
 
 const Menu = () => {
   const cmsMenuStore = useSelector(state => state.cmsMenuStore);
+  const dispatch = useDispatch();
 
   return cmsMenuStore.menu.map((item, key) => (
     <ListGroupItem key={key} data-id={item.page._id}>
@@ -18,22 +20,19 @@ const Menu = () => {
       </div>
 
       <InputSave
-        label="Input name:"
-        name="inputName"
-        placeholder="Enter the input name"
-        initialValue={
-          cmsMenuStore.menu.find(menuItem => menuItem._id === item._id).title
-        }
+        label="Link name:"
+        name="linkName"
+        placeholder="Enter the link name"
+        initialValue={item.name}
         validate={values => {
           let errors = {};
           if (!values.linkName) {
-            errors.linkName = "Link name is required";
+            errors.linkName = 'Link name is required';
           }
           return errors;
         }}
-        onSubmit={() => console.log("submit")}
+        onSubmit={() => console.log('submit')}
       />
-
       <Button
         color="link"
         className="p-0 text-danger"

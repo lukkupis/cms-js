@@ -1,14 +1,15 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 import {
   Form as FormStrap,
   FormGroup,
   Label,
   Input,
-  FormFeedback
-} from "reactstrap";
-import { Formik, Form, Field } from "formik";
+  FormFeedback,
+  Button
+} from 'reactstrap';
+import { Formik, Form, Field } from 'formik';
 
 const InputSave = ({
   label,
@@ -18,6 +19,8 @@ const InputSave = ({
   validate,
   onSubmit
 }) => {
+  const [isButtonSave, setButtonSave] = useState(false);
+
   return (
     <Formik
       initialValues={{
@@ -38,7 +41,14 @@ const InputSave = ({
               name={name}
               placeholder={placeholder}
               invalid={errors.linkName && touched.linkName}
+              onFocus={() => setButtonSave(true)}
+              onBlur={() => setButtonSave(false)}
             />
+            {isButtonSave && (
+              <Button color="link" className="px-0">
+                Save
+              </Button>
+            )}
             <FormFeedback>{errors.linkName}</FormFeedback>
           </FormGroup>
         </FormStrap>
@@ -51,7 +61,7 @@ InputSave.propTypes = {
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
-  initialValue: PropTypes.string.isRequired,
+  initialValue: PropTypes.string,
   validate: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired
 };

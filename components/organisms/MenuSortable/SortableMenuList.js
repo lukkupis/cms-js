@@ -1,11 +1,11 @@
-import React from "react";
-import Sortable from "react-sortablejs";
-import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
+import React from 'react';
+import Sortable from 'react-sortablejs';
+import styled from 'styled-components';
+import { useSelector, useDispatch } from 'react-redux';
 
-import * as cmsMenuActions from "actions/cmsMenuActions";
+import * as cmsMenuActions from 'actions/cmsMenuActions';
 
-import Menu from "components/organisms/MenuSortable/Menu";
+import Menu from 'components/organisms/MenuSortable/Menu';
 
 const SortableMenu = styled(Sortable)`
   max-height: 495px;
@@ -31,7 +31,7 @@ const SortableMenuList = () => {
       options={{
         animation: 150,
         group: {
-          name: "clone1",
+          name: 'clone1',
           pull: false,
           put: true
         }
@@ -48,6 +48,7 @@ const SortableMenuList = () => {
             if (page) {
               return {
                 title: page.title,
+                name: page.title,
                 order: key,
                 page: page._id
               };

@@ -1,10 +1,10 @@
-import React from "react";
-import Sortable from "react-sortablejs";
-import styled from "styled-components";
+import React from 'react';
+import Sortable from 'react-sortablejs';
+import styled from 'styled-components';
 
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 
-import Pages from "components/organisms/MenuSortable/Pages";
+import Pages from 'components/organisms/MenuSortable/Pages';
 
 const SortablePages = styled(Sortable)`
   height: 495px;
@@ -25,8 +25,8 @@ const SortablePagesList = () => {
           animation: 150,
           sort: false,
           group: {
-            name: "clone1",
-            pull: "clone",
+            name: 'clone1',
+            pull: 'clone',
             put: false
           }
         }}

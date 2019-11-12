@@ -11,6 +11,9 @@
   },
   "author": "Łukasz Kupis",
   "license": "ISC",
+  "prettier": {
+    "singleQuote": true
+  },
   "dependencies": {
     "@zeit/next-sass": "^1.0.1",
     "axios": "^0.19.0",

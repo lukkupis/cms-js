@@ -1,7 +1,7 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React from 'react';
+import { useSelector } from 'react-redux';
 
-import { ListGroupItem } from "reactstrap";
+import { ListGroupItem } from 'reactstrap';
 
 const Pages = () => {
   const cmsMenuStore = useSelector(state => state.cmsMenuStore);
