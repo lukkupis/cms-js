@@ -22,7 +22,9 @@ const InputSave = ({
   const [isButtonSave, setButtonSave] = useState(false);
 
   const handleInputOnBlur = ({ target: { value } }, prevValue) => {
-    if (value === prevValue) setButtonSave(false);
+    setTimeout(() => {
+      if (value === prevValue) setButtonSave(false);
+    }, 100);
   };
 
   return (
@@ -52,7 +54,11 @@ const InputSave = ({
                 />
               </div>
               <div className="col-md-4">
-                {isButtonSave && <Button color="primary">Save</Button>}
+                {isButtonSave && (
+                  <Button type="submit" color="primary">
+                    Save
+                  </Button>
+                )}
               </div>
             </div>
             <FormFeedback>{errors.linkName}</FormFeedback>

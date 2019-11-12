@@ -31,7 +31,11 @@ const Menu = () => {
           }
           return errors;
         }}
-        onSubmit={() => console.log('submit')}
+        onSubmit={(values, { setSubmitting, setFieldValue }) => {
+          setSubmitting(false);
+
+          dispatch(cmsMenuActions.UPDATE_LINK_NAME(item._id, values.linkName));
+        }}
       />
       <Button
         color="link"

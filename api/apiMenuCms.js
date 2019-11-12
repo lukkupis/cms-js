@@ -39,3 +39,15 @@ export const deleteMenuAdmin = id =>
         reject(error);
       });
   });
+
+export const putMenuAdmin = data =>
+  new Promise((resolve, reject) => {
+    axios
+      .put(process.env.API_URL + '/admin-api/menu/' + data.id, data)
+      .then(function(response) {
+        resolve(response.data);
+      })
+      .catch(function(error) {
+        reject(error);
+      });
+  });
