@@ -21,6 +21,10 @@ const InputSave = ({
 }) => {
   const [isButtonSave, setButtonSave] = useState(false);
 
+  const handleInputOnBlur = ({ target: { value } }, prevValue) => {
+    if (value === prevValue) setButtonSave(false);
+  };
+
   return (
     <Formik
       initialValues={{
@@ -30,25 +34,27 @@ const InputSave = ({
       validate={validate}
       onSubmit={onSubmit}
     >
-      {({ errors, touched }) => (
+      {({ errors, touched, initialValues }) => (
         <FormStrap tag={Form}>
           <FormGroup>
             <Label for="title">{label}</Label>
-            <Input
-              tag={Field}
-              type="text"
-              id={name}
-              name={name}
-              placeholder={placeholder}
-              invalid={errors.linkName && touched.linkName}
-              onFocus={() => setButtonSave(true)}
-              onBlur={() => setButtonSave(false)}
-            />
-            {isButtonSave && (
-              <Button color="link" className="px-0">
-                Save
-              </Button>
-            )}
+            <div className="row">
+              <div className="col-md-8">
+                <Input
+                  tag={Field}
+                  type="text"
+                  id={name}
+                  name={name}
+                  placeholder={placeholder}
+                  invalid={errors.linkName && touched.linkName}
+                  onFocus={() => setButtonSave(true)}
+                  onBlur={e => handleInputOnBlur(e, initialValues.linkName)}
+                />
+              </div>
+              <div className="col-md-4">
+                {isButtonSave && <Button color="primary">Save</Button>}
+              </div>
+            </div>
             <FormFeedback>{errors.linkName}</FormFeedback>
           </FormGroup>
         </FormStrap>
