@@ -26,7 +26,7 @@ const SortableMenuList = () => {
   const cmsMenuStore = useSelector(state => state.cmsMenuStore);
   const dispatch = useDispatch();
 
-  return (
+  const SortableMenuItems = () => (
     <SortableMenu
       options={{
         animation: 150,
@@ -61,6 +61,16 @@ const SortableMenuList = () => {
     >
       {<Menu />}
     </SortableMenu>
+  );
+
+  return (
+    <>
+      {cmsMenuStore.menu.length > 0 ? (
+        <SortableMenuItems />
+      ) : (
+        <SortableMenuItems />
+      )}
+    </>
   );
 };
 
