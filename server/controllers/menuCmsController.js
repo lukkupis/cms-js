@@ -37,6 +37,7 @@ exports.menu_insert_api = async (req, res) => {
   const menuPages = menu
     .map((item, key) => {
       const page = pages.find(page => String(page._id) === item);
+      const menuItem = prevMenu.find(prevItem => String(prevItem._id) === item);
 
       if (page) {
         return {
@@ -44,6 +45,13 @@ exports.menu_insert_api = async (req, res) => {
           linkName: page.title,
           order: key,
           page: page._id
+        };
+      } else if (menuItem) {
+        return {
+          title: menuItem.title,
+          linkName: menuItem.linkName,
+          order: key,
+          page: menuItem.page._id
         };
       }
     })

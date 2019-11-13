@@ -11,7 +11,7 @@ const Menu = () => {
   const dispatch = useDispatch();
 
   return cmsMenuStore.menu.map((item, key) => (
-    <ListGroupItem key={key} data-id={item.page._id}>
+    <ListGroupItem key={key} data-id={item._id}>
       <div className="mb-3">
         <div>Page:</div>
         <div>

@@ -39,24 +39,7 @@ const SortableMenuList = () => {
       tag="ul"
       className="list-group"
       onChange={items => {
-        const itemsMenu = items
-          .map((item, key) => {
-            const page = cmsMenuStore.pages.find(
-              page => String(page._id) === item
-            );
-
-            if (page) {
-              return {
-                title: page.title,
-                linkName: '',
-                order: key,
-                page: page._id
-              };
-            }
-          })
-          .filter(item => item !== undefined);
-
-        dispatch(cmsMenuActions.REFRESH_MENU(itemsMenu));
+        dispatch(cmsMenuActions.REFRESH_MENU(items));
         dispatch(cmsMenuActions.SET_MENU(items));
       }}
     >

@@ -20,7 +20,32 @@ export default createReducer(initialState, {
     state.menu = action.payload.menu;
   }),
   [cmsMenuActions.REFRESH_MENU]: (state, action) => {
-    state.menu = action.payload;
+    const menu = action.payload
+      .map((item, key) => {
+        const page = state.pages.find(page => String(page._id) === item);
+        const menuItem = state.menu.find(
+          prevItem => String(prevItem._id) === item
+        );
+
+        if (page) {
+          return {
+            title: page.title,
+            linkName: '',
+            order: key,
+            page: page._id
+          };
+        } else if (menuItem) {
+          return {
+            title: menuItem.title,
+            linkName: menuItem.linkName,
+            order: key,
+            page: menuItem.page._id
+          };
+        }
+      })
+      .filter(item => item !== undefined);
+
+    state.menu = menu;
   },
   ...reducerApiData('SET_MENU', (state, action) => {
     state.menu = action.payload;
