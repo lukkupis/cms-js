@@ -3,6 +3,7 @@ function reducerApiData(name, succeededCallback) {
 
   return {
     [`${nameUpper}_STARTED`]: (state, action) => {
+      state[`${nameUpper}_ENDED`] = false;
       state[`${nameUpper}_STARTED`] = true;
     },
     [`${nameUpper}_SUCCEEDED`]: (state, action) => {

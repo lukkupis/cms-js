@@ -29,9 +29,9 @@ function Header(props) {
   useEffect(() => {
     dispatch(pageActions.GET_MENU());
   }, [
-    cmsMenuStore.SET_MENU_STARTED,
-    cmsMenuStore.UPDATE_LINK_NAME_STARTED,
-    cmsMenuStore.REMOVE_MENU_STARTED
+    cmsMenuStore.SET_MENU_ENDED,
+    cmsMenuStore.UPDATE_LINK_NAME_ENDED,
+    cmsMenuStore.REMOVE_MENU_ENDED
   ]);
 
   return (
