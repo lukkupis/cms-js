@@ -8,7 +8,7 @@ import * as cmsPageActions from 'actions/cmsPageActions';
 import Head from 'next/head';
 import Header from 'components/organisms/Header/Header';
 
-function Home(props) {
+function Page(props) {
   const cmsPageStore = useSelector(state => state.cmsPageStore);
   const page = cmsPageStore.currentPageData;
 
@@ -30,7 +30,7 @@ function Home(props) {
   );
 }
 
-Home.getInitialProps = async ({ req, query, store, isServer }) => {
+Page.getInitialProps = async ({ req, query, store, isServer }) => {
   initialCheckAuth(req, store, false);
 
   if (req) {
@@ -43,4 +43,4 @@ Home.getInitialProps = async ({ req, query, store, isServer }) => {
   return { isServer };
 };
 
-export default Home;
+export default Page;

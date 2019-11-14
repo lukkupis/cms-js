@@ -9,7 +9,7 @@ import * as cmsPageActions from 'actions/cmsPageActions';
 import Head from 'next/head';
 import Header from 'components/organisms/Header/Header';
 
-function Home({ content }) {
+function PageError({ content }) {
   return (
     <>
       <Head>
@@ -21,7 +21,7 @@ function Home({ content }) {
   );
 }
 
-Home.getInitialProps = async ({ req, query, store, isServer }) => {
+PageError.getInitialProps = async ({ req, query, store, isServer }) => {
   initialCheckAuth(req, store, false);
 
   let content = '';
@@ -38,4 +38,4 @@ Home.getInitialProps = async ({ req, query, store, isServer }) => {
   return { isServer, content };
 };
 
-export default Home;
+export default PageError;
