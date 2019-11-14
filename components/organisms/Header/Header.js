@@ -22,6 +22,7 @@ function Header(props) {
   const [open, setOpen] = useState(false);
   const cmsUserStore = useSelector(state => state.cmsUserStore);
   const cmsMenuStore = useSelector(state => state.cmsMenuStore);
+  const cmsPageStore = useSelector(state => state.cmsPageStore);
   const pageStore = useSelector(state => state.pageStore);
   const { userAdminName } = cmsUserStore;
   const dispatch = useDispatch();
@@ -31,7 +32,10 @@ function Header(props) {
   }, [
     cmsMenuStore.SET_MENU_ENDED,
     cmsMenuStore.UPDATE_LINK_NAME_ENDED,
-    cmsMenuStore.REMOVE_MENU_ENDED
+    cmsMenuStore.REMOVE_MENU_ENDED,
+    cmsPageStore.ADD_PAGE_ENDED,
+    cmsPageStore.EDIT_PAGE_ENDED,
+    cmsPageStore.DELETE_PAGE_ENDED
   ]);
 
   return (
@@ -46,13 +50,21 @@ function Header(props) {
         <NavbarToggler onClick={() => setOpen(!open)} />
         <Collapse isOpen={open} navbar>
           <Nav className="ml-auto" navbar>
-            {pageStore.menu.map(item => (
-              <NavItem className="mx-2" key={item._id}>
-                <Link href={`/page?slug=${item.slug}`} as={item.path} passHref>
-                  <NavLink>{item.linkName}</NavLink>
-                </Link>
-              </NavItem>
-            ))}
+            {pageStore.menu.map(item => {
+              if (item.page) {
+                return (
+                  <NavItem className="mx-2" key={item._id}>
+                    <Link
+                      href={`/page?slug=${item.page.slug}`}
+                      as={'/' + item.page.slug}
+                      passHref
+                    >
+                      <NavLink>{item.linkName}</NavLink>
+                    </Link>
+                  </NavItem>
+                );
+              }
+            })}
 
             {cmsUserStore.demoMode === true && (
               <NavItem className="mx-2">

@@ -19,7 +19,9 @@ exports.page_data_api = (req, res) => {
 };
 
 exports.page_menu_api = (req, res) => {
-  Menu.find().exec({}, (err, data) => {
-    res.json(data);
-  });
+  Menu.find()
+    .populate('page')
+    .exec({}, (err, data) => {
+      res.json(data);
+    });
 };

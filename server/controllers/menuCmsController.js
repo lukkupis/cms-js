@@ -29,37 +29,7 @@ exports.menu_list_api = (req, res) => {
 };
 
 exports.menu_insert_api = async (req, res) => {
-  const menu = req.body;
-
-  const pages = await Page.find();
-  const prevMenu = await Menu.find();
-
-  const menuPages = menu
-    .map((item, key) => {
-      const page = pages.find(page => String(page._id) === item);
-      const menuItem = prevMenu.find(prevItem => String(prevItem._id) === item);
-
-      if (page) {
-        return {
-          title: page.title,
-          linkName: page.title,
-          slug: page.slug,
-          path: '/' + page.slug,
-          order: key,
-          page: page._id
-        };
-      } else if (menuItem) {
-        return {
-          title: menuItem.title,
-          linkName: menuItem.linkName,
-          slug: menuItem.slug,
-          path: menuItem.path,
-          order: key,
-          page: menuItem.page._id
-        };
-      }
-    })
-    .filter(item => item !== undefined);
+  const menuPages = req.body;
 
   Menu.deleteMany({}, () =>
     Menu.insertMany(menuPages, (err, menu) => {
