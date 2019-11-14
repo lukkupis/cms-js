@@ -43,6 +43,7 @@ exports.menu_insert_api = async (req, res) => {
         return {
           title: page.title,
           linkName: page.title,
+          slug: page.slug,
           path: '/' + page.slug,
           order: key,
           page: page._id
@@ -51,6 +52,7 @@ exports.menu_insert_api = async (req, res) => {
         return {
           title: menuItem.title,
           linkName: menuItem.linkName,
+          slug: menuItem.slug,
           path: menuItem.path,
           order: key,
           page: menuItem.page._id

@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import * as cmsMenuActions from 'actions/cmsMenuActions';
+import * as pageActions from 'actions/pageActions';
 
 import { ListGroupItem, Button } from 'reactstrap';
 import InputSave from 'components/molecules/InputSave';
@@ -47,7 +48,9 @@ const MenuItems = () => {
         color="link"
         className="p-0 text-danger"
         disabled={cmsMenuStore.REMOVE_MENU_STARTED}
-        onClick={() => dispatch(cmsMenuActions.REMOVE_MENU(item._id))}
+        onClick={() => {
+          dispatch(cmsMenuActions.REMOVE_MENU(item._id));
+        }}
       >
         Remove
       </Button>

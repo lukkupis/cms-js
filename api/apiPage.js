@@ -15,3 +15,15 @@ export const getPageData = slug =>
         reject(error);
       });
   });
+
+export const getMenuList = () =>
+  new Promise((resolve, reject) => {
+    axios
+      .get(process.env.API_URL + '/api/page-menu/')
+      .then(function(response) {
+        resolve(response.data);
+      })
+      .catch(function(error) {
+        reject(error);
+      });
+  });

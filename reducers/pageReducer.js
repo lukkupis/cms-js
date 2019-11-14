@@ -16,7 +16,9 @@ const initialPageData = {
 
 const initialState = {
   ...initialStateApiData('GET_PAGE_DATA'),
-  pageData: initialPageData
+  pageData: initialPageData,
+  ...initialStateApiData('GET_MENU_LIST'),
+  menu: []
 };
 
 export default createReducer(initialState, {
@@ -25,12 +27,22 @@ export default createReducer(initialState, {
       state.pageData = action.payload;
     }
   }),
-  [pageActions.RESET_PAGE_DATA]: (state, action) => {
-    state.pageData = initialPageData;
-  },
   [pageActions.SET_PAGE_DATA_SERVER]: (state, action) => {
     if (action.payload) {
       state.pageData = action.payload;
     }
+  },
+  [pageActions.RESET_PAGE_DATA]: (state, action) => {
+    state.pageData = initialPageData;
+  },
+  ...reducerApiData('GET_MENU_LIST', (state, action) => {
+    if (action.payload) {
+      state.menu = action.payload;
+    }
+  }),
+  [pageActions.SET_MENU_LIST_SERVER]: (state, action) => {
+    // if (action.payload) {
+    //   state.menu = action.payload;
+    // }
   }
 });

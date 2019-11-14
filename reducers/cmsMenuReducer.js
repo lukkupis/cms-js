@@ -6,6 +6,9 @@ import reducerApiData from 'helpers/reducerApiData';
 
 const initialState = {
   ...initialStateApiData('GET_MENU'),
+  ...initialStateApiData('SET_MENU'),
+  ...initialStateApiData('UPDATE_LINK_NAME'),
+  ...initialStateApiData('REMOVE_MENU'),
   pages: [],
   menu: []
 };
@@ -31,6 +34,7 @@ export default createReducer(initialState, {
           return {
             title: page.title,
             linkName: '',
+            slug: page.slug,
             path: '/' + page.slug,
             order: key,
             page: page._id
@@ -39,6 +43,7 @@ export default createReducer(initialState, {
           return {
             title: menuItem.title,
             linkName: menuItem.linkName,
+            slug: menuItem.slug,
             path: menuItem.path,
             order: key,
             page: menuItem.page._id
