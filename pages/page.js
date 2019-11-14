@@ -3,14 +3,14 @@ import { useSelector } from 'react-redux';
 
 import initialCheckAuth from 'helpers/initialCheckAuth';
 
-import * as cmsPageActions from 'actions/cmsPageActions';
+import * as pageActions from 'actions/pageActions';
 
 import Head from 'next/head';
 import Header from 'components/organisms/Header/Header';
 
 function Page(props) {
-  const cmsPageStore = useSelector(state => state.cmsPageStore);
-  const page = cmsPageStore.currentPageData;
+  const pageStore = useSelector(state => state.pageStore);
+  const page = pageStore.pageData;
 
   return (
     <>
@@ -34,10 +34,10 @@ Page.getInitialProps = async ({ req, query, store, isServer }) => {
   initialCheckAuth(req, store, false);
 
   if (req) {
-    store.dispatch(cmsPageActions.SET_PAGE_DATA_SERVER(query.data));
+    store.dispatch(pageActions.SET_PAGE_DATA_SERVER(query.data));
   } else {
-    store.dispatch(cmsPageActions.RESET_PAGE_DATA());
-    store.dispatch(cmsPageActions.GET_PAGE_DATA(query.slug));
+    store.dispatch(pageActions.RESET_PAGE_DATA());
+    store.dispatch(pageActions.GET_PAGE_DATA(query.slug));
   }
 
   return { isServer };

@@ -12,16 +12,6 @@ const initialPageForm = {
   slug: ''
 };
 
-const initialCurrentPageData = {
-  slug: '',
-  template: '',
-  title: '',
-  author: '',
-  content: '',
-  status: '',
-  created: ''
-};
-
 const initialState = {
   ...initialStateApiData('GET_PAGES'),
   pages: [],
@@ -31,8 +21,7 @@ const initialState = {
   ...initialStateApiData('DELETE_PAGE'),
   pageSaveStatus: '',
   pageSaveMessage: '',
-  pageForm: initialPageForm,
-  currentPageData: initialCurrentPageData
+  pageForm: initialPageForm
 };
 
 export default createReducer(initialState, {
@@ -89,18 +78,5 @@ export default createReducer(initialState, {
     if (name === 'deleted') {
       pages.splice(pages.map(page => page._id).indexOf(id), 1);
     }
-  }),
-  ...reducerApiData('GET_PAGE_DATA', (state, action) => {
-    if (action.payload) {
-      state.currentPageData = action.payload;
-    }
-  }),
-  [cmsPageActions.RESET_PAGE_DATA]: (state, action) => {
-    state.currentPageData = initialCurrentPageData;
-  },
-  [cmsPageActions.SET_PAGE_DATA_SERVER]: (state, action) => {
-    if (action.payload) {
-      state.currentPageData = action.payload;
-    }
-  }
+  })
 });
