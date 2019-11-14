@@ -15,7 +15,7 @@ const SortablePages = styled(Sortable)`
   }
 `;
 
-const SortablePagesList = () => {
+const SortablePagesContainer = () => {
   const cmsMenuStore = useSelector(state => state.cmsMenuStore);
 
   return (
@@ -39,4 +39,4 @@ const SortablePagesList = () => {
   );
 };
 
-export default SortablePagesList;
+export default SortablePagesContainer;

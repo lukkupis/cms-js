@@ -1,9 +1,9 @@
 import React from 'react';
 
-import SortablePagesList from 'components/organisms/MenuSortable/SortablePagesList';
-import SortableMenuList from 'components/organisms/MenuSortable/SortableMenuList';
+import SortablePagesContainer from 'components/organisms/MenuSortable/SortablePagesContainer';
+import SortableMenuContainer from 'components/organisms/MenuSortable/SortableMenuContainer';
 
-function MenuSortable(props) {
+function MenuSortableWrapper(props) {
   return (
     <div>
       <div className="row">
@@ -12,18 +12,18 @@ function MenuSortable(props) {
             <strong>Pages:</strong>
           </div>
 
-          <SortablePagesList />
+          <SortablePagesContainer />
         </div>
         <div className="col-sm-6">
           <div className="mb-4">
             <strong className="mb-4">Menu:</strong>
           </div>
 
-          <SortableMenuList />
+          <SortableMenuContainer />
         </div>
       </div>
     </div>
   );
 }
 
-export default MenuSortable;
+export default MenuSortableWrapper;

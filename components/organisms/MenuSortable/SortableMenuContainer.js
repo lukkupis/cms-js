@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import * as cmsMenuActions from 'actions/cmsMenuActions';
 
-import Menu from 'components/organisms/MenuSortable/Menu';
+import MenuItems from 'components/organisms/MenuSortable/MenuItems';
 
 const SortableMenu = styled(Sortable)`
   max-height: 495px;
@@ -22,7 +22,7 @@ const SortableMenu = styled(Sortable)`
   }
 `;
 
-const SortableMenuList = () => {
+const SortableMenuContainer = () => {
   const cmsMenuStore = useSelector(state => state.cmsMenuStore);
   const dispatch = useDispatch();
 
@@ -43,7 +43,7 @@ const SortableMenuList = () => {
         dispatch(cmsMenuActions.SET_MENU(items));
       }}
     >
-      {<Menu />}
+      {<MenuItems />}
     </SortableMenu>
   );
 
@@ -58,4 +58,4 @@ const SortableMenuList = () => {
   );
 };
 
-export default SortableMenuList;
+export default SortableMenuContainer;

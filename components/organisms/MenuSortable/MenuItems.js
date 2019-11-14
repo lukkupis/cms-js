@@ -6,7 +6,7 @@ import * as cmsMenuActions from 'actions/cmsMenuActions';
 import { ListGroupItem, Button } from 'reactstrap';
 import InputSave from 'components/molecules/InputSave';
 
-const Menu = () => {
+const MenuItems = () => {
   const cmsMenuStore = useSelector(state => state.cmsMenuStore);
   const dispatch = useDispatch();
 
@@ -55,4 +55,4 @@ const Menu = () => {
   ));
 };
 
-export default Menu;
+export default MenuItems;
