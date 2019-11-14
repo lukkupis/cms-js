@@ -31,6 +31,7 @@ export default createReducer(initialState, {
           return {
             title: page.title,
             linkName: '',
+            path: '/' + page.slug,
             order: key,
             page: page._id
           };
@@ -38,6 +39,7 @@ export default createReducer(initialState, {
           return {
             title: menuItem.title,
             linkName: menuItem.linkName,
+            path: menuItem.path,
             order: key,
             page: menuItem.page._id
           };
@@ -48,13 +50,25 @@ export default createReducer(initialState, {
     state.menu = menu;
   },
   ...reducerApiData('SET_MENU', (state, action) => {
-    state.menu = action.payload;
+    const { name, menu } = action.payload;
+
+    if (name === 'inserted') {
+      state.menu = menu;
+    } else {
+      if (process.env.NODE_ENV === 'development') {
+        console.log(action.payload);
+      }
+    }
   }),
   ...reducerApiData('REMOVE_MENU', (state, action) => {
     const { id, name } = action.payload;
 
     if (name === 'deleted') {
       state.menu.splice(state.menu.map(menu => menu._id).indexOf(id), 1);
+    } else {
+      if (process.env.NODE_ENV === 'development') {
+        console.log(action.payload);
+      }
     }
   }),
   [cmsMenuActions.REFRESH_LINK_NAME]: (state, action) => {

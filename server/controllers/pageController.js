@@ -1,4 +1,5 @@
 const Page = require('../models/Page');
+const Menu = require('../models/Menu');
 const app = require('../nextApp');
 
 exports.page_data = (req, res) => {
@@ -15,4 +16,10 @@ exports.page_data_api = (req, res) => {
     .exec({}, (err, data) => {
       res.json(data);
     });
+};
+
+exports.page_menu_api = (req, res) => {
+  Menu.find().exec({}, (err, data) => {
+    res.json(data);
+  });
 };
