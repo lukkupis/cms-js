@@ -1,5 +1,6 @@
 const express = require('express');
 const app = require('./nextApp');
+const path = require('path');
 
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);

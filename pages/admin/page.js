@@ -3,15 +3,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-import * as cmsPageActions from 'actions/cmsPageActions';
-import initialCheckAuth from 'helpers/initialCheckAuth';
-import initialReqData from 'helpers/initialReqData';
+import * as cmsPageActions from '../../actions/cmsPageActions';
+import initialCheckAuth from '../../helpers/initialCheckAuth';
+import initialReqData from '../../helpers/initialReqData';
 
 import Head from 'next/head';
-import Header from 'components/organisms/Header/Header';
-import AdminMenu from 'components/organisms/AdminMenu/AdminMenu';
-import AdminMain from 'components/atoms/AdminMain';
-import AdminContent from 'components/atoms/AdminContent';
+
+import Header from '../../components/organisms/Header/Header';
+import AdminMenu from '../../components/organisms/AdminMenu/AdminMenu';
+import AdminMain from '../../components/atoms/AdminMain';
+import AdminContent from '../../components/atoms/AdminContent';
 import {
   Button,
   Form as FormStrap,

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Table } from 'reactstrap';
-import AdminEditButtons from 'components/molecules/AdminEditButtons';
+import AdminEditButtons from '../../molecules/AdminEditButtons';
 
 const AdminList = ({ list, columns, buttons }) => {
   function fieldType(column, item) {

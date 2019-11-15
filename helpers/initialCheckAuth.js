@@ -1,4 +1,4 @@
-import * as cmsUserActions from 'actions/cmsUserActions';
+import * as cmsUserActions from '../actions/cmsUserActions';
 import Router from 'next/router';
 
 export default function initialCheckAuth(req, store, redirect = true) {

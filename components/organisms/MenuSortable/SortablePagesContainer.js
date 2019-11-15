@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { useSelector } from 'react-redux';
 
-import Pages from 'components/organisms/MenuSortable/Pages';
+import Pages from '../../organisms/MenuSortable/Pages';
 
 const SortablePages = styled(Sortable)`
   height: 495px;

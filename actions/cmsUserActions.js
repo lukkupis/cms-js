@@ -1,6 +1,6 @@
 import { createAction } from 'redux-starter-kit';
 import { createActionThunk } from 'redux-thunk-actions';
-import * as apiUsersCms from 'api/apiUsersCms';
+import * as apiUsersCms from '../api/apiUsersCms';
 
 export const SET_USER = createAction('SET_USER');
 

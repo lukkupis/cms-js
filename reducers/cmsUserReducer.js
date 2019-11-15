@@ -1,8 +1,8 @@
 import { createReducer } from 'redux-starter-kit';
 
 import * as cmsUserActions from '../actions/cmsUserActions';
-import initialStateApiData from 'helpers/initialStateApiData';
-import reducerApiData from 'helpers/reducerApiData';
+import initialStateApiData from '../helpers/initialStateApiData';
+import reducerApiData from '../helpers/reducerApiData';
 
 const initialUserForm = {
   name: '',
