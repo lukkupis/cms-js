@@ -199,6 +199,11 @@ function User({ reqAction, isServer, reqRoutePath, reqHost }) {
                     <option value="admin">Administrator</option>
                     <option value="user">User</option>
                   </Input>
+                  {values.permissions === 'user' && (
+                    <p className="mt-2">
+                      "User" does not have access to user management.
+                    </p>
+                  )}
                 </FormGroup>
                 <Button type="submit" disabled={isSubmitting}>
                   {action === 'edit' ? 'Edit' : 'Add'}

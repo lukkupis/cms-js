@@ -29,7 +29,7 @@ const theme = {};
 
 export default withRedux(initStore)(
   class MyApp extends App {
-    static async getInitialProps({ Component, ctx }) {
+    static async getInitialProps({ Component, ctx, req }) {
       return {
         pageProps: Component.getInitialProps
           ? await Component.getInitialProps(ctx)

@@ -27,12 +27,7 @@ PageError.getInitialProps = async ({ req, query, store, isServer }) => {
   let content = '';
 
   if (req) {
-    store.dispatch(cmsPageActions.SET_PAGE_DATA_SERVER(query.data));
-
-    content = query;
-  } else {
-    store.dispatch(cmsPageActions.RESET_PAGE_DATA());
-    store.dispatch(cmsPageActions.GET_PAGE_DATA(query.slug));
+    content = query.data;
   }
 
   return { isServer, content };

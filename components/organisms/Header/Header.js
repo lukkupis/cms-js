@@ -67,11 +67,13 @@ function Header(props) {
                 }
               })}
 
-              <NavItem className="mx-2">
-                <Link href="/admin" passHref>
-                  <NavLink>Admin</NavLink>
-                </Link>
-              </NavItem>
+              {cmsUserStore.demoMode === true && (
+                <NavItem className="mx-2">
+                  <Link href="/admin" passHref>
+                    <NavLink>Admin</NavLink>
+                  </Link>
+                </NavItem>
+              )}
             </div>
 
             {userAdminName && (

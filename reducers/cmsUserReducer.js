@@ -35,7 +35,6 @@ export default createReducer(initialState, {
     state.userAdminName = action.payload.name;
     state.userAdminId = action.payload.id;
     state.userPermission = action.payload.permissions;
-    state.demoMode = action.payload.demoMode;
   },
   [cmsUserActions.SET_USERS_SERVER]: (state, action) => {
     state.users = action.payload;
@@ -92,5 +91,8 @@ export default createReducer(initialState, {
   }),
   [cmsUserActions.CLEAR_MODAL_MESSAGE]: (state, action) => {
     state.modalMessage = '';
+  },
+  [cmsUserActions.SET_DEMO_MODE]: (state, action) => {
+    state.demoMode = action.payload === 'true' ? true : false;
   }
 });

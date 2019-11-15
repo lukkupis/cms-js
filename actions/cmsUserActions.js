@@ -30,3 +30,5 @@ export const DELETE_USER = createActionThunk('DELETE_USER', id =>
 );
 
 export const CLEAR_MODAL_MESSAGE = createAction('CLEAR_MODAL_MESSAGE');
+
+export const SET_DEMO_MODE = createAction('SET_DEMO_MODE');

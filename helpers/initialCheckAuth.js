@@ -8,10 +8,12 @@ export default function initialCheckAuth(req, store, redirect = true) {
         cmsUserActions.SET_USER({
           name: req.session.user.name,
           id: req.session.user.id,
-          permissions: req.session.user.permissions,
-          demoMode: req.session.user.demoMode
+          permissions: req.session.user.permissions
         })
       );
+    }
+    if (req.cookies.demoMode) {
+      store.dispatch(cmsUserActions.SET_DEMO_MODE(req.cookies.demoMode));
     }
   } else {
     const userAdminName = store.getState().cmsUserStore.userAdminName;

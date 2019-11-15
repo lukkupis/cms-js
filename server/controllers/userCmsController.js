@@ -66,7 +66,7 @@ exports.user_list = (req, res) => {
         app.render(req, res, '/admin/users', { data });
       });
   } else {
-    app.render(req, res, '/page-error', 'No permission.');
+    app.render(req, res, '/page-error', { data: 'No permission.' });
   }
 };
 
@@ -78,7 +78,7 @@ exports.user_list_api = (req, res) => {
         res.json(data);
       });
   } else {
-    res.json({ error: 'No permission.' });
+    res.json({ error: { data: 'No permission.' } });
   }
 };
 
@@ -95,7 +95,7 @@ exports.user_detail = (req, res) => {
         });
       });
   } else {
-    app.render(req, res, '/page-error', 'No permission.');
+    app.render(req, res, '/page-error', { data: 'No permission.' });
   }
 };
 
@@ -107,7 +107,7 @@ exports.user_detail_api = (req, res) => {
         res.json({ ...data._doc, password: '', confirmPassword: '' });
       });
   } else {
-    res.json({ error: 'No permission.' });
+    res.json({ error: { data: 'No permission.' } });
   }
 };
 
@@ -212,7 +212,7 @@ exports.user_update_api = async (req, res) => {
       });
     });
   } else {
-    res.json({ error: 'No permission.' });
+    res.json({ error: { data: 'No permission.' } });
   }
 };
 
@@ -255,6 +255,6 @@ exports.user_delete_api = async (req, res) => {
       });
     });
   } else {
-    res.json({ error: 'No permission.' });
+    res.json({ error: { data: 'No permission.' } });
   }
 };

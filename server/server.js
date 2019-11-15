@@ -44,6 +44,10 @@ app.prepare().then(() => {
   server.use(function(req, res, next) {
     res.locals.path = req.path;
 
+    if (config.demoMode) {
+      res.cookie('demoMode', config.demoMode);
+    }
+
     next();
   });
 
