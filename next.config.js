@@ -1,13 +1,7 @@
 const path = require('path');
 const withSass = require('@zeit/next-sass');
 
-const dotEnvResult = require('dotenv').config();
-
 const prod = process.env.NODE_ENV === 'production';
-
-if (dotEnvResult.error) {
-  throw dotEnvResult.error;
-}
 
 module.exports = withSass({
   useFileSystemPublicRoutes: false,
