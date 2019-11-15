@@ -50,29 +50,30 @@ function Header(props) {
         <NavbarToggler onClick={() => setOpen(!open)} />
         <Collapse isOpen={open} navbar>
           <Nav className="ml-auto" navbar>
-            {pageStore.menu.map(item => {
-              if (item.page) {
-                return (
-                  <NavItem className="mx-2" key={item._id}>
-                    <Link
-                      href={`/page?slug=${item.page.slug}`}
-                      as={'/' + item.page.slug}
-                      passHref
-                    >
-                      <NavLink>{item.linkName}</NavLink>
-                    </Link>
-                  </NavItem>
-                );
-              }
-            })}
+            <div className="d-flex flex-wrap justify-content-end">
+              {pageStore.menu.map(item => {
+                if (item.page) {
+                  return (
+                    <NavItem className="mx-2" key={item._id}>
+                      <Link
+                        href={`/page?slug=${item.page.slug}`}
+                        as={'/' + item.page.slug}
+                        passHref
+                      >
+                        <NavLink>{item.linkName}</NavLink>
+                      </Link>
+                    </NavItem>
+                  );
+                }
+              })}
 
-            {cmsUserStore.demoMode === true && (
               <NavItem className="mx-2">
                 <Link href="/admin" passHref>
                   <NavLink>Admin</NavLink>
                 </Link>
               </NavItem>
-            )}
+            </div>
+
             {userAdminName && (
               <>
                 <NavItem className="ml-5">
