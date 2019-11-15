@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import initialCheckAuth from 'helpers/initialCheckAuth';
+import initialReqData from 'helpers/initialReqData';
 
 import * as cmsMenuActions from 'actions/cmsMenuActions';
 
@@ -45,6 +46,7 @@ function Menu({ isServer, reqRoutePath }) {
 
 Menu.getInitialProps = async ({ req, query, store, isServer }) => {
   initialCheckAuth(req, store, false);
+  initialReqData(req, query, store);
 
   let reqRoutePath = '';
 

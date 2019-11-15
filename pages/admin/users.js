@@ -4,6 +4,7 @@ import Router from 'next/router';
 
 import * as cmsUserActions from 'actions/cmsUserActions';
 import initialCheckAuth from 'helpers/initialCheckAuth';
+import initialReqData from 'helpers/initialReqData';
 
 import Head from 'next/head';
 import Header from 'components/organisms/Header/Header';
@@ -99,6 +100,7 @@ function Users({ isServer, reqRoutePath }) {
 
 Users.getInitialProps = async ({ req, query, store, isServer }) => {
   initialCheckAuth(req, store);
+  initialReqData(req, query, store);
 
   let reqRoutePath = '';
 

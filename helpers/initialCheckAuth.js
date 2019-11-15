@@ -12,9 +12,6 @@ export default function initialCheckAuth(req, store, redirect = true) {
         })
       );
     }
-    if (req.cookies.demoMode) {
-      store.dispatch(cmsUserActions.SET_DEMO_MODE(req.cookies.demoMode));
-    }
   } else {
     const userAdminName = store.getState().cmsUserStore.userAdminName;
 

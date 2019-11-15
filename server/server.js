@@ -8,6 +8,8 @@ const logger = require('morgan');
 const config = require('./config');
 const mongoose = require('mongoose');
 
+const pageController = require('./controllers/pageController');
+
 mongoose.connect(config.db, { useNewUrlParser: true, useFindAndModify: false });
 
 const db = mongoose.connection;
@@ -50,6 +52,8 @@ app.prepare().then(() => {
 
     next();
   });
+
+  server.use(pageController.page_menu);
 
   server.use('/admin', adminRouter);
   server.use('/admin-api', adminApiRouter);

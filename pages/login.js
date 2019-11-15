@@ -1,5 +1,7 @@
 import * as cmsUserActions from 'actions/cmsUserActions';
 
+import initialReqData from 'helpers/initialReqData';
+
 import Header from 'components/organisms/Header/Header';
 import React from 'react';
 import styled from 'styled-components';
@@ -53,6 +55,8 @@ function Login({ query }) {
 }
 
 Login.getInitialProps = async ({ req, query, store, isServer }) => {
+  initialReqData(req, query, store);
+
   if (req) {
     if (req.session.user) {
       store.dispatch(cmsUserActions.SET_USER(req.session.user.name));

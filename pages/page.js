@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import initialCheckAuth from 'helpers/initialCheckAuth';
+import initialReqData from 'helpers/initialReqData';
 
 import * as pageActions from 'actions/pageActions';
 
@@ -32,6 +33,7 @@ function Page(props) {
 
 Page.getInitialProps = async ({ req, query, store, isServer }) => {
   initialCheckAuth(req, store, false);
+  initialReqData(req, query, store);
 
   if (req) {
     store.dispatch(pageActions.SET_PAGE_DATA_SERVER(query.data));

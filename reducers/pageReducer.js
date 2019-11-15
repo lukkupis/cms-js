@@ -41,8 +41,8 @@ export default createReducer(initialState, {
     }
   }),
   [pageActions.SET_MENU_LIST_SERVER]: (state, action) => {
-    // if (action.payload) {
-    //   state.menu = action.payload;
-    // }
+    if (action.payload) {
+      state.menu = action.payload;
+    }
   }
 });

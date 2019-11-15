@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import Link from 'next/link';
 
 import initialCheckAuth from 'helpers/initialCheckAuth';
+import initialReqData from 'helpers/initialReqData';
 
 import * as cmsPageActions from 'actions/cmsPageActions';
 
@@ -23,6 +24,7 @@ function PageError({ content }) {
 
 PageError.getInitialProps = async ({ req, query, store, isServer }) => {
   initialCheckAuth(req, store, false);
+  initialReqData(req, query, store);
 
   let content = '';
 

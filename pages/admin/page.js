@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 import * as cmsPageActions from 'actions/cmsPageActions';
 import initialCheckAuth from 'helpers/initialCheckAuth';
+import initialReqData from 'helpers/initialReqData';
 
 import Head from 'next/head';
 import Header from 'components/organisms/Header/Header';
@@ -169,6 +170,7 @@ function Page({ reqAction, isServer, reqRoutePath, reqHost }) {
 
 Page.getInitialProps = async ({ req, query, store, isServer }) => {
   initialCheckAuth(req, store);
+  initialReqData(req, query, store);
 
   let reqAction = '';
   let reqRoutePath = '';
