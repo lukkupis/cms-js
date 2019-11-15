@@ -3,9 +3,9 @@ import Sortable from 'react-sortablejs';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 
-import * as cmsMenuActions from '../../../actions/cmsMenuActions';
+import * as cmsMenuActions from 'actions/cmsMenuActions';
 
-import MenuItems from '../../organisms/MenuSortable/MenuItems';
+import MenuItems from 'components/organisms/MenuSortable/MenuItems';
 
 const SortableMenu = styled(Sortable)`
   max-height: 495px;

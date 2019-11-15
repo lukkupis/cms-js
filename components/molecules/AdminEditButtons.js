@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ButtonDelete from '../atoms/ButtonDelete';
-import ButtonEdit from '../atoms/ButtonEdit';
+import ButtonDelete from 'components/atoms/ButtonDelete';
+import ButtonEdit from 'components/atoms/ButtonEdit';
 
 import Link from 'next/link';
 

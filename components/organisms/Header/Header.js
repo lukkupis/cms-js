@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import * as pageActions from '../../../actions/pageActions';
+import * as pageActions from 'actions/pageActions';
 
 import {
   Collapse,
@@ -16,7 +16,7 @@ import Link from 'next/link';
 
 import '@fortawesome/fontawesome-free/js/all';
 
-import '../../../theme/index.scss';
+import 'theme/index.scss';
 
 function Header(props) {
   const [open, setOpen] = useState(false);

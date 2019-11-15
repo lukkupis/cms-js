@@ -1,10 +1,14 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import Link from 'next/link';
 
-import initialCheckAuth from '../helpers/initialCheckAuth';
-import initialReqData from '../helpers/initialReqData';
+import initialCheckAuth from 'helpers/initialCheckAuth';
+import initialReqData from 'helpers/initialReqData';
+
+import * as cmsPageActions from 'actions/cmsPageActions';
 
 import Head from 'next/head';
-import Header from '../components/organisms/Header/Header';
+import Header from 'components/organisms/Header/Header';
 
 function PageError({ content }) {
   return (
