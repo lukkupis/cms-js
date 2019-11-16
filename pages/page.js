@@ -1,13 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import initialCheckAuth from 'helpers/initialCheckAuth';
-import initialReqData from 'helpers/initialReqData';
+import initialCheckAuth from '../helpers/initialCheckAuth';
+import initialReqData from '../helpers/initialReqData';
 
-import * as pageActions from 'actions/pageActions';
+import * as pageActions from '../actions/pageActions';
 
 import Head from 'next/head';
-import Header from 'components/organisms/Header/Header';
+import Header from '../components/organisms/Header/Header';
 
 function Page(props) {
   const pageStore = useSelector(state => state.pageStore);

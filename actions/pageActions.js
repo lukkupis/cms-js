@@ -1,6 +1,6 @@
 import { createAction } from 'redux-starter-kit';
 import { createActionThunk } from 'redux-thunk-actions';
-import * as apiPage from 'api/apiPage';
+import * as apiPage from '../api/apiPage';
 
 export const GET_PAGE_DATA = createActionThunk('GET_PAGE_DATA', slug =>
   apiPage.getPageData(slug)

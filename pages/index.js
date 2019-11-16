@@ -1,8 +1,8 @@
-import initialCheckAuth from 'helpers/initialCheckAuth';
-import initialReqData from 'helpers/initialReqData';
+import initialCheckAuth from '../helpers/initialCheckAuth';
+import initialReqData from '../helpers/initialReqData';
 
 import Head from 'next/head';
-import Header from 'components/organisms/Header/Header';
+import Header from '../components/organisms/Header/Header';
 
 function Index(props) {
   return (

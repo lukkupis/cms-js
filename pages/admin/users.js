@@ -2,19 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Router from 'next/router';
 
-import * as cmsUserActions from 'actions/cmsUserActions';
-import initialCheckAuth from 'helpers/initialCheckAuth';
-import initialReqData from 'helpers/initialReqData';
+import * as cmsUserActions from '../../actions/cmsUserActions';
+import initialCheckAuth from '../../helpers/initialCheckAuth';
+import initialReqData from '../../helpers/initialReqData';
 
 import Head from 'next/head';
-import Header from 'components/organisms/Header/Header';
-import AdminList from 'components/organisms/AdminList/AdminList';
-import AdminMenu from 'components/organisms/AdminMenu/AdminMenu';
-import AdminMain from 'components/atoms/AdminMain';
-import AdminContent from 'components/atoms/AdminContent';
-import AdminHeader from 'components/molecules/AdminHeader';
-import ModalInfo from 'components/molecules/ModalInfo';
-import ModalRemove from 'components/molecules/ModalRemove';
+
+import Header from '../../components/organisms/Header/Header';
+import AdminList from '../../components/organisms/AdminList/AdminList';
+import AdminMenu from '../../components/organisms/AdminMenu/AdminMenu';
+import AdminMain from '../../components/atoms/AdminMain';
+import AdminContent from '../../components/atoms/AdminContent';
+import AdminHeader from '../../components/molecules/AdminHeader';
+import ModalInfo from '../../components/molecules/ModalInfo';
+import ModalRemove from '../../components/molecules/ModalRemove';
 
 function Users({ isServer, reqRoutePath }) {
   const dispatch = useDispatch();
