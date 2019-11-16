@@ -5,9 +5,9 @@
   "main": "app.js",
   "scripts": {
     "test": "jest",
-    "dev": "nodemon server/server.js",
+    "dev": "nodemon app.js",
     "build": "next build",
-    "start": "NODE_ENV=production node server/server.js"
+    "start": "NODE_ENV=production node app.js"
   },
   "author": "Łukasz Kupis",
   "license": "ISC",
