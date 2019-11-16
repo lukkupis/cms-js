@@ -1,15 +1,15 @@
 const express = require('express');
-const app = require('./nextApp');
+const app = require('./server/nextApp');
 const path = require('path');
 
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const config = require('./config');
+const config = require('./server/config');
 const mongoose = require('mongoose');
 
-const pageController = require('./controllers/pageController');
+const pageController = require('./server/controllers/pageController');
 
 mongoose.connect(config.db, { useNewUrlParser: true, useFindAndModify: false });
 
@@ -19,10 +19,10 @@ db.on('error', console.error.bind(console, 'connection error:'));
 const port = parseInt(process.env.PORT, 10) || 3000;
 const handle = app.getRequestHandler();
 
-const indexRouter = require('./routes/index');
-const adminRouter = require('./routes/admin');
-const adminApiRouter = require('./routes/api/admin-api');
-const apiRouter = require('./routes/api/api');
+const indexRouter = require('./server/routes/index');
+const adminRouter = require('./server/routes/admin');
+const adminApiRouter = require('./server/routes/api/admin-api');
+const apiRouter = require('./server/routes/api/api');
 
 app.prepare().then(() => {
   const server = express();

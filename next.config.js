@@ -7,6 +7,6 @@ module.exports = withSass({
   useFileSystemPublicRoutes: false,
   env: {
     TEST: process.env.TEST,
-    API_URL: prod ? 'https://api.example.com' : 'http://localhost:3000'
+    API_URL: prod ? 'http://lk07.usermd.net' : 'http://localhost:3000'
   }
 });
