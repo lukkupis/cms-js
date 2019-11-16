@@ -1,18 +1,18 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
-import * as cmsUserActions from '../../actions/cmsUserActions';
-import initialCheckAuth from '../../helpers/initialCheckAuth';
-import initialReqData from '../../helpers/initialReqData';
+import * as cmsUserActions from 'actions/cmsUserActions';
+import initialCheckAuth from 'helpers/initialCheckAuth';
+import initialReqData from 'helpers/initialReqData';
 
 import Head from 'next/head';
-
-import Header from '../../components/organisms/Header/Header';
-import AdminMenu from '../../components/organisms/AdminMenu/AdminMenu';
-import AdminMain from '../../components/atoms/AdminMain';
-import AdminContent from '../../components/atoms/AdminContent';
-import ModalInfo from '../../components/molecules/ModalInfo';
+import Header from 'components/organisms/Header/Header';
+import AdminMenu from 'components/organisms/AdminMenu/AdminMenu';
+import AdminMain from 'components/atoms/AdminMain';
+import AdminContent from 'components/atoms/AdminContent';
+import ModalInfo from 'components/molecules/ModalInfo';
 import {
   Button,
   Form as FormStrap,

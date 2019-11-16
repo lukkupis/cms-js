@@ -1,10 +1,11 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import * as cmsMenuActions from '../../../actions/cmsMenuActions';
+import * as cmsMenuActions from 'actions/cmsMenuActions';
+import * as pageActions from 'actions/pageActions';
 
 import { ListGroupItem, Button } from 'reactstrap';
-import InputSave from '../../molecules/InputSave';
+import InputSave from 'components/molecules/InputSave';
 
 const MenuItems = () => {
   const cmsMenuStore = useSelector(state => state.cmsMenuStore);

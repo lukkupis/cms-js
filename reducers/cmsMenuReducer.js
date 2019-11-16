@@ -1,8 +1,8 @@
 import { createReducer } from 'redux-starter-kit';
 
 import * as cmsMenuActions from '../actions/cmsMenuActions';
-import initialStateApiData from '../helpers/initialStateApiData';
-import reducerApiData from '../helpers/reducerApiData';
+import initialStateApiData from 'helpers/initialStateApiData';
+import reducerApiData from 'helpers/reducerApiData';
 
 const initialState = {
   ...initialStateApiData('GET_MENU'),

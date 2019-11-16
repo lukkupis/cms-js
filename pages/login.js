@@ -1,8 +1,8 @@
-import * as cmsUserActions from '../actions/cmsUserActions';
+import * as cmsUserActions from 'actions/cmsUserActions';
 
-import initialReqData from '../helpers/initialReqData';
+import initialReqData from 'helpers/initialReqData';
 
-import Header from '../components/organisms/Header/Header';
+import Header from 'components/organisms/Header/Header';
 import React from 'react';
 import styled from 'styled-components';
 

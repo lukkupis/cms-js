@@ -1,8 +1,8 @@
 import { createReducer } from 'redux-starter-kit';
 
 import * as pageActions from '../actions/pageActions';
-import initialStateApiData from '../helpers/initialStateApiData';
-import reducerApiData from '../helpers/reducerApiData';
+import initialStateApiData from 'helpers/initialStateApiData';
+import reducerApiData from 'helpers/reducerApiData';
 
 const initialPageData = {
   slug: '',

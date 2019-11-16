@@ -1,7 +1,7 @@
 import React from 'react';
 
-import SortablePagesContainer from '../../organisms/MenuSortable/SortablePagesContainer';
-import SortableMenuContainer from '../../organisms/MenuSortable/SortableMenuContainer';
+import SortablePagesContainer from 'components/organisms/MenuSortable/SortablePagesContainer';
+import SortableMenuContainer from 'components/organisms/MenuSortable/SortableMenuContainer';
 
 function MenuSortableWrapper(props) {
   return (

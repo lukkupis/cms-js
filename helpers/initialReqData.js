@@ -1,5 +1,5 @@
-import * as cmsUserActions from '../actions/cmsUserActions';
-import * as pageActions from '../actions/pageActions';
+import * as cmsUserActions from 'actions/cmsUserActions';
+import * as pageActions from 'actions/pageActions';
 
 export default function(req, query, store) {
   if (req) {

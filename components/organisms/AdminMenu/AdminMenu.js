@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import NavLink from '../../atoms/NavLink';
+import NavLink from 'components/atoms/NavLink';
 
 const StyledContainer = styled.div`
   width: 150px;
