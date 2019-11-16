@@ -90,7 +90,7 @@ exports.page_create_api = async (req, res) => {
 
       let newPage = clone(page);
 
-      User.findById(page.author, function(err, author) {
+      User.findById(page.author, function(err, author) {        
         newPage.author = author;
 
         res.json({ message: 'Page published.', name: 'published', newPage });

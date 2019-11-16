@@ -48,20 +48,20 @@ function Page({ reqAction, isServer, reqRoutePath, reqHost }) {
     }
   }, [cmsUserStore.userAdminId]);
 
-  const handleOnSubmit = (values, { setSubmitting, setValues, resetForm }) => {
+  const handleOnSubmit = (values, { setSubmitting, setValues, resetForm, setErrors }) => {
     dispatch(cmsPageActions.RESET_STATUS_FORM());
 
     if (action === 'new') {
       dispatch(cmsPageActions.ADD_PAGE(values)).then(res => {
         setSubmitting(false);
 
-        if (!res.code) {
+        if (!res.code && res.name === 'published') {
           router.push(
             `/admin/page?action=edit&id=${res.newPage._id}`,
             `/admin/pages/page?action=edit&id=${res.newPage._id}`
           );
         } else {
-          setErrors({ login: 'Error creating page.' });
+          setErrors({ title: 'Error creating page.' });
         }
       });
     } else if (action === 'edit') {

@@ -8,16 +8,7 @@ exports.user_login = (req, res) => {
   const { login, password } = req.body;
 
   User.find({ permissions: 'admin' }, (err, data) => {
-    if (config.demoMode === true && login === 'demo' && password === 'demo') {
-      req.session.user = {
-        id: 0,
-        name: 'Demo Mode',
-        login: 'demo',
-        permissions: 'admin',
-        demoMode: config.demoMode
-      };
-      res.redirect('/admin');
-    } else if (data && data.length) {
+    if (data && data.length) {
       User.findOne({ login }, (err, data) => {
         if (data) {
           bcrypt.compare(password, data.password, function(err, passCorrect) {
@@ -162,6 +153,14 @@ exports.user_update_api = async (req, res) => {
   if (req.session.user.permissions === 'admin') {
     const body = req.body;
 
+    const user = await User.findById(req.params.id);
+
+    if (config.demoMode === true && user.login === 'demo') {   
+      return res.json({
+        error: 'You can not edit "Demo" user in demo mode.'
+      });
+    }
+
     User.find({ permissions: 'admin' }, (err, admin) => {
       User.findById(req.params.id, (err, user) => {
         if (body.password === body.confirmPassword) {
@@ -189,7 +188,7 @@ exports.user_update_api = async (req, res) => {
 
             user.save((err, user) => {
               if (err) {
-                res.json(errors || err);
+                res.json(err);
                 return;
               }
 
@@ -218,13 +217,20 @@ exports.user_update_api = async (req, res) => {
 
 exports.user_delete_api = async (req, res) => {
   if (req.session.user.permissions === 'admin') {
-    const id = req.params.id;
+    const id = req.params.id;    
 
     User.find({ permissions: 'admin' }, (err, admin) => {
       User.findById(id, (err, user) => {
         if (err || !user) {
           res.status(404);
           return;
+        }
+
+        if (config.demoMode === true && user.login === 'demo') {
+          return res.json({
+            name: 'error',
+            message: 'You can not delete "Demo" user in demo mode.'
+          });
         }
 
         if (user.permissions === 'admin' && admin.length > 1) {

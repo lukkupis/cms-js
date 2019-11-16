@@ -4,8 +4,8 @@ import * as pageActions from '../actions/pageActions';
 export default function(req, query, store) {
   if (req) {
     //demo mode
-    if (req.cookies.demoMode) {
-      store.dispatch(cmsUserActions.SET_DEMO_MODE(req.cookies.demoMode));
+    if (req.cookies.demoMode || req.locals.demoMode) {
+      store.dispatch(cmsUserActions.SET_DEMO_MODE(true));
     }
 
     //menu

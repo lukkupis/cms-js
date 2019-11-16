@@ -47,6 +47,7 @@ app.prepare().then(() => {
     res.locals.path = req.path;
 
     if (config.demoMode) {
+      req.locals = {...req.locals, demoMode: config.demoMode};
       res.cookie('demoMode', config.demoMode);
     }
 

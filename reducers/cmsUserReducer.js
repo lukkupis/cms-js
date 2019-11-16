@@ -93,6 +93,6 @@ export default createReducer(initialState, {
     state.modalMessage = '';
   },
   [cmsUserActions.SET_DEMO_MODE]: (state, action) => {
-    state.demoMode = action.payload === 'true' ? true : false;
+    state.demoMode = action.payload;
   }
 });
