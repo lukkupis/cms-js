@@ -34,7 +34,15 @@ exports.page_list = (req, res) => {
     .populate('author')
     .sort('-created')
     .exec({}, (err, data) => {
-      app.render(req, res, '/admin/pages', { data });
+      const pages =  data.map(page => {
+        if(!page.author) {
+          page.author = {name: 'Author unknown'}
+        }
+
+        return page;
+      });
+
+      app.render(req, res, '/admin/pages', { data: pages });
     });
 };
 
@@ -43,7 +51,15 @@ exports.page_list_api = (req, res) => {
     .populate('author')
     .sort('-created')
     .exec({}, (err, data) => {
-      res.json(data);
+      const pages =  data.map(page => {
+        if(!page.author) {
+          page.author = {name: 'Author unknown'}
+        }
+
+        return page;
+      });
+
+      res.json(pages);
     });
 };
 

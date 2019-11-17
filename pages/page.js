@@ -22,7 +22,9 @@ function Page(props) {
       {page.slug && (
         <div className="container mt-5">
           <h1>{page.title}</h1>
-          <div className="mb-4">{page.author.name}</div>
+          <div className="mb-4">
+            {page.author ? page.author.name : 'Author unknown'}
+          </div>
 
           {page.content}
         </div>
