@@ -1,6 +1,13 @@
 # CMS-JS
 Simple CMS with browser-side and server-side rendering.
 
+## Demo:
+http://cmsjs.lukkupis.pl/login
+
+login: **demo**
+
+pass: **cmsdemo**
+
 ## Features:
 - user authentication
 - add/edit pages
@@ -23,13 +30,6 @@ Simple CMS with browser-side and server-side rendering.
 - styled-components
 - Atomic Design
 - Sass
-
-## Demo:
-http://cmsjs.lukkupis.pl/login
-
-login: **demo**
-
-pass: **cmsdemo**
 
 ## Installation:
 
