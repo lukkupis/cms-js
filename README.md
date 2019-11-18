@@ -48,10 +48,18 @@ module.exports = {
 };
 ```
 
-### Default user:
+### Users
+
+#### Default user:
 
 login: ***admin***
 
 pass: ***admin***
 
 Account will stop working after you create a new user with "Administrator" permissions.
+
+#### User roles:
+
+Administrator - all permissions
+
+Users - no user management access
