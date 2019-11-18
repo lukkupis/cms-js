@@ -36,11 +36,13 @@ For proper operation, the configuration file is required: "server/config.js".
 
 Example:
 
-```module.exports = {
+```js
+module.exports = {
   db:
     'mongodb://<login>:<password>@<domain>:<port>/<dbName>',
   keySession: ['randomKey1', 'randomKey2'],
   maxAgeSession: 24 * 60 * 60 * 1000,
   prodDomain: 'http://example.com',
   demoMode: false //In demo mode, you can not edit user "demo", and "Admin" page is visible in the menu.
-};```
+};
+```
