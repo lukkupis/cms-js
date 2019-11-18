@@ -33,7 +33,9 @@ pass: **cmsdemo**
 
 ## Installation:
 
-For proper operation, the configuration file is required: "server/config.js". 
+### Configuration file
+
+A configuration file is required for proper operation: "server/config.js". 
 
 Example:
 
