@@ -1,25 +1,25 @@
 # CMS-JS
 Simple CMS with browser-side and server-side rendering.
 
-## Demo:
+## Demo
 http://cmsjs.lukkupis.pl/login
 
 login: **demo**
 
 pass: **cmsdemo**
 
-## Features:
+## Features
 - user authentication
 - add/edit pages
 - user management
 - edit menu
 
-## Future features:
+## Future features
 - categories
 - WYSIWYG Editor
 - page templates
 
-## Built with:
+## Built with
 - React
 - Redux
 - Next.js
@@ -31,7 +31,7 @@ pass: **cmsdemo**
 - Atomic Design
 - Sass
 
-## Installation:
+## Installation
 
 ### Configuration file
 
@@ -49,6 +49,8 @@ module.exports = {
   demoMode: false //In demo mode, you can not edit user "demo", and "Admin" page is visible in the menu.
 };
 ```
+
+## Documentation
 
 ### Users
 
