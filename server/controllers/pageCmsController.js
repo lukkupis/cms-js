@@ -34,9 +34,9 @@ exports.page_list = (req, res) => {
     .populate('author')
     .sort('-created')
     .exec({}, (err, data) => {
-      const pages =  data.map(page => {
-        if(!page.author) {
-          page.author = {name: 'Author unknown'}
+      const pages = data.map(page => {
+        if (!page.author) {
+          page.author = { name: 'Author unknown' };
         }
 
         return page;
@@ -51,9 +51,9 @@ exports.page_list_api = (req, res) => {
     .populate('author')
     .sort('-created')
     .exec({}, (err, data) => {
-      const pages =  data.map(page => {
-        if(!page.author) {
-          page.author = {name: 'Author unknown'}
+      const pages = data.map(page => {
+        if (!page.author) {
+          page.author = { name: 'Author unknown' };
         }
 
         return page;
@@ -106,7 +106,7 @@ exports.page_create_api = async (req, res) => {
 
       let newPage = clone(page);
 
-      User.findById(page.author, function(err, author) {        
+      User.findById(page.author, function(err, author) {
         newPage.author = author;
 
         res.json({ message: 'Page published.', name: 'published', newPage });
@@ -135,8 +135,11 @@ exports.page_update_api = async (req, res) => {
     page.title = body.title;
     page.content = body.content;
     page.status = body.status;
-    page.author = body.author._id;
     page.created = body.created;
+
+    if (body.author) {
+      page.author = body.author._id;
+    }
 
     page.save((err, page) => {
       if (err) {
@@ -144,12 +147,22 @@ exports.page_update_api = async (req, res) => {
         return;
       }
 
-      let newPage = clone(page);
+      let newPage = clone(page._doc);
 
       User.findById(page.author, function(err, author) {
-        newPage.author = author;
+        if (body.author) {
+          newPage.author = author;
 
-        res.json({ message: 'Page edited.', name: 'edited', newPage });
+          res.json({ message: 'Page edited.', name: 'edited', newPage });
+        } else {
+          if (author) {
+            newPage.author = author;
+          } else {
+            newPage.author = { name: 'Author unknown' };
+          }
+
+          res.json({ message: 'Page edited.', name: 'edited', newPage });
+        }
       });
     });
   });
