@@ -28,6 +28,7 @@ Simple CMS with browser-side and server-side rendering.
 http://cmsjs.lukkupis.pl/login
 
 login: demo
+
 pass: cmsdemo
 
 ## Installation:
