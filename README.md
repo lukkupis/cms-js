@@ -41,8 +41,7 @@ Example:
 
 ```js
 module.exports = {
-  db:
-    'mongodb://<login>:<password>@<domain>:<port>/<dbName>',
+  db: 'mongodb://<login>:<password>@<domain>:<port>/<dbName>',
   keySession: ['randomKey1', 'randomKey2'],
   maxAgeSession: 24 * 60 * 60 * 1000,
   prodDomain: 'http://example.com',
