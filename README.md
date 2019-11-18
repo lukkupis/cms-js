@@ -47,3 +47,11 @@ module.exports = {
   demoMode: false //In demo mode, you can not edit user "demo", and "Admin" page is visible in the menu.
 };
 ```
+
+### Default user:
+
+login: ***admin***
+
+pass: ***admin***
+
+Account will stop working after you create a new user with "Administrator" permissions.
