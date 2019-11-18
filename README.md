@@ -35,9 +35,9 @@ pass: **cmsdemo**
 
 ### Configuration file
 
-A configuration file is required for proper operation: "server/config.js". 
+A configuration file is required for proper operation: ***server/config.js***. 
 
-Example:
+Example ***config.js***:
 
 ```js
 module.exports = {
