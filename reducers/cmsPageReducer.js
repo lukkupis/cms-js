@@ -40,6 +40,9 @@ export default createReducer(initialState, {
   [cmsPageActions.SET_PAGE_AUTHOR]: (state, action) => {
     state.pageForm.author = action.payload;
   },
+  [cmsPageActions.SET_PAGE_CONTENT]: (state, action) => {
+    state.pageForm.content = action.payload;
+  },
   [cmsPageActions.RESET_PAGE_FORM]: (state, action) => {
     state.pageForm = initialPageForm;
     state.pageForm.author = action.payload;

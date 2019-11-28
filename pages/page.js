@@ -26,7 +26,7 @@ function Page(props) {
             {page.author ? page.author.name : 'Author unknown'}
           </div>
 
-          {page.content}
+          <div dangerouslySetInnerHTML={{ __html: page.content }}></div>
         </div>
       )}
     </>

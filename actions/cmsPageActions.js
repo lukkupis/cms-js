@@ -13,6 +13,7 @@ export const GET_PAGE = createActionThunk('GET_PAGE', id =>
 );
 
 export const SET_PAGE_AUTHOR = createAction('SET_PAGE_AUTHOR');
+export const SET_PAGE_CONTENT = createAction('SET_PAGE_CONTENT');
 
 export const RESET_PAGE_FORM = createAction('RESET_PAGE_FORM');
 export const RESET_STATUS_FORM = createAction('RESET_STATUS_FORM');
