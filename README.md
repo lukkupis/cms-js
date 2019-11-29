@@ -11,12 +11,13 @@ pass: **cmsdemo**
 ## Features
 - user authentication
 - add/edit pages
+- WYSIWYG Editor
 - user management
 - edit menu
 
 ## Future features
+- advanced editor
 - categories
-- WYSIWYG Editor
 - page templates
 
 ## Built with
