@@ -23,6 +23,7 @@ import {
   Alert
 } from 'reactstrap';
 import { Formik, Form, Field } from 'formik';
+import { Editor } from '@tinymce/tinymce-react';
 
 function Page({ reqAction, isServer, reqRoutePath, reqHost }) {
   const cmsPageStore = useSelector(state => state.cmsPageStore);
@@ -48,7 +49,10 @@ function Page({ reqAction, isServer, reqRoutePath, reqHost }) {
     }
   }, [cmsUserStore.userAdminId]);
 
-  const handleOnSubmit = (values, { setSubmitting, setValues, resetForm, setErrors }) => {
+  const handleOnSubmit = (
+    values,
+    { setSubmitting, setValues, resetForm, setErrors }
+  ) => {
     dispatch(cmsPageActions.RESET_STATUS_FORM());
 
     if (action === 'new') {
@@ -120,7 +124,7 @@ function Page({ reqAction, isServer, reqRoutePath, reqHost }) {
             }}
             onSubmit={handleOnSubmit}
           >
-            {({ errors, touched, isSubmitting, values }) => (
+            {({ errors, touched, isSubmitting, values, handleChange }) => (
               <FormStrap tag={Form}>
                 {action === 'edit' && (
                   <FormGroup>
@@ -155,6 +159,27 @@ function Page({ reqAction, isServer, reqRoutePath, reqHost }) {
                     id="content"
                     name="content"
                     rows="8"
+                    style={{ display: 'none' }}
+                  />
+                  <Editor
+                    apiKey="zkz5dyst4diiuqean4ejlbdt4n3cw2tqyj17fp8vouzdpitu"
+                    value={values.content}
+                    onEditorChange={content =>
+                      dispatch(cmsPageActions.SET_PAGE_CONTENT(content))
+                    }
+                    init={{
+                      height: 500,
+                      menubar: true,
+                      plugins: [
+                        'advlist autolink lists link image charmap print preview anchor',
+                        'searchreplace visualblocks code fullscreen',
+                        'insertdatetime media table paste code help wordcount'
+                      ],
+                      toolbar:
+                        'undo redo | formatselect | bold italic backcolor | \
+             alignleft aligncenter alignright alignjustify | \
+             bullist numlist outdent indent | removeformat | help'
+                    }}
                   />
                 </FormGroup>
                 <Button type="submit" disabled={isSubmitting}>
