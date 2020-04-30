@@ -31,7 +31,7 @@
     "express-session": "^1.16.2",
     "formik": "^2.0.1",
     "identity-obj-proxy": "^3.0.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "mongoose": "^5.7.5",
     "morgan": "^1.9.1",
     "next": "^8.1.0",
